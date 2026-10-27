@@ -1,0 +1,256 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-red: #D90816;
+  --color-brand-red-dark: #b80512;
+  --color-brand-black: #171717;
+  --color-brand-offwhite: #FAF8F5;
+  --color-brand-softred: #FDEBEC;
+  --color-brand-gray: #6B6B6B;
+  --color-brand-terracotta: #C85A48;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* ==========================================================================
+   PAGE-SPECIFIC BACKGROUND IDENTITIES
+   Government-grade, editorial, distinctive, with subtle cultural textures
+   ========================================================================== */
+
+/* 1. Beranda: Warm ivory with crisp subtle grid and cultural linework */
+.bg-theme-beranda {
+  background-color: #FAF8F5;
+  background-image:
+    linear-gradient(to right, rgba(23, 23, 23, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(23, 23, 23, 0.045) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+/* Translucent heritage cultural watermark for hero */
+.bg-heritage-solo-hero {
+  position: relative;
+}
+
+.bg-heritage-solo-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/solo_umkm_artisan.jpg');
+  background-size: cover;
+  background-position: center 25%;
+  opacity: 0.055;
+  filter: grayscale(100%) contrast(120%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 2. Tentang: Warm ivory editorial with architectural linework */
+.bg-theme-tentang {
+  background-color: #FAF7F2;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(217, 8, 22, 0.035) 0%, transparent 50%),
+    linear-gradient(to right, rgba(160, 110, 80, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(160, 110, 80, 0.035) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 48px, 48px 48px;
+}
+
+/* 3. Katalog: Neutral light with subtle micro-weave grid for product prominence */
+.bg-theme-katalog {
+  background-color: #F9F8F6;
+  background-image:
+    radial-gradient(rgba(23, 23, 23, 0.065) 1px, transparent 1px),
+    linear-gradient(to right, rgba(23, 23, 23, 0.02) 1px, transparent 1px);
+  background-size: 20px 20px, 100px 100%;
+}
+
+/* 4. Akademi: Calm structured blueprint with educational learning dot-matrix */
+.bg-theme-akademi {
+  background-color: #F8F9FB;
+  background-image:
+    radial-gradient(circle at 2px 2px, rgba(14, 43, 92, 0.06) 1.5px, transparent 0),
+    linear-gradient(to right, rgba(14, 43, 92, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 43, 92, 0.025) 1px, transparent 1px);
+  background-size: 32px 32px, 32px 32px, 32px 32px;
+}
+
+/* 5. Agenda: Minimalist event calendar-grid styling with subtle timeline rhythm */
+.bg-theme-agenda {
+  background-color: #FBFBFA;
+  background-image:
+    linear-gradient(to right, rgba(23, 23, 23, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(217, 8, 22, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px, 100% 24px;
+}
+
+/* 6. Pasar: Structured business and supply-chain geometric linework */
+.bg-theme-pasar {
+  background-color: #F8F9FA;
+  background-image:
+    linear-gradient(135deg, rgba(23, 23, 23, 0.03) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(23, 23, 23, 0.03) 25%, transparent 25%),
+    linear-gradient(to right, rgba(23, 23, 23, 0.02) 1px, transparent 1px);
+  background-size: 36px 36px, 36px 36px, 72px 100%;
+}
+
+/* 7. Berita: Warm editorial journal texture */
+.bg-theme-berita {
+  background-color: #FDFBFA;
+  background-image:
+    linear-gradient(to bottom, rgba(23, 23, 23, 0.025) 1px, transparent 1px),
+    linear-gradient(to right, rgba(23, 23, 23, 0.018) 1px, transparent 1px);
+  background-size: 100% 30px, 90px 100%;
+}
+
+/* 8. Auth / Forms: Clean focused backdrop with brand seal glow */
+.bg-theme-auth {
+  background-color: #FAF8F6;
+  background-image:
+    radial-gradient(circle at 50% 15%, rgba(217, 8, 22, 0.045) 0%, transparent 55%),
+    linear-gradient(to bottom, rgba(23, 23, 23, 0.025) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 40px;
+}
+
+/* Legacy subtle grid texture */
+.bg-subtle-grid {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(23, 23, 23, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(23, 23, 23, 0.035) 1px, transparent 1px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Refined animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatSlow {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(1.5deg);
+  }
+}
+
+@keyframes pulseSubtle {
+
+  0%,
+  100% {
+    opacity: 0.05;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.09;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes ambientGlow {
+
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: scale(1.1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-hero-enter {
+  animation: heroEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float-slow {
+  animation: floatSlow 12s ease-in-out infinite;
+}
+
+.animate-pulse-subtle {
+  animation: pulseSubtle 8s ease-in-out infinite;
+}
+
+.animate-ambient-glow {
+  animation: ambientGlow 10s ease-in-out infinite;
+}
+
+/* Accessible reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
