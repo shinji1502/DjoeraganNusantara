@@ -24,6 +24,7 @@ import {
 import { useApp } from '../../context/AppContext';
 import { ProductCard } from '../../components/common/ProductCard';
 import { NumberCounter } from '../../components/common/NumberCounter';
+import { BatikFlank, BatikDivider, BatikKawung } from '../../components/common/BatikOrnament';
 
 export const HomePage: React.FC = () => {
   const { products, programs, events, registerProgram } = useApp();
@@ -292,31 +293,35 @@ export const HomePage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-20 pb-20 bg-theme-beranda min-h-screen">
-      {/* HERO SECTION — Editorial, Friendly, and Welcoming */}
-      <section className="relative overflow-hidden bg-transparent border-b border-neutral-200/80 bg-heritage-solo-hero pt-12 pb-16 lg:pt-20 lg:pb-24">
-        {/* Ambient atmospheric glows */}
-        <div className="absolute top-0 right-1/4 -mt-24 w-96 h-96 rounded-full bg-[#D90816]/6 blur-3xl pointer-events-none animate-ambient-glow" />
-        <div className="absolute bottom-0 left-10 -mb-24 w-[420px] h-[420px] rounded-full bg-amber-600/5 blur-3xl pointer-events-none animate-ambient-glow" style={{ animationDelay: '4s' }} />
+    <div className="space-y-16 sm:space-y-20 pb-20 bg-theme-beranda min-h-screen relative overflow-x-clip">
+      {/* HERO SECTION — Modern Javanese Elegance with Square Grid & Faint Artisan Photo */}
+      <section className="relative overflow-hidden bg-transparent border-b border-[#E7E2D9] bg-heritage-solo-hero pt-12 pb-16 lg:pt-20 lg:pb-24">
+        {/* Batik Parang flanking strips on screen edges */}
+        <BatikFlank position="left" opacity={0.065} />
+        <BatikFlank position="right" opacity={0.065} />
+
+        {/* Ambient atmospheric warm glows */}
+        <div className="absolute top-0 right-1/4 -mt-24 w-96 h-96 rounded-full bg-[#B81D24]/5 blur-3xl pointer-events-none animate-ambient-glow" />
+        <div className="absolute bottom-0 left-10 -mb-24 w-[420px] h-[420px] rounded-full bg-[#C5A059]/5 blur-3xl pointer-events-none animate-ambient-glow" style={{ animationDelay: '4s' }} />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            {/* Left Column: Friendly Headline & CTAs */}
+            {/* Left Column: Editorial Headline & CTAs */}
             <div className="lg:col-span-7 space-y-6 text-left animate-hero-enter">
-              {/* Friendly Eyebrow Label */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDEBEC] border border-[#D90816]/15 text-[#D90816] text-xs font-bold tracking-wide">
-                <Sparkles className="w-3.5 h-3.5" />
+              {/* Friendly Eyebrow Label matching user reference */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#B81D24]/10 border border-[#B81D24]/20 text-[#B81D24] text-xs font-semibold tracking-wide shadow-2xs">
+                <Sparkles className="w-3.5 h-3.5 text-[#B81D24]" />
                 <span>Selamat Datang di Djoeragan Nusantara</span>
               </div>
 
-              {/* Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-[#171717] tracking-tight leading-[1.14]">
+              {/* Headline with High-Class Contrast */}
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-[#1C1917] tracking-tight leading-[1.12]">
                 Wadah Tumbuh & <br className="hidden sm:inline" />
-                <span className="text-[#D90816]">Kolaborasi UMKM Nusantara.</span>
+                <span className="text-[#B81D24]">Kolaborasi UMKM Nusantara.</span>
               </h1>
 
               {/* Friendly Supporting Copy */}
-              <p className="text-base sm:text-lg text-neutral-600 leading-relaxed font-normal max-w-xl">
+              <p className="text-base sm:text-lg text-stone-600 leading-relaxed font-normal max-w-xl">
                 Bantu usaha lokal naik kelas dengan cara yang santai dan mudah. Dapatkan legalitas NIB, sertifikasi halal, akses pelatihan gratis, hingga peluang kerja sama bisnis dan pengadaan pemerintah.
               </p>
 
@@ -324,7 +329,7 @@ export const HomePage: React.FC = () => {
               <div className="pt-1 flex flex-wrap items-center gap-3.5">
                 <Link
                   to="/katalog"
-                  className="px-6 py-3.5 rounded-full bg-[#D90816] text-white font-bold text-sm hover:bg-[#b80512] transition-colors shadow-md shadow-[#D90816]/25 flex items-center gap-2 group"
+                  className="px-6 py-3.5 rounded-full bg-gradient-to-r from-[#B81D24] to-[#98141A] text-white font-bold text-sm hover:from-[#98141A] hover:to-[#7A0D13] transition-all shadow-md shadow-[#B81D24]/20 flex items-center gap-2 group ring-1 ring-amber-300/20"
                 >
                   <ShoppingBag className="w-4 h-4" />
                   <span>Jelajahi Katalog Produk</span>
@@ -333,45 +338,45 @@ export const HomePage: React.FC = () => {
 
                 <Link
                   to="/daftar"
-                  className="px-6 py-3.5 rounded-full border border-neutral-300 bg-white text-neutral-800 font-bold text-sm hover:border-neutral-900 hover:bg-neutral-50 transition-colors shadow-xs"
+                  className="px-6 py-3.5 rounded-full border border-[#D6CEC2] bg-white text-[#1C1917] font-bold text-sm hover:border-[#1C1917] hover:bg-[#FAF7F2] transition-colors shadow-2xs"
                 >
                   Daftar Anggota UMKM
                 </Link>
               </div>
 
               {/* Statistics Bar with NumberCounter Animation */}
-              <div className="pt-6 border-t border-neutral-200/70 grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="pt-6 border-t border-[#E7E2D9] grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div>
-                  <div className="text-2xl sm:text-3xl font-black text-[#171717]">
+                  <div className="text-2xl sm:text-3xl font-black text-[#1C1917]">
                     <NumberCounter target={1480} suffix="+" />
                   </div>
-                  <p className="text-xs text-neutral-500 font-medium mt-0.5">Anggota Terdaftar</p>
+                  <p className="text-xs text-stone-500 font-medium mt-0.5">Anggota Terdaftar</p>
                 </div>
                 <div>
-                  <div className="text-2xl sm:text-3xl font-black text-[#D90816]">
+                  <div className="text-2xl sm:text-3xl font-black text-[#B81D24]">
                     <NumberCounter target={35} />
                   </div>
-                  <p className="text-xs text-neutral-500 font-medium mt-0.5">Kab/Kota Jawa Tengah</p>
+                  <p className="text-xs text-stone-500 font-medium mt-0.5">Kab/Kota Jawa Tengah</p>
                 </div>
                 <div>
-                  <div className="text-2xl sm:text-3xl font-black text-emerald-700">
+                  <div className="text-2xl sm:text-3xl font-black text-[#8C5835]">
                     <NumberCounter target={820} suffix="+" />
                   </div>
-                  <p className="text-xs text-neutral-500 font-medium mt-0.5">Produk Terkurasi</p>
+                  <p className="text-xs text-stone-500 font-medium mt-0.5">Produk Terkurasi</p>
                 </div>
                 <div>
-                  <div className="text-2xl sm:text-3xl font-black text-blue-700">
+                  <div className="text-2xl sm:text-3xl font-black text-emerald-800">
                     <NumberCounter target={98} suffix="%" />
                   </div>
-                  <p className="text-xs text-neutral-500 font-medium mt-0.5">Lolos Legalitas NIB</p>
+                  <p className="text-xs text-stone-500 font-medium mt-0.5">Lolos Legalitas NIB</p>
                 </div>
               </div>
             </div>
 
             {/* Right Column: Hero Visual Card with Verified Badges */}
             <div className="lg:col-span-5 relative animate-hero-enter">
-              <div className="relative rounded-3xl overflow-hidden border border-neutral-200/90 bg-white shadow-xl shadow-neutral-900/5 ring-1 ring-black/5">
-                <div className="relative aspect-4/3 sm:aspect-5/4 lg:aspect-4/3 w-full overflow-hidden bg-neutral-100">
+              <div className="relative rounded-3xl overflow-hidden border border-[#E7E2D9] bg-white shadow-xl shadow-stone-900/5 ring-1 ring-amber-900/5">
+                <div className="relative aspect-4/3 sm:aspect-5/4 lg:aspect-4/3 w-full overflow-hidden bg-stone-100">
                   <img
                     src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=1200&q=80"
                     alt="Pemberdayaan Pengrajin Batik & Kriya Tradisi Djoeragan Nusantara"
@@ -380,33 +385,33 @@ export const HomePage: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
 
                   {/* Top-Right Badge */}
-                  <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[11px] font-semibold">
+                  <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[11px] font-semibold shadow-xs">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span>Legalitas & Kurasi Terjamin</span>
                   </div>
 
                   {/* Bottom Integrated Caption */}
                   <div className="absolute bottom-0 inset-x-0 p-5 text-white space-y-1.5">
-                    <div className="flex items-center gap-2 text-[11px] font-mono tracking-wider text-neutral-300 uppercase">
-                      <MapPin className="w-3.5 h-3.5 text-[#ff4d5a]" />
+                    <div className="flex items-center gap-2 text-[11px] font-mono tracking-wider text-[#C5A059] uppercase font-semibold">
+                      <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
                       <span>Jawa Tengah • Surakarta & Sekitarnya</span>
                     </div>
                     <p className="font-bold text-sm sm:text-base leading-snug text-white">
                       Dari Rumah Produksi Tradisi Menuju Pasar Ritel Modern & LKPP
                     </p>
-                    <p className="text-xs text-neutral-300 font-normal">
+                    <p className="text-xs text-stone-300 font-normal">
                       Mendukung pelaku UMKM kuliner, batik, kerajinan kriya, hingga agribisnis lokal.
                     </p>
                   </div>
                 </div>
 
                 {/* Sub-strip Bar */}
-                <div className="px-5 py-3 bg-[#171717] border-t border-neutral-800 flex items-center justify-between text-[11px] text-neutral-400">
-                  <span className="flex items-center gap-1.5 font-medium text-neutral-200">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#D90816]" />
+                <div className="px-5 py-3 bg-[#1C1917] border-t border-stone-800 flex items-center justify-between text-[11px] text-stone-400">
+                  <span className="flex items-center gap-1.5 font-medium text-stone-200">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#C5A059]" />
                     Terverifikasi Admin Djoeragan Nusantara
                   </span>
-                  <Link to="/anggota" className="text-[#ff4d5a] hover:underline font-bold">
+                  <Link to="/anggota" className="text-[#C5A059] hover:underline font-bold">
                     Lihat Direktori Anggota &rarr;
                   </Link>
                 </div>
@@ -416,65 +421,72 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* SECTION: PROGRAM FASILITASI & IKON ILUSTRATIF (GAYA JAKPRENEUR) */}
-      <section className="relative overflow-hidden py-10 sm:py-14">
+      {/* SECTION: PROGRAM FASILITASI & IKON ILUSTRATIF */}
+      <section className="relative overflow-hidden py-4 sm:py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Header Title & Subtitle like Jakpreneur */}
+          {/* Header Title & Subtitle */}
           <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 space-y-3">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#D90816] tracking-tight">
-              Program Djoeragan Nusantara
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F9F4EB] border border-[#C5A059]/30 text-[#8C5835] text-xs font-bold">
+              <Award className="w-3.5 h-3.5 text-[#C5A059]" />
+              <span>Ekosistem Terintegrasi</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1C1917] tracking-tight">
+              Pilar Fasilitas <span className="text-[#B81D24]">Djoeragan Nusantara</span>
             </h2>
-            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
-              Melalui <strong className="text-neutral-900 font-bold">Djoeragan Nusantara</strong>, berbagai program fasilitasi yang disediakan dapat diakses oleh para pelaku UMKM untuk lebih mudah dalam mengembangkan usahanya. Sehingga, setiap pelaku usaha dapat memiliki keterampilan, legalitas terjamin, kemandirian berwirausaha, serta kesempatan untuk meraih kesuksesannya.
+            <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
+              Melalui <strong className="text-[#1C1917] font-bold">Djoeragan Nusantara</strong>, berbagai program fasilitasi disediakan agar pelaku UMKM dapat lebih cepat dan mandiri dalam mengembangkan usahanya dengan kepastian legalitas serta perluasan pasar.
             </p>
           </div>
 
           {/* 6 Illustrative Icons Navigation Row */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-4 lg:gap-6 items-start text-center">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5 items-stretch text-center">
             {facilityFeatures.map((item, index) => (
               <Link
                 key={index}
                 to={item.link}
-                className="group flex flex-col items-center text-center p-3 sm:p-2 rounded-2xl hover:bg-white/90 hover:shadow-lg hover:shadow-neutral-900/5 transition-all duration-300"
+                className="card-heritage rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-between group"
               >
                 {/* Illustrative Vector Scene Icon */}
-                <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 flex items-center justify-center group-hover:scale-105 group-hover:-translate-y-1 transition-all duration-300 drop-shadow-sm group-hover:drop-shadow-md">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center group-hover:scale-105 group-hover:-translate-y-1 transition-all duration-300 drop-shadow-xs">
                   {item.vectorIcon}
                 </div>
 
-                {/* Title */}
-                <h3 className="font-bold text-sm sm:text-base text-neutral-900 group-hover:text-[#D90816] transition-colors mt-2 leading-snug">
-                  {item.title}
-                </h3>
-
-                {/* Selengkapnya Link */}
-                <span className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#D90816] group-hover:underline mt-1">
-                  Selengkapnya &rarr;
-                </span>
+                {/* Content */}
+                <div className="mt-2 space-y-1">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-[#9A6B39]">{item.category}</p>
+                  <h3 className="font-bold text-sm text-[#1C1917] group-hover:text-[#B81D24] transition-colors leading-snug">
+                    {item.title}
+                  </h3>
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-[#B81D24] group-hover:underline pt-1">
+                    Selengkapnya &rarr;
+                  </span>
+                </div>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
+      <BatikDivider badge="Kurasi Produk Unggulan" />
+
       {/* SECTION: PRODUK UNGGULAN TERKURASI */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDEBEC] text-[#D90816] text-xs font-bold mb-2">
-              <Flame className="w-3.5 h-3.5" />
-              Paling Diminati Pembeli
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF7F2] text-[#8C5835] border border-amber-900/10 text-xs font-bold mb-2">
+              <Flame className="w-3.5 h-3.5 text-[#B81D24]" />
+              Karya Pilihan Nusantara
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#171717] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1C1917] tracking-tight">
               Karya Pilihan UMKM Terverifikasi
             </h2>
-            <p className="text-xs sm:text-sm text-neutral-500 mt-1">
+            <p className="text-xs sm:text-sm text-stone-500 mt-1">
               Produk bermutu tinggi dengan harga jujur langsung dari pengrajin dan pelaku usaha lokal.
             </p>
           </div>
           <Link
             to="/katalog"
-            className="text-xs font-bold text-[#D90816] hover:text-[#b80512] flex items-center gap-1 group"
+            className="text-xs font-bold text-[#B81D24] hover:text-[#8F1017] flex items-center gap-1 group"
           >
             <span>Lihat Semua Produk di Katalog</span>
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -488,34 +500,36 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
+      <BatikDivider badge="Peluang Akses Bertumbuh" />
+
       {/* SECTION: AKSES BERTUMBUH (B2B, B2G & RUANG KOMERSIAL) */}
-      <section className="bg-white py-16 border-y border-neutral-200/80">
+      <section className="bg-white/80 backdrop-blur-xs py-16 border-y border-[#E7E2D9]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold text-[#D90816] uppercase tracking-wider">Akses Bertumbuh</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#171717] tracking-tight">
+            <span className="text-xs font-bold text-[#9A6B39] uppercase tracking-wider">Akses Bertumbuh</span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1C1917] tracking-tight">
               Buka Peluang Pasar Besar: B2B, B2G, & Ruang Komersial
             </h2>
-            <p className="text-sm text-neutral-600">
+            <p className="text-sm text-stone-600">
               Usaha Anda sudah siap ekspansi? Kami menghubungkan UMKM dengan pesanan korporasi skala besar, pengadaan barang jasa instansi pemerintah, dan showcase ruang komersial.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Keuangan & Modal */}
-            <div className="p-7 rounded-3xl bg-[#FAF8F7] border border-neutral-200 hover:border-[#D90816] transition space-y-4 flex flex-col justify-between">
+            <div className="card-heritage p-7 rounded-3xl space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+                <div className="w-12 h-12 rounded-2xl bg-[#F9F4EB] text-[#8C5835] border border-[#C5A059]/30 flex items-center justify-center font-bold">
                   <Landmark className="w-6 h-6" />
                 </div>
-                <h3 className="font-extrabold text-lg text-neutral-900">A. Akses Keuangan & Permodalan</h3>
-                <p className="text-xs text-neutral-600 leading-relaxed">
+                <h3 className="font-extrabold text-lg text-[#1C1917]">A. Akses Keuangan & Permodalan</h3>
+                <p className="text-xs text-stone-600 leading-relaxed">
                   Fasilitasi kredit usaha rakyat (KUR) tanpa agunan rumit, akses permodalan dari perbankan mitra, dan pembukaan akses investor untuk UMKM potensial.
                 </p>
               </div>
               <Link
                 to="/akses-bertumbuh"
-                className="pt-3 font-bold text-xs text-[#D90816] hover:underline flex items-center gap-1"
+                className="pt-3 font-bold text-xs text-[#B81D24] hover:underline flex items-center gap-1"
               >
                 <span>Pelajari Akses Permodalan</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -523,19 +537,19 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* B2B Matching */}
-            <div className="p-7 rounded-3xl bg-[#FAF8F7] border border-neutral-200 hover:border-[#D90816] transition space-y-4 flex flex-col justify-between">
+            <div className="card-heritage p-7 rounded-3xl space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-800 flex items-center justify-center font-bold">
+                <div className="w-12 h-12 rounded-2xl bg-stone-100 text-[#1C1917] border border-stone-200 flex items-center justify-center font-bold">
                   <Handshake className="w-6 h-6" />
                 </div>
-                <h3 className="font-extrabold text-lg text-neutral-900">B. Kolaborasi B2B Antarbisnis</h3>
-                <p className="text-xs text-neutral-600 leading-relaxed">
+                <h3 className="font-extrabold text-lg text-[#1C1917]">B. Kolaborasi B2B Antarbisnis</h3>
+                <p className="text-xs text-stone-600 leading-relaxed">
                   Kerja sama antar-pengusaha. Contoh: butuh 1.000 potong konveksi jahit untuk pesanan batik, pasokan bahan baku dari petani, atau agregator ekspor.
                 </p>
               </div>
               <Link
                 to="/akses-bertumbuh"
-                className="pt-3 font-bold text-xs text-[#D90816] hover:underline flex items-center gap-1"
+                className="pt-3 font-bold text-xs text-[#B81D24] hover:underline flex items-center gap-1"
               >
                 <span>Lihat Peluang Kerja Sama B2B</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -543,19 +557,19 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* B2G Government Procurement */}
-            <div className="p-7 rounded-3xl bg-[#FAF8F7] border border-neutral-200 hover:border-[#D90816] transition space-y-4 flex flex-col justify-between">
+            <div className="card-heritage p-7 rounded-3xl space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center justify-center font-bold">
                   <Building2 className="w-6 h-6" />
                 </div>
-                <h3 className="font-extrabold text-lg text-neutral-900">C. Pengadaan Pemerintah (B2G)</h3>
-                <p className="text-xs text-neutral-600 leading-relaxed">
+                <h3 className="font-extrabold text-lg text-[#1C1917]">C. Pengadaan Pemerintah (B2G)</h3>
+                <p className="text-xs text-stone-600 leading-relaxed">
                   Menjembatani produk UMKM yang telah ber-NIB dan halal untuk masuk e-Katalog Lokal belanja resmi kedinasan dan instansi pemerintah daerah.
                 </p>
               </div>
               <Link
                 to="/akses-bertumbuh"
-                className="pt-3 font-bold text-xs text-[#D90816] hover:underline flex items-center gap-1"
+                className="pt-3 font-bold text-xs text-[#B81D24] hover:underline flex items-center gap-1"
               >
                 <span>Peluang Belanja Dinas (B2G)</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -565,17 +579,19 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
+      <BatikDivider badge="Agenda & Pelatihan Terbuka" />
+
       {/* SECTION: PELATIHAN & EVENT TERDEKAT */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Pelatihan Box */}
-          <div className="bg-white rounded-3xl border border-neutral-200 p-6 sm:p-8 space-y-5 shadow-xs">
+          <div className="bg-white rounded-3xl border border-stone-200/90 p-6 sm:p-8 space-y-5 shadow-xs">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-[#D90816]" />
-                <h3 className="font-extrabold text-lg text-neutral-900">Pelatihan UMKM Terbuka</h3>
+                <BookOpen className="w-5 h-5 text-[#B81D24]" />
+                <h3 className="font-extrabold text-lg text-[#1C1917]">Pelatihan UMKM Terbuka</h3>
               </div>
-              <Link to="/pelatihan" className="text-xs font-bold text-[#D90816] hover:underline">
+              <Link to="/pelatihan" className="text-xs font-bold text-[#B81D24] hover:underline">
                 Lihat Semua &rarr;
               </Link>
             </div>
@@ -583,7 +599,7 @@ export const HomePage: React.FC = () => {
               {programs.slice(0, 2).map((prog) => (
                 <div
                   key={prog.id}
-                  className="p-4 rounded-2xl bg-[#FAF8F7] border border-neutral-200/80 flex flex-col sm:flex-row gap-4 items-start"
+                  className="p-4 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 flex flex-col sm:flex-row gap-4 items-start"
                 >
                   <img
                     src={prog.image}
@@ -591,18 +607,18 @@ export const HomePage: React.FC = () => {
                     className="w-full sm:w-24 h-24 rounded-xl object-cover shrink-0"
                   />
                   <div className="flex-1 space-y-1">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-red-100 text-[#D90816]">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#F9F4EB] text-[#8C5835] border border-amber-900/10">
                       {prog.type}
                     </span>
-                    <h4 className="font-bold text-sm text-neutral-900 leading-snug">{prog.title}</h4>
-                    <p className="text-[11px] text-neutral-500">{prog.date} • {prog.location}</p>
+                    <h4 className="font-bold text-sm text-[#1C1917] leading-snug">{prog.title}</h4>
+                    <p className="text-[11px] text-stone-500">{prog.date} • {prog.location}</p>
                     <div className="pt-2 flex items-center justify-between text-xs">
-                      <span className="text-neutral-500 text-[11px]">
-                        Sisa kuota: <strong>{prog.quota - prog.registeredCount} kursi</strong>
+                      <span className="text-stone-500 text-[11px]">
+                        Sisa kuota: <strong className="text-[#1C1917]">{prog.quota - prog.registeredCount} kursi</strong>
                       </span>
                       <button
                         onClick={() => registerProgram(prog.id)}
-                        className="px-3 py-1 rounded-full bg-neutral-900 text-white font-semibold text-[11px] hover:bg-neutral-800 transition"
+                        className="px-3 py-1 rounded-full bg-[#1C1917] text-white font-semibold text-[11px] hover:bg-[#2C2724] transition shadow-2xs"
                       >
                         Ikut Gratis
                       </button>
@@ -614,13 +630,13 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Event & Agenda Box */}
-          <div className="bg-white rounded-3xl border border-neutral-200 p-6 sm:p-8 space-y-5 shadow-xs">
+          <div className="bg-white rounded-3xl border border-stone-200/90 p-6 sm:p-8 space-y-5 shadow-xs">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-[#D90816]" />
-                <h3 className="font-extrabold text-lg text-neutral-900">Agenda Event Mendatang</h3>
+                <Calendar className="w-5 h-5 text-[#B81D24]" />
+                <h3 className="font-extrabold text-lg text-[#1C1917]">Agenda Event Mendatang</h3>
               </div>
-              <Link to="/event" className="text-xs font-bold text-[#D90816] hover:underline">
+              <Link to="/event" className="text-xs font-bold text-[#B81D24] hover:underline">
                 Lihat Jadwal &rarr;
               </Link>
             </div>
@@ -628,7 +644,7 @@ export const HomePage: React.FC = () => {
               {events.slice(0, 2).map((ev) => (
                 <div
                   key={ev.id}
-                  className="p-4 rounded-2xl bg-[#FAF8F7] border border-neutral-200/80 flex flex-col sm:flex-row gap-4 items-start"
+                  className="p-4 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 flex flex-col sm:flex-row gap-4 items-start"
                 >
                   <img
                     src={ev.image}
@@ -636,16 +652,16 @@ export const HomePage: React.FC = () => {
                     className="w-full sm:w-24 h-24 rounded-xl object-cover shrink-0"
                   />
                   <div className="flex-1 space-y-1">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-50 text-[#8C5835] border border-amber-900/10">
                       {ev.category}
                     </span>
-                    <h4 className="font-bold text-sm text-neutral-900 leading-snug">{ev.title}</h4>
-                    <p className="text-[11px] text-neutral-500">{ev.date} • {ev.location}</p>
+                    <h4 className="font-bold text-sm text-[#1C1917] leading-snug">{ev.title}</h4>
+                    <p className="text-[11px] text-stone-500">{ev.date} • {ev.location}</p>
                     <div className="pt-2 flex items-center justify-between text-xs">
-                      <span className="text-[11px] text-neutral-500">{ev.organizer}</span>
+                      <span className="text-[11px] text-stone-500">{ev.organizer}</span>
                       <Link
                         to="/event"
-                        className="font-bold text-[11px] text-[#D90816] hover:underline flex items-center"
+                        className="font-bold text-[11px] text-[#B81D24] hover:underline flex items-center"
                       >
                         Detail Event &rarr;
                       </Link>
@@ -660,29 +676,34 @@ export const HomePage: React.FC = () => {
 
       {/* SECTION: CTA DAFTAR MITRA DJOERAGAN NUSANTARA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl border border-neutral-200/90 p-8 sm:p-12 text-center max-w-4xl mx-auto space-y-6 shadow-sm">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#D90816] to-[#A00610] text-white mx-auto flex items-center justify-center font-black text-2xl shadow-lg shadow-[#D90816]/30">
-            DN
+        <div className="relative overflow-hidden bg-white rounded-3xl border border-[#E7E2D9] p-8 sm:p-12 text-center max-w-4xl mx-auto space-y-6 shadow-sm">
+          {/* Subtle Kawung watermark in CTA box */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.035]">
+            <BatikKawung color="#C5A059" opacity={0.08} className="w-full h-full" />
           </div>
-          <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 tracking-tight">
+
+          <div className="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br from-[#B81D24] to-[#7A0D13] ring-1 ring-[#C5A059]/40 text-white mx-auto flex items-center justify-center font-black text-2xl shadow-lg shadow-[#B81D24]/20">
+            <span className="tracking-tighter">DN</span>
+          </div>
+          <div className="relative z-10 space-y-2">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1C1917] tracking-tight">
               Siap Bertumbuh Bersama Djoeragan Nusantara?
             </h2>
-            <p className="text-sm text-neutral-600 max-w-xl mx-auto">
+            <p className="text-sm text-stone-600 max-w-xl mx-auto leading-relaxed">
               Daftarkan diri Anda atau usaha UMKM Anda. Dapatkan pendampingan izin resmi, akses pelatihan gratis, dan perluasan pasar ke seluruh nusantara.
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="relative z-10 flex flex-wrap justify-center gap-4">
             <Link
               to="/daftar"
-              className="px-8 py-3.5 rounded-full bg-[#D90816] text-white font-bold text-sm hover:bg-[#b80512] transition shadow-lg shadow-[#D90816]/25"
+              className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#B81D24] to-[#98141A] text-white font-bold text-sm hover:from-[#98141A] hover:to-[#7A0D13] transition shadow-md shadow-[#B81D24]/20"
             >
               Daftar Jadi Anggota Sekarang
             </Link>
             <Link
               to="/sertifikasi-usaha"
-              className="px-8 py-3.5 rounded-full border border-neutral-300 text-neutral-800 font-bold text-sm hover:border-neutral-900 transition"
+              className="px-8 py-3.5 rounded-full border border-[#D6CEC2] bg-white text-[#1C1917] font-bold text-sm hover:border-[#1C1917] hover:bg-[#FAF7F2] transition"
             >
               Konsultasi Izin & Sertifikasi
             </Link>

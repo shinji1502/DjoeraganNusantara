@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import {
-  FileText,
   Calendar,
   ArrowUpRight,
   Sparkles,
-  BookOpen,
-  TrendingUp,
-  Search,
-  Tag,
 } from 'lucide-react';
+import { BatikParang } from '../../components/common/BatikOrnament';
 
 export const InformasiPage: React.FC = () => {
   const [selectedTag, setSelectedTag] = useState('Semua');
@@ -60,17 +56,20 @@ export const InformasiPage: React.FC = () => {
 
   return (
     <div className="space-y-12 pb-20 bg-theme-berita min-h-screen">
-      {/* Header with friendly tone */}
-      <section className="bg-white/80 backdrop-blur-xs border-b border-neutral-200/80 py-14 sm:py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDEBEC] text-[#D90816] text-xs font-bold border border-[#D90816]/15">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Pusat Berita, Edukasi & Informasi Usaha</span>
+      {/* Header with Square Grid, Parang ornament, & Faint Artisan Photo */}
+      <section className="relative overflow-hidden bg-transparent border-b border-[#E7DFD5] bg-heritage-artisan-watermark py-14 sm:py-16">
+        <div className="absolute right-0 top-0 bottom-0 w-64 pointer-events-none opacity-40 hidden md:block">
+          <BatikParang className="h-full w-full" color="#C5A059" opacity={0.12} />
+        </div>
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-4 relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B81D24]/10 text-[#98141A] text-xs font-bold border border-[#B81D24]/20">
+            <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
+            <span>Pusat Wawasan, Edukasi & Kabar Usaha</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#171717] tracking-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-[#1C1917] tracking-tight">
             Informasi Seputar Djoeragan Nusantara
           </h1>
-          <p className="text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-[#57534E] max-w-2xl mx-auto leading-relaxed">
             Temukan kabar terbaru seputar regulasi perizinan, tips praktis mengembangkan omzet bisnis, peluang kerja sama pemerintah, dan kisah sukses sobat wirausaha lokal.
           </p>
 
@@ -82,8 +81,8 @@ export const InformasiPage: React.FC = () => {
                 onClick={() => setSelectedTag(t)}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${
                   selectedTag === t
-                    ? 'bg-[#171717] text-white shadow-xs'
-                    : 'bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-100'
+                    ? 'bg-[#1C1917] text-[#FAF7F2] border border-[#C5A059] shadow-xs'
+                    : 'bg-white border border-[#D6CEC2] text-[#57534E] hover:bg-[#FAF7F2]'
                 }`}
               >
                 {t === 'Semua' ? 'Semua Topik' : t}
@@ -99,30 +98,30 @@ export const InformasiPage: React.FC = () => {
           {filteredArticles.map((art) => (
             <article
               key={art.id}
-              className="bg-white rounded-3xl border border-neutral-200/90 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+              className="card-heritage overflow-hidden flex flex-col justify-between"
             >
               <div>
                 <img src={art.image} alt={art.title} className="w-full aspect-16/10 object-cover" />
                 <div className="p-6 space-y-3">
-                  <div className="flex items-center justify-between text-xs text-neutral-500">
-                    <span className="font-bold text-[#D90816]">{art.category}</span>
+                  <div className="flex items-center justify-between text-xs text-[#78716C]">
+                    <span className="font-bold text-[#8C5835]">{art.category}</span>
                     <span className="flex items-center gap-1 text-[11px]">
-                      <Calendar className="w-3.5 h-3.5" />
+                      <Calendar className="w-3.5 h-3.5 text-[#C5A059]" />
                       {art.date}
                     </span>
                   </div>
-                  <h3 className="font-bold text-base text-neutral-900 leading-snug hover:text-[#D90816] transition cursor-pointer">
+                  <h3 className="font-serif font-extrabold text-lg text-[#1C1917] leading-snug hover:text-[#98141A] transition cursor-pointer">
                     {art.title}
                   </h3>
-                  <p className="text-xs text-neutral-600 leading-relaxed line-clamp-3">
+                  <p className="text-xs text-[#57534E] leading-relaxed line-clamp-3">
                     {art.summary}
                   </p>
                 </div>
               </div>
 
-              <div className="p-6 pt-0 border-t border-neutral-100 mt-4 flex items-center justify-between text-xs">
-                <span className="text-[11px] text-neutral-400">Baca: 3 menit</span>
-                <span className="font-bold text-[#D90816] hover:underline flex items-center gap-0.5 cursor-pointer">
+              <div className="p-6 pt-0 border-t border-[#E7DFD5] mt-4 flex items-center justify-between text-xs">
+                <span className="text-[11px] text-[#A8A29E]">Baca: 3 menit</span>
+                <span className="font-bold text-[#98141A] hover:underline flex items-center gap-0.5 cursor-pointer">
                   Baca Selengkapnya <ArrowUpRight className="w-3.5 h-3.5" />
                 </span>
               </div>
@@ -133,3 +132,4 @@ export const InformasiPage: React.FC = () => {
     </div>
   );
 };
+

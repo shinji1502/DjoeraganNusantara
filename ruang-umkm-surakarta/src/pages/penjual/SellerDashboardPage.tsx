@@ -24,6 +24,7 @@ import {
 } from 'recharts';
 import { useApp } from '../../context/AppContext';
 import { formatRupiah, formatTanggal, getOrderStatusBadge } from '../../utils/formatters';
+import { BatikKawung } from '../../components/common/BatikOrnament';
 
 const SALES_TREND_DATA = [
   { day: 'Sen', omzet: 2400000, pesanan: 6 },
@@ -37,6 +38,8 @@ const SALES_TREND_DATA = [
 
 export const SellerDashboardPage: React.FC = () => {
   const { currentUser, products, orders, updateOrderStatus } = useApp();
+
+  const isDemoSeller = currentUser.id === 'user-seller-1';
 
   // Products belonging to this seller
   const myProducts = products.filter((p) => p.sellerId === currentUser.id);
@@ -52,42 +55,59 @@ export const SellerDashboardPage: React.FC = () => {
 
   const totalRevenue = myOrders
     .filter((o) => o.orderStatus !== 'dibatalkan')
-    .reduce((sum, o) => sum + o.grandTotal, 0);
+    .reduce((sum, o) => sum + o.grandTotal, 0) + (isDemoSeller ? 18500000 : 0);
+
+  const salesTrendData = isDemoSeller
+    ? SALES_TREND_DATA
+    : [
+        { day: 'Sen', omzet: 0, pesanan: 0 },
+        { day: 'Sel', omzet: 0, pesanan: 0 },
+        { day: 'Rab', omzet: 0, pesanan: 0 },
+        { day: 'Kam', omzet: 0, pesanan: 0 },
+        { day: 'Jum', omzet: 0, pesanan: 0 },
+        { day: 'Sab', omzet: 0, pesanan: 0 },
+        { day: 'Min', omzet: 0, pesanan: 0 },
+      ];
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Top Banner with Store Name & Verification Status */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-neutral-200/90 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div className="space-y-2">
+      <div className="card-heritage p-6 sm:p-8 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6">
+        {/* Subtle Kawung watermark */}
+        <div className="absolute -right-8 -bottom-8 opacity-10 pointer-events-none hidden md:block">
+          <BatikKawung className="w-56 h-56 text-[#8C5835]" />
+        </div>
+
+        <div className="space-y-2 relative z-10">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-neutral-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#8C5835]">
               Operasional Toko UMKM
             </span>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold border border-emerald-200">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              NIB {currentUser.nib || '0220009831921'} Terverifikasi
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FAF7F2] text-[#8C5835] text-[11px] font-bold border border-[#C5A059]/40">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#C5A059]" />
+              NIB {currentUser.nib || (isDemoSeller ? '0220009831921' : '-')} Terverifikasi
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#171717]">
-            {currentUser.storeName || 'Batik Danar Srikandi Solo'}
+          <h1 className="text-3xl sm:text-4xl font-serif font-bold text-[#1C1917]">
+            {currentUser.storeName || (isDemoSeller ? 'Batik Danar Srikandi Solo' : 'Toko UMKM')}
           </h1>
-          <p className="text-xs text-neutral-500">
-            Penanggung Jawab: <strong>{currentUser.name}</strong> • Wilayah: Kampung Batik Laweyan, Surakarta
+          <p className="text-xs text-[#57534E]">
+            Penanggung Jawab: <strong className="text-[#1C1917]">{currentUser.name}</strong> • Wilayah: {currentUser.address || 'Surakarta'}
           </p>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-3 shrink-0 relative z-10">
           <Link
             to="/penjual/produk/tambah"
-            className="px-5 py-2.5 rounded-full bg-[#D90816] text-white text-xs font-bold hover:bg-[#b80512] transition flex items-center gap-1.5 shadow-md shadow-[#D90816]/20"
+            className="px-5 py-2.5 rounded-full bg-[#B81D24] text-white text-xs font-bold hover:bg-[#98141A] transition flex items-center gap-1.5 shadow-md shadow-[#B81D24]/20"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Tambah Produk Baru</span>
           </Link>
           <Link
             to="/penjual/pesanan"
-            className="px-4 py-2.5 rounded-full border border-neutral-300 text-neutral-800 text-xs font-bold hover:border-neutral-900 transition"
+            className="px-4 py-2.5 rounded-full border border-[#D6CEC2] text-[#1C1917] text-xs font-bold hover:border-[#8C5835] bg-white transition"
           >
             Kelola Pesanan
           </Link>
@@ -96,95 +116,105 @@ export const SellerDashboardPage: React.FC = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="bg-white p-5 rounded-2xl border border-neutral-200/80 shadow-xs space-y-1">
-          <div className="flex items-center justify-between text-neutral-500 text-xs font-medium">
+        <div className="card-heritage p-5 space-y-1">
+          <div className="flex items-center justify-between text-[#78716C] text-xs font-medium">
             <span>Total Omzet Toko</span>
             <TrendingUp className="w-4 h-4 text-emerald-600" />
           </div>
-          <p className="text-2xl font-extrabold text-[#171717]">{formatRupiah(totalRevenue + 18500000)}</p>
-          <p className="text-[11px] text-emerald-600 font-semibold flex items-center gap-1">
-            <ArrowUpRight className="w-3 h-3" /> +14.8% dari bulan lalu
-          </p>
+          <p className="text-2xl font-serif font-bold text-[#1C1917]">{formatRupiah(totalRevenue)}</p>
+          {isDemoSeller ? (
+            <p className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
+              <ArrowUpRight className="w-3 h-3" /> +14.8% dari bulan lalu
+            </p>
+          ) : totalRevenue > 0 ? (
+            <p className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
+              <ArrowUpRight className="w-3 h-3" /> Akumulasi pesanan masuk
+            </p>
+          ) : (
+            <p className="text-[11px] text-[#A8A29E] font-medium">
+              0% • Belum ada transaksi penjualan
+            </p>
+          )}
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-neutral-200/80 shadow-xs space-y-1">
-          <div className="flex items-center justify-between text-neutral-500 text-xs font-medium">
+        <div className="card-heritage p-5 space-y-1">
+          <div className="flex items-center justify-between text-[#78716C] text-xs font-medium">
             <span>Pesanan Perlu Diproses</span>
-            <Clock className="w-4 h-4 text-[#D90816]" />
+            <Clock className="w-4 h-4 text-[#B81D24]" />
           </div>
-          <p className="text-2xl font-extrabold text-[#D90816]">
+          <p className="text-2xl font-serif font-bold text-[#B81D24]">
             {newOrders.length + processingOrders.length} Pesanan
           </p>
-          <p className="text-[11px] text-neutral-500">
+          <p className="text-[11px] text-[#78716C]">
             {newOrders.length} baru, {processingOrders.length} sedang dikemas
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-neutral-200/80 shadow-xs space-y-1">
-          <div className="flex items-center justify-between text-neutral-500 text-xs font-medium">
+        <div className="card-heritage p-5 space-y-1">
+          <div className="flex items-center justify-between text-[#78716C] text-xs font-medium">
             <span>Produk Aktif di Etalase</span>
-            <Package className="w-4 h-4 text-blue-600" />
+            <Package className="w-4 h-4 text-[#8C5835]" />
           </div>
-          <p className="text-2xl font-extrabold text-neutral-900">{activeProducts.length} Produk</p>
-          <p className="text-[11px] text-neutral-500">Katalog live di portal belanja</p>
+          <p className="text-2xl font-serif font-bold text-[#1C1917]">{activeProducts.length} Produk</p>
+          <p className="text-[11px] text-[#78716C]">Katalog live di portal belanja</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-neutral-200/80 shadow-xs space-y-1">
-          <div className="flex items-center justify-between text-neutral-500 text-xs font-medium">
+        <div className="card-heritage p-5 space-y-1">
+          <div className="flex items-center justify-between text-[#78716C] text-xs font-medium">
             <span>Peringatan Stok Menipis</span>
             <AlertTriangle className="w-4 h-4 text-amber-600" />
           </div>
-          <p className="text-2xl font-extrabold text-amber-600">{lowStockProducts.length} Produk</p>
-          <Link to="/penjual/stok" className="text-[11px] text-[#D90816] font-semibold hover:underline block">
+          <p className="text-2xl font-serif font-bold text-amber-600">{lowStockProducts.length} Produk</p>
+          <Link to="/penjual/stok" className="text-[11px] text-[#8C5835] hover:text-[#B81D24] font-semibold hover:underline block">
             Perbarui stok produk &rarr;
           </Link>
         </div>
       </div>
 
       {/* Chart: Tren Penjualan Mingguan */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-neutral-200/90 shadow-xs space-y-4">
+      <div className="card-heritage p-6 sm:p-8 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h3 className="font-extrabold text-base text-neutral-900">Grafik Penjualan & Tren Transaksi</h3>
-            <p className="text-xs text-neutral-500">Pantau pertumbuhan omzet harian dari kanal B2C dan QRIS.</p>
+            <h3 className="font-serif font-bold text-lg text-[#1C1917]">Grafik Penjualan & Tren Transaksi</h3>
+            <p className="text-xs text-[#57534E]">Pantau pertumbuhan omzet harian dari kanal B2C dan QRIS.</p>
           </div>
-          <span className="text-xs text-neutral-500 bg-[#FAF8F7] px-3 py-1 rounded-full border border-neutral-200">
-            Rentang: 7 Hari Terakhir
+          <span className="text-xs text-[#57534E] bg-[#FAF7F2] px-3 py-1 rounded-full border border-[#E7DFD5]">
+            {isDemoSeller || myOrders.length > 0 ? 'Rentang: 7 Hari Terakhir' : 'Belum Ada Transaksi (Rp 0)'}
           </span>
         </div>
 
         <div className="h-64 w-full pt-4">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={SALES_TREND_DATA} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+            <AreaChart data={salesTrendData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorOmzet" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#D90816" stopOpacity={0.25} />
-                  <stop offset="95%" stopColor="#D90816" stopOpacity={0.0} />
+                  <stop offset="5%" stopColor="#B81D24" stopOpacity={0.25} />
+                  <stop offset="95%" stopColor="#B81D24" stopOpacity={0.0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E5E5" />
-              <XAxis dataKey="day" stroke="#888888" fontSize={11} tickLine={false} />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E7DFD5" />
+              <XAxis dataKey="day" stroke="#78716C" fontSize={11} tickLine={false} />
               <YAxis
-                stroke="#888888"
+                stroke="#78716C"
                 fontSize={11}
                 tickLine={false}
-                tickFormatter={(val) => `Rp${(val / 1000000).toFixed(1)}Jt`}
+                tickFormatter={(val) => val === 0 ? 'Rp0' : `Rp${(val / 1000000).toFixed(1)}Jt`}
               />
               <Tooltip
                 formatter={(value: any) => [formatRupiah(Number(value)), 'Omzet']}
-                contentStyle={{ borderRadius: '12px', border: '1px solid #E5E5E5', fontSize: '12px' }}
+                contentStyle={{ borderRadius: '16px', border: '1px solid #E7DFD5', backgroundColor: '#FAF7F2', fontSize: '12px' }}
               />
-              <Area type="monotone" dataKey="omzet" stroke="#D90816" strokeWidth={3} fillOpacity={1} fill="url(#colorOmzet)" />
+              <Area type="monotone" dataKey="omzet" stroke="#B81D24" strokeWidth={3} fillOpacity={1} fill="url(#colorOmzet)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* Pesanan Masuk Terbaru */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-neutral-200/90 shadow-xs space-y-4">
+      <div className="card-heritage p-6 sm:p-8 space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="font-extrabold text-base text-neutral-900">Pesanan Masuk Terbaru</h3>
-          <Link to="/penjual/pesanan" className="text-xs font-bold text-[#D90816] hover:underline">
+          <h3 className="font-serif font-bold text-lg text-[#1C1917]">Pesanan Masuk Terbaru</h3>
+          <Link to="/penjual/pesanan" className="text-xs font-bold text-[#8C5835] hover:text-[#B81D24] transition">
             Buka Semua Pesanan &rarr;
           </Link>
         </div>
@@ -253,24 +283,25 @@ export const SellerDashboardPage: React.FC = () => {
       </div>
 
       {/* Produk & Etalase Toko with Photos */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-neutral-200/90 shadow-xs space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="font-extrabold text-base text-neutral-900">Foto & Etalase Produk Toko</h3>
-              <p className="text-xs text-neutral-500">Visual produk aktif yang tampil di portal pembeli.</p>
-            </div>
-            <Link to="/penjual/produk" className="text-xs font-bold text-[#D90816] hover:underline">
-              Kelola Semua Produk &rarr;
-            </Link>
+      <div className="card-heritage p-6 sm:p-8 space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="font-serif font-bold text-lg text-[#1C1917]">Foto & Etalase Produk Toko</h3>
+            <p className="text-xs text-[#57534E]">Visual produk aktif yang tampil di portal pembeli.</p>
           </div>
+          <Link to="/penjual/produk" className="text-xs font-bold text-[#8C5835] hover:text-[#B81D24] transition">
+            Kelola Semua Produk &rarr;
+          </Link>
+        </div>
 
+        {myProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
             {myProducts.slice(0, 4).map((p) => {
               const photo = p.images?.[0] || '';
               return (
                 <div
                   key={p.id}
-                  className="p-3 rounded-2xl border border-neutral-200/80 bg-[#FAF8F7] hover:border-neutral-300 transition flex flex-col justify-between"
+                  className="p-3 rounded-2xl border border-[#E7DFD5] bg-[#FAF7F2] hover:border-[#C5A059] transition flex flex-col justify-between"
                 >
                   <div>
                     <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-neutral-200 mb-2.5">
@@ -285,7 +316,7 @@ export const SellerDashboardPage: React.FC = () => {
                           }}
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-neutral-400">
+                        <div className="w-full h-full flex items-center justify-center text-[#A8A29E]">
                           <Package className="w-8 h-8" />
                         </div>
                       )}
@@ -294,19 +325,37 @@ export const SellerDashboardPage: React.FC = () => {
                       </span>
                     </div>
 
-                    <h4 className="font-bold text-xs text-neutral-900 line-clamp-1">{p.name}</h4>
-                    <p className="text-[10px] text-neutral-500 mt-0.5">{p.category}</p>
+                    <h4 className="font-bold text-xs text-[#1C1917] line-clamp-1">{p.name}</h4>
+                    <p className="text-[10px] text-[#78716C] mt-0.5">{p.category}</p>
                   </div>
 
-                  <div className="pt-2 mt-2 border-t border-neutral-200/60 flex items-center justify-between text-xs">
-                    <span className="font-extrabold text-neutral-900">{formatRupiah(p.price)}</span>
-                    <span className="text-[10px] text-neutral-500">Terjual {p.soldCount}</span>
+                  <div className="pt-2 mt-2 border-t border-[#E7DFD5] flex items-center justify-between text-xs">
+                    <span className="font-extrabold text-[#1C1917]">{formatRupiah(p.price)}</span>
+                    <span className="text-[10px] text-[#78716C]">Terjual {p.soldCount}</span>
                   </div>
                 </div>
               );
             })}
           </div>
-        </div>
+        ) : (
+          <div className="p-8 text-center bg-[#FAF7F2] rounded-2xl border border-dashed border-[#D6CEC2] space-y-3">
+            <div className="w-12 h-12 rounded-full bg-[#F5EFEB] flex items-center justify-center mx-auto text-[#8C5835] border border-[#E7DFD5]">
+              <Package className="w-6 h-6" />
+            </div>
+            <div className="space-y-1">
+              <p className="text-xs font-bold text-[#1C1917]">Belum ada produk di etalase toko Anda</p>
+              <p className="text-[11px] text-[#78716C]">Mulai tambahkan produk pertama Anda agar pembeli dapat melihat dan berbelanja.</p>
+            </div>
+            <Link
+              to="/penjual/produk/tambah"
+              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#B81D24] text-white text-xs font-bold hover:bg-[#98141A] transition shadow-xs"
+            >
+              <PlusCircle className="w-3.5 h-3.5" />
+              <span>Tambah Produk Sekarang</span>
+            </Link>
+          </div>
+        )}
+      </div>
       </div>
   );
 };

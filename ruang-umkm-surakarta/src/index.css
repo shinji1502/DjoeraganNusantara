@@ -1,36 +1,59 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-red: #D90816;
-  --color-brand-red-dark: #b80512;
-  --color-brand-black: #171717;
-  --color-brand-offwhite: #FAF8F5;
-  --color-brand-softred: #FDEBEC;
-  --color-brand-gray: #6B6B6B;
+  --color-brand-red: #B81D24;
+  --color-brand-red-dark: #8F1017;
+  --color-brand-red-bright: #D90816;
+  --color-brand-black: #1C1917;
+  --color-brand-charcoal: #231F1D;
+  --color-brand-umber: #44403C;
+  --color-brand-offwhite: #FAF7F2;
+  --color-brand-ivory: #FAF7F2;
+  --color-brand-cream: #F5EFEB;
+  --color-brand-sand: #EDE5DC;
+  --color-brand-gold: #C5A059;
+  --color-brand-gold-dark: #9A6B39;
+  --color-brand-gold-soft: #F9F4EB;
+  --color-brand-bronze: #8C5835;
+  --color-brand-softred: #FDF2F2;
+  --color-brand-gray: #78716C;
   --color-brand-terracotta: #C85A48;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
 }
 
 html,
 body {
   max-width: 100%;
   overflow-x: clip;
+  background-color: #FAF7F2;
+  color: #1C1917;
 }
 
 /* ==========================================================================
-   PAGE-SPECIFIC BACKGROUND IDENTITIES
-   Government-grade, editorial, distinctive, with subtle cultural textures
+   PAGE-SPECIFIC BACKGROUND IDENTITIES — MODERN JAVANESE ELEGANCE
+   Curated warm ivory, crisp architectural square grids, and faint artisan photo watermark
    ========================================================================== */
 
-/* 1. Beranda: Warm ivory with crisp subtle grid and cultural linework */
-.bg-theme-beranda {
-  background-color: #FAF8F5;
+/* Universal crisp square grid ("kotak-kotak") */
+.bg-grid-squares {
+  background-color: #FAF7F2;
   background-image:
-    linear-gradient(to right, rgba(23, 23, 23, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(23, 23, 23, 0.045) 1px, transparent 1px);
+    linear-gradient(to right, rgba(68, 64, 60, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(68, 64, 60, 0.06) 1px, transparent 1px);
   background-size: 36px 36px;
 }
 
-/* Translucent heritage cultural watermark for hero */
+/* 1. Beranda: Warm ivory base with square grid ("kotak-kotak") and ambient glow */
+.bg-theme-beranda {
+  background-color: #FAF7F2;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(197, 160, 89, 0.06) 0%, transparent 60%),
+    linear-gradient(to right, rgba(68, 64, 60, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(68, 64, 60, 0.06) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
+}
+
+/* Translucent heritage artisan photo watermark for hero ("foto gambar yang sedikit kelihatan") */
 .bg-heritage-solo-hero {
   position: relative;
 }
@@ -42,84 +65,113 @@ body {
   background-image: url('/images/solo_umkm_artisan.jpg');
   background-size: cover;
   background-position: center 25%;
-  opacity: 0.055;
-  filter: grayscale(100%) contrast(120%);
+  opacity: 0.085;
+  filter: grayscale(100%) contrast(125%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* 2. Tentang: Warm ivory editorial with architectural linework */
+/* Faint artisan photo watermark utility for any section */
+.bg-heritage-artisan-watermark {
+  position: relative;
+}
+
+.bg-heritage-artisan-watermark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/solo_umkm_artisan.jpg');
+  background-size: cover;
+  background-position: center 30%;
+  opacity: 0.075;
+  filter: grayscale(100%) contrast(125%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 2. Tentang / Anggota: Warm ivory with crisp square grid */
 .bg-theme-tentang {
   background-color: #FAF7F2;
   background-image:
-    radial-gradient(circle at 50% 0%, rgba(217, 8, 22, 0.035) 0%, transparent 50%),
-    linear-gradient(to right, rgba(160, 110, 80, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(160, 110, 80, 0.035) 1px, transparent 1px);
-  background-size: 100% 100%, 48px 48px, 48px 48px;
+    linear-gradient(to right, rgba(68, 64, 60, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(68, 64, 60, 0.055) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
-/* 3. Katalog: Neutral light with subtle micro-weave grid for product prominence */
+/* 3. Katalog: Warm ivory with crisp square grid */
 .bg-theme-katalog {
-  background-color: #F9F8F6;
+  background-color: #FAF7F2;
   background-image:
-    radial-gradient(rgba(23, 23, 23, 0.065) 1px, transparent 1px),
-    linear-gradient(to right, rgba(23, 23, 23, 0.02) 1px, transparent 1px);
-  background-size: 20px 20px, 100px 100%;
+    linear-gradient(to right, rgba(68, 64, 60, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(68, 64, 60, 0.055) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
-/* 4. Akademi: Calm structured blueprint with educational learning dot-matrix */
+/* 4. Akademi / Pelatihan: Warm ivory with crisp square grid */
 .bg-theme-akademi {
-  background-color: #F8F9FB;
+  background-color: #FAF7F2;
   background-image:
-    radial-gradient(circle at 2px 2px, rgba(14, 43, 92, 0.06) 1.5px, transparent 0),
-    linear-gradient(to right, rgba(14, 43, 92, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(14, 43, 92, 0.025) 1px, transparent 1px);
-  background-size: 32px 32px, 32px 32px, 32px 32px;
+    linear-gradient(to right, rgba(68, 64, 60, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(68, 64, 60, 0.055) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
-/* 5. Agenda: Minimalist event calendar-grid styling with subtle timeline rhythm */
+/* 5. Agenda / Event: Warm ivory with crisp square grid */
 .bg-theme-agenda {
-  background-color: #FBFBFA;
+  background-color: #FAF7F2;
   background-image:
-    linear-gradient(to right, rgba(23, 23, 23, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(217, 8, 22, 0.035) 1px, transparent 1px);
-  background-size: 48px 48px, 100% 24px;
+    linear-gradient(to right, rgba(68, 64, 60, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(68, 64, 60, 0.055) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
-/* 6. Pasar: Structured business and supply-chain geometric linework */
+/* 6. Pasar / Akses Bertumbuh: Warm ivory with crisp square grid */
 .bg-theme-pasar {
-  background-color: #F8F9FA;
+  background-color: #FAF7F2;
   background-image:
-    linear-gradient(135deg, rgba(23, 23, 23, 0.03) 25%, transparent 25%),
-    linear-gradient(225deg, rgba(23, 23, 23, 0.03) 25%, transparent 25%),
-    linear-gradient(to right, rgba(23, 23, 23, 0.02) 1px, transparent 1px);
-  background-size: 36px 36px, 36px 36px, 72px 100%;
+    linear-gradient(to right, rgba(68, 64, 60, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(68, 64, 60, 0.055) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
-/* 7. Berita: Warm editorial journal texture */
+/* 7. Berita / Informasi: Warm ivory with crisp square grid */
 .bg-theme-berita {
-  background-color: #FDFBFA;
+  background-color: #FAF7F2;
   background-image:
-    linear-gradient(to bottom, rgba(23, 23, 23, 0.025) 1px, transparent 1px),
-    linear-gradient(to right, rgba(23, 23, 23, 0.018) 1px, transparent 1px);
-  background-size: 100% 30px, 90px 100%;
+    linear-gradient(to right, rgba(68, 64, 60, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(68, 64, 60, 0.055) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
-/* 8. Auth / Forms: Clean focused backdrop with brand seal glow */
+/* 8. Auth / Forms: Warm ivory with crisp square grid */
 .bg-theme-auth {
-  background-color: #FAF8F6;
+  background-color: #FAF7F2;
   background-image:
-    radial-gradient(circle at 50% 15%, rgba(217, 8, 22, 0.045) 0%, transparent 55%),
-    linear-gradient(to bottom, rgba(23, 23, 23, 0.025) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 40px;
+    radial-gradient(circle at 50% 15%, rgba(184, 29, 36, 0.04) 0%, transparent 55%),
+    linear-gradient(to right, rgba(68, 64, 60, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(68, 64, 60, 0.055) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
 }
 
 /* Legacy subtle grid texture */
 .bg-subtle-grid {
   background-size: 40px 40px;
   background-image:
-    linear-gradient(to right, rgba(23, 23, 23, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(23, 23, 23, 0.035) 1px, transparent 1px);
+    linear-gradient(to right, rgba(68, 64, 60, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(68, 64, 60, 0.03) 1px, transparent 1px);
+}
+
+/* Subtle micro-elevations & heritage card styling */
+.card-heritage {
+  background-color: #FFFFFF;
+  border: 1px solid rgba(231, 229, 228, 0.9);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-heritage:hover {
+  border-color: rgba(197, 160, 89, 0.4);
+  box-shadow: 0 12px 30px -8px rgba(28, 25, 23, 0.08);
+  transform: translateY(-2px);
 }
 
 /* Custom scrollbar */

@@ -55,69 +55,81 @@ export const SellerStockPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-neutral-100">
-              {myProducts.map((p) => (
-                <tr key={p.id} className="hover:bg-neutral-50/80 transition">
-                  <td className="py-4 px-6">
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={p.images[0]}
-                        alt=""
-                        className="w-11 h-11 rounded-xl object-cover border border-neutral-200 shrink-0"
-                      />
-                      <div>
-                        <p className="font-bold text-neutral-900 line-clamp-1">{p.name}</p>
-                        <p className="text-[10px] text-neutral-400">{formatRupiah(p.price)}</p>
+              {myProducts.length > 0 ? (
+                myProducts.map((p) => (
+                  <tr key={p.id} className="hover:bg-neutral-50/80 transition">
+                    <td className="py-4 px-6">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={p.images[0]}
+                          alt=""
+                          className="w-11 h-11 rounded-xl object-cover border border-neutral-200 shrink-0"
+                        />
+                        <div>
+                          <p className="font-bold text-neutral-900 line-clamp-1">{p.name}</p>
+                          <p className="text-[10px] text-neutral-400">{formatRupiah(p.price)}</p>
+                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </td>
 
-                  <td className="py-4 px-4 font-medium text-neutral-800">{p.category}</td>
+                    <td className="py-4 px-4 font-medium text-neutral-800">{p.category}</td>
 
-                  <td className="py-4 px-4 text-center">
-                    <span
-                      className={`inline-block px-3 py-1 rounded-full font-extrabold text-xs ${
-                        p.stock <= 3
-                          ? 'bg-rose-100 text-rose-700'
-                          : p.stock < 10
-                          ? 'bg-amber-100 text-amber-800'
-                          : 'bg-emerald-100 text-emerald-800'
-                      }`}
-                    >
-                      {p.stock} pcs
-                    </span>
-                  </td>
-
-                  <td className="py-4 px-4 text-center font-bold text-neutral-800">
-                    {p.soldCount}
-                  </td>
-
-                  <td className="py-4 px-6 text-right">
-                    <div className="flex items-center justify-end gap-1.5">
-                      <button
-                        onClick={() => handleAddStock(p.id, p.stock, 5)}
-                        className="px-2.5 py-1 rounded-lg border border-neutral-300 font-bold text-xs hover:border-[#D90816] hover:text-[#D90816] transition"
-                        title="Tambah 5 pcs"
+                    <td className="py-4 px-4 text-center">
+                      <span
+                        className={`inline-block px-3 py-1 rounded-full font-extrabold text-xs ${
+                          p.stock <= 3
+                            ? 'bg-rose-100 text-rose-700'
+                            : p.stock < 10
+                            ? 'bg-amber-100 text-amber-800'
+                            : 'bg-emerald-100 text-emerald-800'
+                        }`}
                       >
-                        +5
-                      </button>
-                      <button
-                        onClick={() => handleAddStock(p.id, p.stock, 10)}
-                        className="px-2.5 py-1 rounded-lg border border-neutral-300 font-bold text-xs hover:border-[#D90816] hover:text-[#D90816] transition"
-                        title="Tambah 10 pcs"
-                      >
-                        +10
-                      </button>
-                      <button
-                        onClick={() => handleAddStock(p.id, p.stock, 25)}
-                        className="px-2.5 py-1 rounded-lg bg-neutral-900 text-white font-bold text-xs hover:bg-neutral-800 transition"
-                        title="Tambah 25 pcs"
-                      >
-                        +25
-                      </button>
-                    </div>
+                        {p.stock} pcs
+                      </span>
+                    </td>
+
+                    <td className="py-4 px-4 text-center font-bold text-neutral-800">
+                      {p.soldCount}
+                    </td>
+
+                    <td className="py-4 px-6 text-right">
+                      <div className="flex items-center justify-end gap-1.5">
+                        <button
+                          onClick={() => handleAddStock(p.id, p.stock, 5)}
+                          className="px-2.5 py-1 rounded-lg border border-neutral-300 font-bold text-xs hover:border-[#D90816] hover:text-[#D90816] transition"
+                          title="Tambah 5 pcs"
+                        >
+                          +5
+                        </button>
+                        <button
+                          onClick={() => handleAddStock(p.id, p.stock, 10)}
+                          className="px-2.5 py-1 rounded-lg border border-neutral-300 font-bold text-xs hover:border-[#D90816] hover:text-[#D90816] transition"
+                          title="Tambah 10 pcs"
+                        >
+                          +10
+                        </button>
+                        <button
+                          onClick={() => handleAddStock(p.id, p.stock, 25)}
+                          className="px-2.5 py-1 rounded-lg bg-neutral-900 text-white font-bold text-xs hover:bg-neutral-800 transition"
+                          title="Tambah 25 pcs"
+                        >
+                          +25
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5} className="py-10 px-6 text-center text-xs text-neutral-400">
+                    <Package className="w-8 h-8 mx-auto text-neutral-300 mb-2" />
+                    <p className="font-semibold text-neutral-600">Belum ada produk terdaftar</p>
+                    <p className="text-[11px] text-neutral-400 mt-0.5">
+                      Tambahkan produk baru di menu "Tambah Produk" untuk mulai mengelola stok toko Anda.
+                    </p>
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

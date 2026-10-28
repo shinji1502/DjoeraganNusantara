@@ -6,8 +6,8 @@ import { FooterPublic } from '../components/common/FooterPublic';
 
 export const PublicLayout: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F5] overflow-x-clip">
-      <div className="sticky top-0 z-50 shadow-xs">
+    <div className="min-h-screen flex flex-col bg-[#FAF7F2] bg-grid-squares text-[#1C1917] overflow-x-clip font-['Plus_Jakarta_Sans',sans-serif]">
+      <div className="sticky top-0 z-50 shadow-2xs">
         <DemoRoleSwitcher />
         <NavbarPublic />
       </div>

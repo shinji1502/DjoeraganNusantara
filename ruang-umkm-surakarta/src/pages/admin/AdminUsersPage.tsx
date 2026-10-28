@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Users, Search, Shield, ShoppingBag, Store, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Users, Search, Shield, ShoppingBag, Store, ArrowRight, CheckCircle2, Clock, XCircle } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-import { UserRole } from '../../types';
+import { User, UserRole } from '../../types';
 
 export const AdminUsersPage: React.FC = () => {
-  const { users, switchRole, showToast } = useApp();
+  const { users, setCurrentUser, verifications, showToast } = useApp();
+  const navigate = useNavigate();
   const [roleFilter, setRoleFilter] = useState<string>('semua');
   const [searchWord, setSearchWord] = useState('');
 
@@ -21,9 +23,28 @@ export const AdminUsersPage: React.FC = () => {
     return true;
   });
 
-  const handleImpersonate = (role: UserRole, name: string) => {
-    switchRole(role);
-    showToast(`Beralih simulasi ke akun ${name} (${role.toUpperCase()})`);
+  const handleImpersonate = (targetUser: User) => {
+    setCurrentUser(targetUser);
+    showToast(`Beralih simulasi ke akun ${targetUser.name} (${targetUser.role.toUpperCase()})`, 'success');
+
+    if (targetUser.role === 'penjual') {
+      const isApproved =
+        targetUser.isVerified ||
+        targetUser.sellerVerificationStatus === 'Approved' ||
+        verifications.some(
+          (v) => (v.sellerId === targetUser.id || (targetUser.storeName && v.storeName === targetUser.storeName)) && v.status === 'disetujui'
+        );
+
+      if (isApproved) {
+        navigate('/penjual/dashboard');
+      } else {
+        navigate('/menunggu-verifikasi');
+      }
+    } else if (targetUser.role === 'admin') {
+      navigate('/admin/dashboard');
+    } else {
+      navigate('/pembeli/dashboard');
+    }
   };
 
   return (
@@ -121,26 +142,37 @@ export const AdminUsersPage: React.FC = () => {
 
                   <td className="py-4 px-4">
                     {u.role === 'penjual' ? (
-                      u.isVerified ? (
-                        <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded text-[10px]">
-                          NIB Terverifikasi
+                      u.isVerified || u.sellerVerificationStatus === 'Approved' ? (
+                        <span className="text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full text-[10px] inline-flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                          NIB Terverifikasi (Aktif)
+                        </span>
+                      ) : u.sellerVerificationStatus === 'Rejected' ? (
+                        <span className="text-rose-700 font-bold bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded-full text-[10px] inline-flex items-center gap-1">
+                          <XCircle className="w-3 h-3 text-rose-600" />
+                          Ditolak (Perlu Revisi)
                         </span>
                       ) : (
-                        <span className="text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded text-[10px]">
-                          Proses Legalisasi
+                        <span className="text-amber-700 font-bold bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full text-[10px] inline-flex items-center gap-1">
+                          <Clock className="w-3 h-3 text-amber-600" />
+                          Menunggu Verifikasi
                         </span>
                       )
                     ) : (
-                      <span className="text-neutral-400 text-[10px]">Terverifikasi Email</span>
+                      <span className="text-neutral-500 text-[10px] bg-neutral-100 px-2 py-0.5 rounded-full">
+                        Terverifikasi Email
+                      </span>
                     )}
                   </td>
 
                   <td className="py-4 px-6 text-right">
                     <button
-                      onClick={() => handleImpersonate(u.role, u.name)}
-                      className="px-3 py-1 rounded-xl border border-neutral-300 text-neutral-700 hover:border-neutral-900 text-[11px] font-semibold transition"
+                      onClick={() => handleImpersonate(u)}
+                      className="px-3 py-1.5 rounded-xl border border-neutral-300 text-neutral-700 hover:border-neutral-900 hover:bg-neutral-900 hover:text-white text-[11px] font-semibold transition inline-flex items-center gap-1.5 shadow-xs"
+                      title={`Buka dashboard sebagai ${u.name}`}
                     >
-                      Masuk sebagai Akun Ini
+                      <span>Masuk sebagai Akun Ini</span>
+                      <ArrowRight className="w-3 h-3" />
                     </button>
                   </td>
                 </tr>

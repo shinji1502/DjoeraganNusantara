@@ -111,209 +111,86 @@ export const CatalogPage: React.FC = () => {
   return (
     <div className="bg-theme-katalog min-h-screen pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
-        {/* Page Header */}
-        <div className="bg-white/90 backdrop-blur-xs rounded-2xl p-6 sm:p-8 border border-neutral-200/80 shadow-xs space-y-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDEBEC] text-[#D90816] text-xs font-bold mb-2">
-              <Sparkles className="w-3.5 h-3.5" />
-              Katalog Resmi Djoeragan Nusantara
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#171717] tracking-tight">
-              Karya & Produk Pilihan UMKM Terverifikasi
-            </h1>
-            <p className="text-sm text-neutral-600 mt-1">
-              Temukan batik otentik, kuliner khas, dan kerajinan kriya yang telah melalui kurasi mutu dan verifikasi legalitas izin usaha.
-            </p>
-          </div>
-
-          {/* Quick Search */}
-          <div className="w-full md:w-80 relative">
-            <input
-              type="text"
-              placeholder="Cari batik parang, serabi, vas..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 text-xs rounded-full bg-[#FAF8F7] border border-neutral-300 focus:outline-none focus:border-[#D90816] focus:bg-white transition"
-            />
-            <Search className="w-4 h-4 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Quick Category Badges with Logo Icons */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-2 scrollbar-none">
-          {categories.map((cat) => {
-            const Icon = categoryIcons[cat] || Sparkles;
-            const isSelected = selectedCategory === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
-                  isSelected
-                    ? 'bg-[#171717] text-white shadow-sm scale-[1.02]'
-                    : 'bg-[#FAF8F7] text-neutral-700 hover:bg-neutral-200/80 border border-neutral-200/60'
-                }`}
-              >
-                <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-[#ff4d5a]' : 'text-neutral-500'}`} />
-                <span>{cat}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Main Content: Filter Sidebar + Products Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Desktop Filter Sidebar */}
-        <aside className="hidden lg:block space-y-6 bg-white p-6 rounded-2xl border border-neutral-200/90 h-fit">
-          <div className="flex items-center justify-between pb-3 border-b border-neutral-100">
-            <span className="font-bold text-sm text-neutral-900 flex items-center gap-2">
-              <SlidersHorizontal className="w-4 h-4 text-[#D90816]" />
-              Filter Pencarian
-            </span>
-            <button
-              onClick={resetFilters}
-              className="text-xs font-semibold text-[#D90816] hover:underline"
-            >
-              Reset
-            </button>
-          </div>
-
-          {/* Kecamatan Surakarta */}
-          <div className="space-y-2">
-            <label className="text-xs font-bold text-neutral-800 uppercase tracking-wider block">
-              Wilayah Kecamatan
-            </label>
-            <div className="space-y-1">
-              {districts.map((dist) => (
-                <button
-                  key={dist}
-                  onClick={() => setSelectedDistrict(dist)}
-                  className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-                    selectedDistrict === dist
-                      ? 'bg-[#FDEBEC] text-[#D90816] font-bold'
-                      : 'text-neutral-600 hover:bg-neutral-50'
-                  }`}
-                >
-                  <span>{dist}</span>
-                  {selectedDistrict === dist && <Check className="w-3.5 h-3.5" />}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Sertifikasi & Label */}
-          <div className="space-y-2 pt-3 border-t border-neutral-100">
-            <label className="text-xs font-bold text-neutral-800 uppercase tracking-wider block">
-              Sertifikasi Mutu
-            </label>
-            <div className="space-y-1">
-              {certifications.map((cert) => (
-                <button
-                  key={cert}
-                  onClick={() => setSelectedCertification(cert)}
-                  className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-                    selectedCertification === cert
-                      ? 'bg-[#FDEBEC] text-[#D90816] font-bold'
-                      : 'text-neutral-600 hover:bg-neutral-50'
-                  }`}
-                >
-                  <span>{cert}</span>
-                  {selectedCertification === cert && <Check className="w-3.5 h-3.5" />}
-                </button>
-              ))}
-            </div>
-          </div>
-        </aside>
-
-        {/* Products Grid & Sorting */}
-        <div className="lg:col-span-3 space-y-6">
-          {/* Sorting & Result Count Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-neutral-200/90 text-xs">
-            <span className="text-neutral-500 font-medium">
-              Menampilkan <strong className="text-neutral-900">{filteredProducts.length}</strong> produk UMKM
-            </span>
-
-            <div className="flex items-center gap-3">
-              {/* Mobile Filter Toggle */}
-              <button
-                onClick={() => setIsMobileFilterOpen(true)}
-                className="lg:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-neutral-300 font-semibold text-neutral-700"
-              >
-                <Filter className="w-3.5 h-3.5" />
-                <span>Filter</span>
-              </button>
-
-              <div className="flex items-center gap-2">
-                <span className="text-neutral-500 hidden sm:inline">Urutkan:</span>
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
-                  className="bg-[#FAF8F7] border border-neutral-300 rounded-lg px-3 py-1.5 font-semibold text-neutral-800 focus:outline-none focus:border-[#D90816]"
-                >
-                  <option value="populer">Paling Populer (Terlaris)</option>
-                  <option value="rating">Rating Tertinggi ke Terendah</option>
-                  <option value="termurah">Harga: Rendah ke Tinggi</option>
-                  <option value="termahal">Harga: Tinggi ke Rendah</option>
-                  <option value="terbaru">Produk Terbaru Ditambahkan</option>
-                </select>
+        {/* Page Header with Square Grid & Faint Artisan Watermark */}
+        <div className="card-heritage bg-heritage-artisan-watermark relative overflow-hidden rounded-3xl p-6 sm:p-8 border border-[#E7E2D9] shadow-2xs space-y-4">
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F9F4EB] text-[#8C5835] border border-[#C5A059]/30 text-xs font-bold mb-2">
+                <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
+                Katalog Resmi Djoeragan Nusantara
               </div>
-            </div>
-          </div>
-
-          {/* Grid or Empty State */}
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          ) : (
-            <div className="bg-white rounded-3xl p-12 text-center border border-neutral-200 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400 mx-auto">
-                <ShoppingBag className="w-8 h-8" />
-              </div>
-              <h3 className="font-bold text-lg text-neutral-900">Tidak ada produk yang cocok</h3>
-              <p className="text-xs text-neutral-500 max-w-sm mx-auto">
-                Coba ubah kata kunci pencarian atau sesuaikan pilihan filter kategori dan wilayah kecamatan.
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1C1917] tracking-tight">
+                Karya & Produk Pilihan UMKM Terverifikasi
+              </h1>
+              <p className="text-sm text-stone-600 mt-1 max-w-2xl">
+                Temukan batik otentik, kuliner khas, dan kerajinan kriya yang telah melalui kurasi mutu dan verifikasi legalitas izin usaha.
               </p>
+            </div>
+
+            {/* Quick Search */}
+            <div className="w-full md:w-80 relative">
+              <input
+                type="text"
+                placeholder="Cari batik parang, serabi, vas..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 text-xs rounded-full bg-[#FAF7F2] border border-[#D6CEC2] text-[#1C1917] placeholder:text-stone-400 focus:outline-none focus:border-[#C5A059] focus:bg-white transition shadow-2xs"
+              />
+              <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Quick Category Badges with Logo Icons */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-2 scrollbar-none">
+            {categories.map((cat) => {
+              const Icon = categoryIcons[cat] || Sparkles;
+              const isSelected = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
+                    isSelected
+                      ? 'bg-[#1C1917] text-white shadow-2xs border border-[#1C1917] scale-[1.02]'
+                      : 'bg-[#FAF7F2] text-stone-700 hover:bg-[#F5EFEB] border border-stone-200/80'
+                  }`}
+                >
+                  <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-[#C5A059]' : 'text-stone-500'}`} />
+                  <span>{cat}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Main Content: Filter Sidebar + Products Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Desktop Filter Sidebar */}
+          <aside className="hidden lg:block space-y-6 bg-white p-6 rounded-2xl border border-stone-200/90 shadow-2xs h-fit">
+            <div className="flex items-center justify-between pb-3 border-b border-stone-100">
+              <span className="font-bold text-sm text-[#1C1917] flex items-center gap-2">
+                <SlidersHorizontal className="w-4 h-4 text-[#8C5835]" />
+                Filter Pencarian
+              </span>
               <button
                 onClick={resetFilters}
-                className="px-5 py-2 rounded-full bg-[#D90816] text-white text-xs font-semibold hover:bg-[#b80512] transition"
+                className="text-xs font-semibold text-[#B81D24] hover:underline"
               >
-                Reset Semua Filter
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Mobile Filter Modal */}
-      {isMobileFilterOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-xs lg:hidden">
-          <div className="w-80 bg-white h-full p-6 overflow-y-auto space-y-6">
-            <div className="flex items-center justify-between pb-3 border-b border-neutral-100">
-              <span className="font-bold text-sm text-neutral-900">Filter Produk</span>
-              <button
-                onClick={() => setIsMobileFilterOpen(false)}
-                className="p-1 rounded-lg text-neutral-500"
-              >
-                <X className="w-5 h-5" />
+                Reset
               </button>
             </div>
 
-            {/* Kecamatan */}
+            {/* Kecamatan Surakarta */}
             <div className="space-y-2">
-              <label className="text-xs font-bold text-neutral-800 uppercase tracking-wider block">
+              <label className="text-xs font-bold text-stone-800 uppercase tracking-wider block">
                 Wilayah Kecamatan
               </label>
               <div className="space-y-1">
@@ -321,51 +198,174 @@ export const CatalogPage: React.FC = () => {
                   <button
                     key={dist}
                     onClick={() => setSelectedDistrict(dist)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium ${
+                    className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs font-medium transition ${
                       selectedDistrict === dist
-                        ? 'bg-[#FDEBEC] text-[#D90816] font-bold'
-                        : 'text-neutral-600'
+                        ? 'bg-[#F5EFEB] text-[#B81D24] font-bold border border-amber-900/10'
+                        : 'text-stone-600 hover:bg-[#FAF7F2]'
                     }`}
                   >
                     <span>{dist}</span>
-                    {selectedDistrict === dist && <Check className="w-4 h-4" />}
+                    {selectedDistrict === dist && <Check className="w-3.5 h-3.5 text-[#B81D24]" />}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Sertifikasi */}
-            <div className="space-y-2 pt-3 border-t border-neutral-100">
-              <label className="text-xs font-bold text-neutral-800 uppercase tracking-wider block">
-                Sertifikasi
+            {/* Sertifikasi & Label */}
+            <div className="space-y-2 pt-3 border-t border-stone-100">
+              <label className="text-xs font-bold text-stone-800 uppercase tracking-wider block">
+                Sertifikasi Mutu
               </label>
               <div className="space-y-1">
                 {certifications.map((cert) => (
                   <button
                     key={cert}
                     onClick={() => setSelectedCertification(cert)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium ${
+                    className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs font-medium transition ${
                       selectedCertification === cert
-                        ? 'bg-[#FDEBEC] text-[#D90816] font-bold'
-                        : 'text-neutral-600'
+                        ? 'bg-[#F5EFEB] text-[#B81D24] font-bold border border-amber-900/10'
+                        : 'text-stone-600 hover:bg-[#FAF7F2]'
                     }`}
                   >
                     <span>{cert}</span>
-                    {selectedCertification === cert && <Check className="w-4 h-4" />}
+                    {selectedCertification === cert && <Check className="w-3.5 h-3.5 text-[#B81D24]" />}
                   </button>
                 ))}
               </div>
             </div>
+          </aside>
 
-            <button
-              onClick={() => setIsMobileFilterOpen(false)}
-              className="w-full py-3 rounded-full bg-[#D90816] text-white font-bold text-xs"
-            >
-              Terapkan Filter
-            </button>
+          {/* Products Grid & Sorting */}
+          <div className="lg:col-span-3 space-y-6">
+            {/* Sorting & Result Count Bar */}
+            <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-stone-200/90 shadow-2xs text-xs">
+              <span className="text-stone-500 font-medium">
+                Menampilkan <strong className="text-[#1C1917]">{filteredProducts.length}</strong> produk UMKM
+              </span>
+
+              <div className="flex items-center gap-3">
+                {/* Mobile Filter Toggle */}
+                <button
+                  onClick={() => setIsMobileFilterOpen(true)}
+                  className="lg:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D6CEC2] font-semibold text-[#1C1917] bg-[#FAF7F2]"
+                >
+                  <Filter className="w-3.5 h-3.5" />
+                  <span>Filter</span>
+                </button>
+
+                <div className="flex items-center gap-2">
+                  <span className="text-stone-500 hidden sm:inline">Urutkan:</span>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as any)}
+                    className="bg-[#FAF7F2] border border-[#D6CEC2] rounded-lg px-3 py-1.5 font-semibold text-[#1C1917] focus:outline-none focus:border-[#C5A059]"
+                  >
+                    <option value="populer">Paling Populer (Terlaris)</option>
+                    <option value="rating">Rating Tertinggi ke Terendah</option>
+                    <option value="termurah">Harga: Rendah ke Tinggi</option>
+                    <option value="termahal">Harga: Tinggi ke Rendah</option>
+                    <option value="terbaru">Produk Terbaru Ditambahkan</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Grid or Empty State */}
+            {filteredProducts.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            ) : (
+              <div className="bg-white rounded-3xl p-12 text-center border border-stone-200/90 space-y-4 shadow-2xs">
+                <div className="w-16 h-16 rounded-full bg-[#FAF7F2] border border-[#E7E2D9] flex items-center justify-center text-[#8C5835] mx-auto">
+                  <ShoppingBag className="w-8 h-8" />
+                </div>
+                <h3 className="font-bold text-lg text-[#1C1917]">Tidak ada produk yang cocok</h3>
+                <p className="text-xs text-stone-500 max-w-sm mx-auto">
+                  Coba ubah kata kunci pencarian atau sesuaikan pilihan filter kategori dan wilayah kecamatan.
+                </p>
+                <button
+                  onClick={resetFilters}
+                  className="px-5 py-2 rounded-full bg-gradient-to-r from-[#B81D24] to-[#98141A] text-white text-xs font-semibold hover:from-[#98141A] hover:to-[#7A0D13] transition shadow-xs"
+                >
+                  Reset Semua Filter
+                </button>
+              </div>
+            )}
           </div>
         </div>
-      )}
+
+        {/* Mobile Filter Modal */}
+        {isMobileFilterOpen && (
+          <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs lg:hidden">
+            <div className="w-80 bg-[#FAF7F2] h-full p-6 overflow-y-auto space-y-6 text-[#1C1917]">
+              <div className="flex items-center justify-between pb-3 border-b border-[#E7E2D9]">
+                <span className="font-bold text-sm text-[#1C1917]">Filter Produk</span>
+                <button
+                  onClick={() => setIsMobileFilterOpen(false)}
+                  className="p-1 rounded-lg text-stone-500 hover:text-stone-800"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Kecamatan */}
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-stone-800 uppercase tracking-wider block">
+                  Wilayah Kecamatan
+                </label>
+                <div className="space-y-1">
+                  {districts.map((dist) => (
+                    <button
+                      key={dist}
+                      onClick={() => setSelectedDistrict(dist)}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium ${
+                        selectedDistrict === dist
+                          ? 'bg-[#F5EFEB] text-[#B81D24] font-bold border border-amber-900/10'
+                          : 'text-stone-600 bg-white'
+                      }`}
+                    >
+                      <span>{dist}</span>
+                      {selectedDistrict === dist && <Check className="w-4 h-4 text-[#B81D24]" />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Sertifikasi */}
+              <div className="space-y-2 pt-3 border-t border-[#E7E2D9]">
+                <label className="text-xs font-bold text-stone-800 uppercase tracking-wider block">
+                  Sertifikasi
+                </label>
+                <div className="space-y-1">
+                  {certifications.map((cert) => (
+                    <button
+                      key={cert}
+                      onClick={() => setSelectedCertification(cert)}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium ${
+                        selectedCertification === cert
+                          ? 'bg-[#F5EFEB] text-[#B81D24] font-bold border border-amber-900/10'
+                          : 'text-stone-600 bg-white'
+                      }`}
+                    >
+                      <span>{cert}</span>
+                      {selectedCertification === cert && <Check className="w-4 h-4 text-[#B81D24]" />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={() => setIsMobileFilterOpen(false)}
+                className="w-full py-3 rounded-full bg-gradient-to-r from-[#B81D24] to-[#98141A] text-white font-bold text-xs shadow-xs"
+              >
+                Terapkan Filter
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

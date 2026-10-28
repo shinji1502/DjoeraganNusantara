@@ -6,10 +6,37 @@ import { formatTanggal, getVerificationStatusBadge } from '../../utils/formatter
 export const SellerVerificationPage: React.FC = () => {
   const { currentUser, verifications } = useApp();
 
-  // Find verification request for this seller or fallback
-  const myVerif = verifications.find((v) => v.sellerId === currentUser.id) || verifications[1];
+  // Find verification request for this seller or create accurate fallback
+  const myVerif = verifications.find(
+    (v) => v.sellerId === currentUser.id || (currentUser.storeName && v.storeName === currentUser.storeName)
+  ) || {
+    id: 'verif-' + currentUser.id,
+    sellerId: currentUser.id,
+    storeName: currentUser.storeName || 'Usaha UMKM Baru',
+    ownerName: currentUser.name,
+    nik: '3372000000000001',
+    nib: currentUser.nib || '-',
+    address: currentUser.address || 'Surakarta',
+    district: currentUser.address || 'Surakarta',
+    category: 'Batik & Fashion',
+    businessScale: 'Mikro',
+    annualRevenue: 0,
+    submittedDate: new Date().toISOString().slice(0, 10),
+    status: (currentUser.sellerVerificationStatus === 'Approved' || currentUser.isVerified)
+      ? 'disetujui'
+      : (currentUser.sellerVerificationStatus === 'Rejected' ? 'ditolak' : 'menunggu'),
+    documents: {
+      ktp: 'KTP_PenanggungJawab.jpg',
+      nibDoc: 'NIB_OSS_Resmi.pdf',
+      productPhoto: 'Foto_Tempat_Usaha.jpg',
+      suratPernyataan: 'Surat_Pernyataan_Bermaterai.pdf',
+    },
+    adminNotes: (currentUser.sellerVerificationStatus === 'Approved' || currentUser.isVerified)
+      ? 'Telah diverifikasi dan disetujui resmi oleh Dinas Koperasi & UKM Surakarta.'
+      : 'Berkas dalam antrean verifikasi legalitas NIB OSS.',
+  };
 
-  const badge = getVerificationStatusBadge(myVerif.status);
+  const badge = getVerificationStatusBadge(myVerif.status as any);
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">

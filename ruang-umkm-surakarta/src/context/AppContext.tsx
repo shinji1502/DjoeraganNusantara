@@ -38,6 +38,7 @@ interface AppContextType {
   setCurrentUser: (user: User) => void;
   switchRole: (role: UserRole) => void;
   users: User[];
+  addUser: (user: User) => void;
 
   // Members Directory
   members: Member[];
@@ -144,9 +145,42 @@ function saveToStorage<T>(key: string, value: T): void {
 }
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [users, setUsers] = useState<User[]>(() =>
-    loadFromStorage<User[]>('users', INITIAL_USERS)
-  );
+  const [users, setUsers] = useState<User[]>(() => {
+    const loadedUsers = loadFromStorage<User[]>('users', INITIAL_USERS);
+    const loadedVerifications = loadFromStorage<VerificationRequest[]>('verifications', INITIAL_VERIFICATIONS);
+    const loadedMembers = loadFromStorage<Member[]>('members', INITIAL_MEMBERS);
+
+    const mergedUsers = [...loadedUsers];
+
+    // Backfill any sellers from verifications if not already in users list
+    loadedVerifications.forEach((v) => {
+      const exists = mergedUsers.some(
+        (u) => u.id === v.sellerId || (v.storeName && u.storeName === v.storeName)
+      );
+      if (!exists && v.sellerId) {
+        const matchingMember = loadedMembers.find(
+          (m) => m.businessName === v.storeName || m.name === v.ownerName
+        );
+        const isApproved = v.status === 'disetujui' || v.status === 'Approved';
+        const isRejected = v.status === 'ditolak' || v.status === 'Rejected';
+        mergedUsers.push({
+          id: v.sellerId,
+          name: v.ownerName,
+          email: matchingMember?.email || `penjual.${v.sellerId.replace(/[^a-zA-Z0-9]/g, '')}@umkm.id`,
+          phone: matchingMember?.phone || '081234567890',
+          role: 'penjual',
+          avatar: matchingMember?.avatar || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=160&q=80',
+          address: v.address,
+          storeName: v.storeName,
+          nib: v.nib,
+          isVerified: isApproved,
+          sellerVerificationStatus: isApproved ? 'Approved' : isRejected ? 'Rejected' : 'Waiting Verification',
+        });
+      }
+    });
+
+    return mergedUsers;
+  });
   const [currentUser, setCurrentUser] = useState<User>(() =>
     loadFromStorage<User>('current_user', INITIAL_USERS[0]) // default: Pembeli Ahmad Pratama
   );
@@ -223,6 +257,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
     setCurrentUser(target);
     showToast(`Beralih ke mode demo: ${target.name} (${role.toUpperCase()})`, 'info');
+  };
+
+  // User Management
+  const addUser = (newUser: User) => {
+    setUsers((prev) => {
+      const existsIndex = prev.findIndex(
+        (u) => u.id === newUser.id || (newUser.email && u.email.toLowerCase() === newUser.email.toLowerCase())
+      );
+      if (existsIndex >= 0) {
+        const updated = [...prev];
+        updated[existsIndex] = { ...updated[existsIndex], ...newUser };
+        return updated;
+      }
+      return [newUser, ...prev];
+    });
   };
 
   // Members Management
@@ -894,6 +943,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setCurrentUser,
         switchRole,
         users,
+        addUser,
         members,
         addMember,
         approveMember,

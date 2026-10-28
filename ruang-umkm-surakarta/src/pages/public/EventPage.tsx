@@ -14,17 +14,17 @@ export const EventPage: React.FC = () => {
 
   return (
     <div className="space-y-12 pb-20 bg-theme-agenda min-h-screen">
-      {/* Header with warm and welcoming tone */}
-      <section className="bg-white/80 backdrop-blur-xs border-b border-neutral-200/80 py-14 sm:py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDEBEC] text-[#D90816] text-xs font-bold border border-[#D90816]/15">
-            <Sparkles className="w-3.5 h-3.5" />
+      {/* Header with warm and welcoming tone, square grid, & faint artisan watermark */}
+      <section className="relative overflow-hidden bg-transparent border-b border-[#E7E2D9] bg-heritage-artisan-watermark py-14 sm:py-16">
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-4 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F9F4EB] text-[#8C5835] text-xs font-bold border border-[#C5A059]/30 shadow-2xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
             <span>Pameran, Bazar & Temu Usaha Nusantara</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#171717] tracking-tight">
-            Event & Kegiatan Djoeragan Nusantara
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1C1917] tracking-tight">
+            Event & Kegiatan <span className="text-[#B81D24]">Djoeragan Nusantara</span>
           </h1>
-          <p className="text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-stone-600 max-w-2xl mx-auto leading-relaxed">
             Yuk ramaikan berbagai kegiatan seru! Mulai dari festival kuliner nusantara, expo produk kreatif, bazar CFD mingguan, hingga temu bisnis eksklusif untuk memperluas koneksi usaha Anda.
           </p>
 
@@ -36,8 +36,8 @@ export const EventPage: React.FC = () => {
                 onClick={() => setSelectedCategory(c)}
                 className={`px-4 py-2 rounded-full text-xs font-bold transition cursor-pointer ${
                   selectedCategory === c
-                    ? 'bg-[#171717] text-white shadow-xs'
-                    : 'bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-100'
+                    ? 'bg-[#1C1917] text-white shadow-2xs border border-[#1C1917]'
+                    : 'bg-[#FAF7F2] border border-stone-200/80 text-stone-700 hover:bg-[#F5EFEB]'
                 }`}
               >
                 {c === 'Semua' ? 'Semua Event' : c}
@@ -53,24 +53,24 @@ export const EventPage: React.FC = () => {
           {filteredEvents.map((evt) => (
             <div
               key={evt.id}
-              className="bg-white rounded-3xl border border-neutral-200/90 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+              className="card-heritage bg-white rounded-3xl overflow-hidden flex flex-col justify-between"
             >
               <div>
-                <div className="relative aspect-16/10 w-full bg-neutral-100 overflow-hidden">
+                <div className="relative aspect-16/10 w-full bg-stone-100 overflow-hidden">
                   <img
                     src={evt.image}
                     alt={evt.title}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4 flex gap-2">
-                    <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-white text-xs font-bold">
+                    <span className="px-3 py-1 rounded-full bg-[#1C1917]/85 backdrop-blur-md text-stone-200 text-xs font-bold border border-stone-700/50">
                       {evt.category}
                     </span>
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-bold ${
+                      className={`px-3 py-1 rounded-full text-xs font-bold shadow-2xs ${
                         evt.status === 'Berlangsung'
-                          ? 'bg-emerald-600 text-white'
-                          : 'bg-[#D90816] text-white'
+                          ? 'bg-emerald-800 text-white'
+                          : 'bg-gradient-to-r from-[#B81D24] to-[#98141A] text-white'
                       }`}
                     >
                       {evt.status}
@@ -79,28 +79,28 @@ export const EventPage: React.FC = () => {
                 </div>
 
                 <div className="p-6 space-y-4">
-                  <h3 className="text-lg font-bold text-neutral-900 leading-snug">
+                  <h3 className="text-lg font-bold text-[#1C1917] leading-snug">
                     {evt.title}
                   </h3>
-                  <p className="text-xs text-neutral-600 leading-relaxed">
+                  <p className="text-xs text-stone-600 leading-relaxed">
                     {evt.description}
                   </p>
 
-                  <div className="space-y-2 pt-3 border-t border-neutral-100 text-xs text-neutral-600">
+                  <div className="space-y-2 pt-3 border-t border-stone-100 text-xs text-stone-600">
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-3.5 h-3.5 text-[#D90816]" />
-                      <span>Tanggal: <strong>{evt.date}</strong></span>
+                      <Calendar className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span>Tanggal: <strong className="text-[#1C1917]">{evt.date}</strong></span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Clock className="w-3.5 h-3.5 text-[#D90816]" />
-                      <span>Waktu: <strong>{evt.time}</strong></span>
+                      <Clock className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span>Waktu: <strong className="text-[#1C1917]">{evt.time}</strong></span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-3.5 h-3.5 text-[#D90816]" />
-                      <span>Lokasi: <strong>{evt.location}</strong></span>
+                      <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span>Lokasi: <strong className="text-[#1C1917]">{evt.location}</strong></span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Users className="w-3.5 h-3.5 text-[#D90816]" />
+                      <Users className="w-3.5 h-3.5 text-[#C5A059]" />
                       <span>Penyelenggara: {evt.organizer}</span>
                     </div>
                   </div>

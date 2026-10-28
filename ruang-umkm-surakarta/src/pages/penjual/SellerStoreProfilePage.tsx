@@ -4,15 +4,18 @@ import { useApp } from '../../context/AppContext';
 
 export const SellerStoreProfilePage: React.FC = () => {
   const { currentUser, setCurrentUser, showToast } = useApp();
+  const isDemoSeller = currentUser.id === 'user-seller-1';
 
-  const [storeName, setStoreName] = useState(currentUser.storeName || 'Batik Danar Srikandi Solo');
+  const [storeName, setStoreName] = useState(currentUser.storeName || (isDemoSeller ? 'Batik Danar Srikandi Solo' : 'Toko UMKM'));
   const [ownerName, setOwnerName] = useState(currentUser.name);
   const [phone, setPhone] = useState(currentUser.phone);
   const [address, setAddress] = useState(
-    currentUser.address || 'Kampung Batik Laweyan Jl. Dr. Rajiman No. 420, Laweyan, Surakarta'
+    currentUser.address || (isDemoSeller ? 'Kampung Batik Laweyan Jl. Dr. Rajiman No. 420, Laweyan, Surakarta' : 'Surakarta, Jawa Tengah')
   );
   const [bio, setBio] = useState(
-    'Produsen batik tulis dan cap premium asli Laweyan Surakarta sejak tahun 1998. Menjaga warisan motif klasik Keraton dengan sentuhan desain kontemporer.'
+    isDemoSeller
+      ? 'Produsen batik tulis dan cap premium asli Laweyan Surakarta sejak tahun 1998. Menjaga warisan motif klasik Keraton dengan sentuhan desain kontemporer.'
+      : `Pelaku usaha resmi ${currentUser.storeName || 'UMKM'} Surakarta binaan Djoeragan Nusantara.`
   );
 
   const handleSave = (e: React.FormEvent) => {
@@ -43,7 +46,7 @@ export const SellerStoreProfilePage: React.FC = () => {
           </div>
           <div>
             <h3 className="font-bold text-lg text-neutral-900">{storeName}</h3>
-            <p className="text-xs text-neutral-500">Izin NIB: {currentUser.nib || '0220009831921'} • Kampung Batik Laweyan</p>
+            <p className="text-xs text-neutral-500">Izin NIB: {currentUser.nib || (isDemoSeller ? '0220009831921' : '-')} • {address}</p>
           </div>
         </div>
 

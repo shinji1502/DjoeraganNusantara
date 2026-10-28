@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 import {
   ShieldCheck,
-  Award,
-  FileText,
   ExternalLink,
   CheckCircle2,
   Clock,
   Sparkles,
-  HelpCircle,
-  Building2,
   Send,
+  Building2,
   FileCheck,
-  AlertCircle,
+  Award,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import { BatikParang, BatikDivider } from '../../components/common/BatikOrnament';
 
 export const SertifikasiUsahaPage: React.FC = () => {
   const { showToast } = useApp();
@@ -31,7 +29,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
       title: 'NIB (Nomor Induk Berusaha)',
       organizer: 'Kementerian Investasi / BKPM (OSS-RBA)',
       badge: 'Legalitas Utama',
-      badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+      badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-300/70',
       officialUrl: 'https://oss.go.id',
       duration: '1 Hari Kerja (Instan)',
       cost: 'Gratis (Usaha Mikro & Kecil)',
@@ -49,7 +47,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
       title: 'Sertifikasi Halal (BPJPH & MUI)',
       organizer: 'BPJPH Kemenag RI & Majelis Ulama Indonesia',
       badge: 'Wajib Produk Konsumsi',
-      badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
+      badgeColor: 'bg-[#C5A059]/15 text-[#8C5835] border-[#C5A059]/40',
       officialUrl: 'https://ptsp.halal.go.id',
       duration: '14 - 21 Hari Kerja',
       cost: 'Fasilitasi Gratis (Self-Declare) / Subsidi',
@@ -67,7 +65,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
       title: 'Pengajuan BPOM & P-IRT',
       organizer: 'Badan Pengawas Obat & Makanan / Dinkes',
       badge: 'Standar Mutu Pangan',
-      badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
+      badgeColor: 'bg-amber-50 text-amber-800 border-amber-300/70',
       officialUrl: 'https://pom.go.id',
       duration: '14 - 30 Hari Kerja',
       cost: 'Sesuai regulasi PNBP daerah',
@@ -85,7 +83,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
       title: 'Hak Paten & Pendaftaran Merek (HKI)',
       organizer: 'DJKI Kementerian Hukum & HAM RI',
       badge: 'Perlindungan Aset Brand',
-      badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
+      badgeColor: 'bg-[#B81D24]/10 text-[#98141A] border-[#B81D24]/25',
       officialUrl: 'https://dgip.go.id',
       duration: 'Masa Pengumuman Resmi 2 Bulan',
       cost: 'Tarif Khusus UMKM (Diskon PNBP)',
@@ -103,7 +101,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
       title: 'Jasa Kepengurusan Dokumen Usaha',
       organizer: 'Layanan Asistensi Djoeragan Nusantara',
       badge: 'Pendampingan Personal',
-      badgeColor: 'bg-rose-50 text-rose-700 border-rose-200',
+      badgeColor: 'bg-stone-100 text-stone-800 border-stone-300',
       officialUrl: '#konsultasi',
       duration: 'Pendampingan Fleksibel',
       cost: 'Konsultasi Dasar Bebas Biaya',
@@ -134,18 +132,21 @@ export const SertifikasiUsahaPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-14 pb-20 bg-theme-pasar min-h-screen">
-      {/* Header */}
-      <section className="bg-white/80 backdrop-blur-xs border-b border-neutral-200/80 py-14 sm:py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDEBEC] text-[#D90816] text-xs font-bold border border-[#D90816]/15">
-            <ShieldCheck className="w-3.5 h-3.5" />
+    <div className="space-y-12 sm:space-y-16 pb-20 bg-theme-pasar min-h-screen">
+      {/* Header with Square Grid, Parang watermark, & Faint Artisan Photo */}
+      <section className="relative overflow-hidden bg-transparent border-b border-[#E7DFD5] bg-heritage-artisan-watermark py-14 sm:py-16">
+        <div className="absolute right-0 top-0 bottom-0 w-64 pointer-events-none opacity-40 hidden md:block">
+          <BatikParang className="h-full w-full" color="#C5A059" opacity={0.12} />
+        </div>
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-4 relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B81D24]/10 text-[#98141A] text-xs font-bold border border-[#B81D24]/20">
+            <ShieldCheck className="w-4 h-4 text-[#C5A059]" />
             <span>Pusat Layanan Legalitas & Perizinan Usaha</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#171717] tracking-tight">
-            Sertifikasi Usaha Djoeragan Nusantara
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-[#1C1917] tracking-tight">
+            Sertifikasi Usaha & Kepastian Hukum
           </h1>
-          <p className="text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-[#57534E] max-w-2xl mx-auto leading-relaxed">
             Legalitas lengkap bikin usaha tenang, dipercaya pembeli, dan gampang tembus pasar modern. Kami menyediakan panduan syarat, alur pendaftaran, tautan resmi ke lembaga terkait, dan pendampingan personal.
           </p>
         </div>
@@ -154,20 +155,20 @@ export const SertifikasiUsahaPage: React.FC = () => {
       {/* 5 Core Services Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs font-bold text-[#D90816] uppercase tracking-wider">Layanan Tersedia</span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#171717]">
+          <span className="text-xs font-bold text-[#8C5835] uppercase tracking-wider">Layanan Tersedia</span>
+          <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-[#1C1917]">
             Daftar Layanan Sertifikasi & Izin Usaha
           </h2>
-          <p className="text-xs sm:text-sm text-neutral-500">
+          <p className="text-xs sm:text-sm text-[#78716C]">
             Pilih layanan yang dibutuhkan untuk melihat persyaratan dan tautan portal resmi lembaga negara.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           {services.map((svc) => (
             <div
               key={svc.id}
-              className="bg-white rounded-3xl border border-neutral-200/90 p-6 sm:p-8 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-6"
+              className="card-heritage p-6 sm:p-8 flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 {/* Header card */}
@@ -176,41 +177,41 @@ export const SertifikasiUsahaPage: React.FC = () => {
                     <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${svc.badgeColor}`}>
                       {svc.badge}
                     </span>
-                    <h3 className="font-extrabold text-lg text-neutral-900 mt-2 leading-snug">
+                    <h3 className="font-serif font-extrabold text-xl text-[#1C1917] mt-2 leading-snug">
                       {svc.title}
                     </h3>
-                    <p className="text-xs text-neutral-500 font-medium">{svc.organizer}</p>
+                    <p className="text-xs text-[#78716C] font-medium">{svc.organizer}</p>
                   </div>
                 </div>
 
-                <p className="text-xs text-neutral-600 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#44403C] leading-relaxed">
                   {svc.desc}
                 </p>
 
                 {/* Duration & Cost */}
-                <div className="grid grid-cols-2 gap-3 p-3 rounded-2xl bg-[#FAF8F7] border border-neutral-100 text-xs">
+                <div className="grid grid-cols-2 gap-3 p-3.5 rounded-2xl bg-[#F5EFEB] border border-[#E7DFD5] text-xs">
                   <div>
-                    <span className="text-[10px] text-neutral-400 block">Estimasi Waktu:</span>
-                    <strong className="text-neutral-800 text-[11px] flex items-center gap-1 mt-0.5">
-                      <Clock className="w-3.5 h-3.5 text-[#D90816]" />
+                    <span className="text-[10px] text-[#78716C] block">Estimasi Waktu:</span>
+                    <strong className="text-[#1C1917] text-[11px] sm:text-xs flex items-center gap-1.5 mt-0.5">
+                      <Clock className="w-3.5 h-3.5 text-[#C5A059]" />
                       {svc.duration}
                     </strong>
                   </div>
                   <div>
-                    <span className="text-[10px] text-neutral-400 block">Biaya Layanan:</span>
-                    <strong className="text-emerald-700 text-[11px] flex items-center gap-1 mt-0.5">
-                      <Sparkles className="w-3.5 h-3.5" />
+                    <span className="text-[10px] text-[#78716C] block">Biaya Layanan:</span>
+                    <strong className="text-emerald-800 text-[11px] sm:text-xs flex items-center gap-1.5 mt-0.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
                       {svc.cost}
                     </strong>
                   </div>
                 </div>
 
                 {/* Requirements Checklist */}
-                <div className="space-y-2 pt-2 border-t border-neutral-100">
-                  <span className="text-xs font-bold text-neutral-800 block">
+                <div className="space-y-2.5 pt-2 border-t border-[#E7DFD5]">
+                  <span className="text-xs font-bold text-[#1C1917] block">
                     Dokumen & Persyaratan Utama:
                   </span>
-                  <ul className="space-y-1.5 text-xs text-neutral-600">
+                  <ul className="space-y-1.5 text-xs text-[#57534E]">
                     {svc.requirements.map((req, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />
@@ -222,19 +223,19 @@ export const SertifikasiUsahaPage: React.FC = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-4 border-t border-neutral-100 flex flex-wrap items-center justify-between gap-3">
+              <div className="pt-4 border-t border-[#E7DFD5] flex flex-wrap items-center justify-between gap-3">
                 {svc.officialUrl.startsWith('http') ? (
                   <a
                     href={svc.officialUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-neutral-300 text-xs font-bold text-neutral-800 hover:border-neutral-900 hover:bg-neutral-50 transition"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[#D6CEC2] bg-white text-xs font-bold text-[#1C1917] hover:border-[#C5A059] hover:bg-[#FAF7F2] transition"
                   >
                     <span>Buka Portal Resmi</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <ExternalLink className="w-3.5 h-3.5 text-[#8C5835]" />
                   </a>
                 ) : (
-                  <span className="text-[11px] text-neutral-500 italic">
+                  <span className="text-[11px] text-[#78716C] italic">
                     Disediakan langsung oleh tim fasilitator
                   </span>
                 )}
@@ -244,7 +245,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
                     setSelectedService(svc.title);
                     document.getElementById('konsultasi')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="px-4 py-2 rounded-full bg-[#D90816] text-white text-xs font-bold hover:bg-[#b80512] transition shadow-sm cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-[#B81D24] text-white text-xs font-bold hover:bg-[#98141A] transition shadow-md shadow-[#B81D24]/20 cursor-pointer"
                 >
                   Ajukan Pendampingan
                 </button>
@@ -254,53 +255,55 @@ export const SertifikasiUsahaPage: React.FC = () => {
         </div>
       </section>
 
+      <BatikDivider />
+
       {/* 4-Step Process Guide */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl border border-neutral-200/90 p-8 sm:p-10 shadow-xs space-y-8">
+        <div className="card-heritage p-8 sm:p-10 space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-bold text-[#D90816] uppercase tracking-wider">Alur Mudah</span>
-            <h2 className="text-2xl font-extrabold text-neutral-900">
+            <span className="text-xs font-bold text-[#8C5835] uppercase tracking-wider">Alur Mudah</span>
+            <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-[#1C1917]">
               4 Langkah Mudah Mengurus Legalitas Usaha
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-            <div className="p-5 rounded-2xl bg-[#FAF8F7] border border-neutral-200 space-y-2.5">
-              <div className="w-10 h-10 rounded-full bg-[#D90816] text-white font-extrabold flex items-center justify-center mx-auto text-sm">
+            <div className="p-5 rounded-2xl bg-[#FAF7F2] border border-[#E7DFD5] space-y-2.5">
+              <div className="w-10 h-10 rounded-full bg-[#1C1917] text-[#C5A059] font-serif font-extrabold flex items-center justify-center mx-auto text-base border border-[#C5A059]/40">
                 1
               </div>
-              <h4 className="font-bold text-sm text-neutral-900">Pilih Jenis Izin</h4>
-              <p className="text-xs text-neutral-500">
+              <h4 className="font-bold text-sm text-[#1C1917]">Pilih Jenis Izin</h4>
+              <p className="text-xs text-[#78716C]">
                 Tentukan sertifikasi yang paling dibutuhkan usaha Anda saat ini (mulai dari NIB OSS).
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#FAF8F7] border border-neutral-200 space-y-2.5">
-              <div className="w-10 h-10 rounded-full bg-[#D90816] text-white font-extrabold flex items-center justify-center mx-auto text-sm">
+            <div className="p-5 rounded-2xl bg-[#FAF7F2] border border-[#E7DFD5] space-y-2.5">
+              <div className="w-10 h-10 rounded-full bg-[#1C1917] text-[#C5A059] font-serif font-extrabold flex items-center justify-center mx-auto text-base border border-[#C5A059]/40">
                 2
               </div>
-              <h4 className="font-bold text-sm text-neutral-900">Lengkapi Dokumen</h4>
-              <p className="text-xs text-neutral-500">
+              <h4 className="font-bold text-sm text-[#1C1917]">Lengkapi Dokumen</h4>
+              <p className="text-xs text-[#78716C]">
                 Siapkan KTP, foto produk, informasi bahan, atau etiket logo sesuai checklist.
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#FAF8F7] border border-neutral-200 space-y-2.5">
-              <div className="w-10 h-10 rounded-full bg-[#D90816] text-white font-extrabold flex items-center justify-center mx-auto text-sm">
+            <div className="p-5 rounded-2xl bg-[#FAF7F2] border border-[#E7DFD5] space-y-2.5">
+              <div className="w-10 h-10 rounded-full bg-[#1C1917] text-[#C5A059] font-serif font-extrabold flex items-center justify-center mx-auto text-base border border-[#C5A059]/40">
                 3
               </div>
-              <h4 className="font-bold text-sm text-neutral-900">Bantuan Fasilitator</h4>
-              <p className="text-xs text-neutral-500">
+              <h4 className="font-bold text-sm text-[#1C1917]">Bantuan Fasilitator</h4>
+              <p className="text-xs text-[#78716C]">
                 Gunakan portal resmi atau manfaatkan bimbingan tim Djoeragan Nusantara.
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#FAF8F7] border border-neutral-200 space-y-2.5">
-              <div className="w-10 h-10 rounded-full bg-emerald-600 text-white font-extrabold flex items-center justify-center mx-auto text-sm">
+            <div className="p-5 rounded-2xl bg-[#FAF7F2] border border-[#E7DFD5] space-y-2.5">
+              <div className="w-10 h-10 rounded-full bg-[#B81D24] text-white font-serif font-extrabold flex items-center justify-center mx-auto text-base border border-[#B81D24]">
                 4
               </div>
-              <h4 className="font-bold text-sm text-neutral-900">Sertifikat Terbit</h4>
-              <p className="text-xs text-neutral-500">
+              <h4 className="font-bold text-sm text-[#1C1917]">Sertifikat Terbit</h4>
+              <p className="text-xs text-[#78716C]">
                 Izin resmi terbit dan produk Anda siap dipamerkan di katalog Djoeragan Nusantara!
               </p>
             </div>
@@ -310,29 +313,29 @@ export const SertifikasiUsahaPage: React.FC = () => {
 
       {/* Consultation & Assistance Inquiry Form */}
       <section id="konsultasi" className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl border border-neutral-200 p-8 sm:p-10 shadow-xs space-y-6">
+        <div className="card-heritage p-8 sm:p-10 space-y-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDEBEC] text-[#D90816] text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#C5A059]/15 text-[#8C5835] text-xs font-bold border border-[#C5A059]/30">
+              <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
               Bimbingan Personal Gratis
             </div>
-            <h2 className="text-2xl font-extrabold text-neutral-900">
+            <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-[#1C1917]">
               Formulir Bantuan & Pendampingan Sertifikasi
             </h2>
-            <p className="text-xs text-neutral-500 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#78716C] leading-relaxed">
               Punya pertanyaan atau butuh dibimbing saat pengurusan dokumen? Isi data singkat di bawah ini, tim Djoeragan Nusantara akan segera membantu Anda.
             </p>
           </div>
 
           <form onSubmit={handleSubmitConsultation} className="space-y-4">
             <div>
-              <label className="text-xs font-bold text-neutral-700 block mb-1">
+              <label className="text-xs font-bold text-[#1C1917] block mb-1">
                 Layanan Sertifikasi yang Diminati *
               </label>
               <select
                 value={selectedService}
                 onChange={(e) => setSelectedService(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                className="w-full px-4 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
               >
                 {services.map((s) => (
                   <option key={s.id} value={s.title}>
@@ -344,7 +347,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-bold text-neutral-700 block mb-1">
+                <label className="text-xs font-bold text-[#1C1917] block mb-1">
                   Nama Pemilik Usaha *
                 </label>
                 <input
@@ -353,12 +356,12 @@ export const SertifikasiUsahaPage: React.FC = () => {
                   placeholder="Contoh: Budi Santoso"
                   value={applicantName}
                   onChange={(e) => setApplicantName(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-neutral-700 block mb-1">
+                <label className="text-xs font-bold text-[#1C1917] block mb-1">
                   Nama Toko / Usaha *
                 </label>
                 <input
@@ -367,14 +370,14 @@ export const SertifikasiUsahaPage: React.FC = () => {
                   placeholder="Contoh: Dapur Serabi Notosuman"
                   value={storeName}
                   onChange={(e) => setStoreName(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-bold text-neutral-700 block mb-1">
+                <label className="text-xs font-bold text-[#1C1917] block mb-1">
                   Nomor WhatsApp Aktif *
                 </label>
                 <input
@@ -383,12 +386,12 @@ export const SertifikasiUsahaPage: React.FC = () => {
                   placeholder="0812-xxxx-xxxx"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-neutral-700 block mb-1">
+                <label className="text-xs font-bold text-[#1C1917] block mb-1">
                   Kabupaten / Kota Domisili
                 </label>
                 <input
@@ -396,13 +399,13 @@ export const SertifikasiUsahaPage: React.FC = () => {
                   placeholder="Kota Surakarta / Kabupaten ..."
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs font-bold text-neutral-700 block mb-1">
+              <label className="text-xs font-bold text-[#1C1917] block mb-1">
                 Catatan / Kendala yang Dihadapi (Opsional)
               </label>
               <textarea
@@ -410,13 +413,13 @@ export const SertifikasiUsahaPage: React.FC = () => {
                 placeholder="Ceritakan kendala Anda (misal: belum paham cara daftar akun OSS, belum punya uji lab, dsb)..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                className="w-full px-4 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-3.5 rounded-full bg-[#D90816] text-white font-bold text-xs hover:bg-[#b80512] transition shadow-lg shadow-[#D90816]/25 flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3.5 rounded-xl bg-[#B81D24] text-white font-bold text-xs hover:bg-[#98141A] transition shadow-lg shadow-[#B81D24]/20 flex items-center justify-center gap-2 cursor-pointer"
             >
               <Send className="w-4 h-4" />
               <span>Kirim Permohonan Pendampingan</span>
@@ -427,3 +430,4 @@ export const SertifikasiUsahaPage: React.FC = () => {
     </div>
   );
 };
+

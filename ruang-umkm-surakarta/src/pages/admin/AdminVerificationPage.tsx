@@ -132,16 +132,16 @@ export const AdminVerificationPage: React.FC = () => {
     <div className="max-w-7xl mx-auto space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-extrabold text-neutral-900">
+        <h1 className="text-3xl font-serif font-bold text-[#1C1917]">
           Pusat Verifikasi & Persetujuan Admin
         </h1>
-        <p className="text-xs text-neutral-500 mt-0.5">
+        <p className="text-xs text-[#57534E] mt-0.5">
           Pemeriksaan berkas pendaftaran anggota baru, validasi identitas dan NIB usaha, serta kepatuhan standar UMKM Djoeragan Nusantara.
         </p>
       </div>
 
       {/* Main Section Navigation */}
-      <div className="flex border-b border-neutral-200 gap-4">
+      <div className="flex border-b border-[#E7DFD5] gap-4">
         <button
           onClick={() => {
             setActiveSection('anggota');
@@ -149,14 +149,14 @@ export const AdminVerificationPage: React.FC = () => {
           }}
           className={`pb-3 text-xs font-bold transition relative flex items-center gap-2 ${
             activeSection === 'anggota'
-              ? 'text-[#D90816] border-b-2 border-[#D90816]'
-              : 'text-neutral-500 hover:text-neutral-900'
+              ? 'text-[#B81D24] border-b-2 border-[#B81D24]'
+              : 'text-[#78716C] hover:text-[#1C1917]'
           }`}
         >
           <UserCheck className="w-4 h-4" />
           <span>Verifikasi Pendaftaran Anggota</span>
           {pendingMemberCount > 0 && (
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#D90816] text-white">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#B81D24] text-white">
               {pendingMemberCount}
             </span>
           )}
@@ -169,14 +169,14 @@ export const AdminVerificationPage: React.FC = () => {
           }}
           className={`pb-3 text-xs font-bold transition relative flex items-center gap-2 ${
             activeSection === 'legalitas'
-              ? 'text-[#D90816] border-b-2 border-[#D90816]'
-              : 'text-neutral-500 hover:text-neutral-900'
+              ? 'text-[#B81D24] border-b-2 border-[#B81D24]'
+              : 'text-[#78716C] hover:text-[#1C1917]'
           }`}
         >
           <ShieldCheck className="w-4 h-4" />
           <span>Verifikasi Legalitas & Dokumen NIB Usaha</span>
           {pendingLegalCount > 0 && (
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-white">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#C5A059] text-white">
               {pendingLegalCount}
             </span>
           )}
@@ -200,8 +200,8 @@ export const AdminVerificationPage: React.FC = () => {
                   onClick={() => setMemberStatusFilter(tab.key)}
                   className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition ${
                     memberStatusFilter === tab.key
-                      ? 'bg-[#171717] text-white shadow-xs'
-                      : 'bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50'
+                      ? 'bg-[#1C1917] text-[#C5A059] shadow-xs'
+                      : 'bg-white border border-[#E7DFD5] text-[#57534E] hover:bg-[#FAF7F2]'
                   }`}
                 >
                   {tab.label}
@@ -215,17 +215,17 @@ export const AdminVerificationPage: React.FC = () => {
                 placeholder="Cari nama, kota, usaha, atau email..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-white border border-neutral-300 focus:outline-none focus:border-[#D90816]"
+                className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-[#FAF7F2] border border-[#D6CEC2] text-[#1C1917] placeholder-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
               />
-              <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#A8A29E] absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
           </div>
 
           {/* Members Table */}
-          <div className="bg-white rounded-3xl border border-neutral-200/90 shadow-xs overflow-hidden">
+          <div className="card-heritage overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs text-neutral-600">
-                <thead className="bg-[#FAF8F7] text-neutral-700 font-extrabold uppercase tracking-wider text-[10px] border-b border-neutral-200">
+              <table className="w-full text-left text-xs text-[#57534E]">
+                <thead className="bg-[#F5EFEB] text-[#1C1917] font-extrabold uppercase tracking-wider text-[10px] border-b border-[#E7DFD5]">
                   <tr>
                     <th className="py-3.5 px-6">Nama Anggota</th>
                     <th className="py-3.5 px-4">Gender & Usia</th>
@@ -236,7 +236,7 @@ export const AdminVerificationPage: React.FC = () => {
                     <th className="py-3.5 px-6 text-right">Tindakan</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-100">
+                <tbody className="divide-y divide-[#E7DFD5]/70">
                   {filteredMembers.length > 0 ? (
                     filteredMembers.map((m) => {
                       return (
@@ -304,7 +304,7 @@ export const AdminVerificationPage: React.FC = () => {
                                 <Eye className="w-3.5 h-3.5" />
                               </button>
 
-                              {m.verificationStatus === 'menunggu' ? (
+                              {m.verificationStatus === 'menunggu' && (
                                 <>
                                   <button
                                     onClick={() => approveMember(m.id, 'Disetujui langsung oleh kurator admin.')}
@@ -326,15 +326,6 @@ export const AdminVerificationPage: React.FC = () => {
                                     Tolak
                                   </button>
                                 </>
-                              ) : (
-                                <button
-                                  onClick={() => pendingMember(m.id)}
-                                  className="px-2 py-1.5 rounded-lg border border-amber-300 text-amber-800 hover:bg-amber-50 font-bold text-[11px] transition flex items-center gap-1"
-                                  title="Kembalikan ke status Menunggu Verifikasi (Pending)"
-                                >
-                                  <Clock className="w-3 h-3 text-amber-600" />
-                                  <span>Pending</span>
-                                </button>
                               )}
                             </div>
                           </td>
@@ -372,8 +363,8 @@ export const AdminVerificationPage: React.FC = () => {
                   onClick={() => setLegalStatusFilter(tab.key)}
                   className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition ${
                     legalStatusFilter === tab.key
-                      ? 'bg-[#171717] text-white shadow-xs'
-                      : 'bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50'
+                      ? 'bg-[#1C1917] text-[#C5A059] shadow-xs'
+                      : 'bg-white border border-[#E7DFD5] text-[#57534E] hover:bg-[#FAF7F2]'
                   }`}
                 >
                   {tab.label}
@@ -387,17 +378,17 @@ export const AdminVerificationPage: React.FC = () => {
                 placeholder="Cari toko, nama pemilik, atau NIB..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-white border border-neutral-300 focus:outline-none focus:border-[#D90816]"
+                className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-[#FAF7F2] border border-[#D6CEC2] text-[#1C1917] placeholder-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
               />
-              <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#A8A29E] absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
           </div>
 
           {/* Legality Table */}
-          <div className="bg-white rounded-3xl border border-neutral-200/90 shadow-xs overflow-hidden">
+          <div className="card-heritage overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs text-neutral-600">
-                <thead className="bg-[#FAF8F7] text-neutral-700 font-extrabold uppercase tracking-wider text-[10px] border-b border-neutral-200">
+              <table className="w-full text-left text-xs text-[#57534E]">
+                <thead className="bg-[#F5EFEB] text-[#1C1917] font-extrabold uppercase tracking-wider text-[10px] border-b border-[#E7DFD5]">
                   <tr>
                     <th className="py-3.5 px-6">Toko / Usaha</th>
                     <th className="py-3.5 px-4">Pemilik & NIK</th>
@@ -408,7 +399,7 @@ export const AdminVerificationPage: React.FC = () => {
                     <th className="py-3.5 px-6 text-right">Tindakan</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-100">
+                <tbody className="divide-y divide-[#E7DFD5]/70">
                   {filteredVerifications.length > 0 ? (
                     filteredVerifications.map((v) => {
                       const badge = getVerificationStatusBadge(v.status);
@@ -456,7 +447,7 @@ export const AdminVerificationPage: React.FC = () => {
                                 <Eye className="w-3.5 h-3.5" />
                               </button>
 
-                              {v.status === 'menunggu' ? (
+                              {v.status === 'menunggu' && (
                                 <>
                                   <button
                                     onClick={() => approveVerification(v.id, 'Disetujui langsung oleh kurator admin.')}
@@ -478,15 +469,6 @@ export const AdminVerificationPage: React.FC = () => {
                                     Tolak
                                   </button>
                                 </>
-                              ) : (
-                                <button
-                                  onClick={() => pendingVerification(v.id)}
-                                  className="px-2 py-1.5 rounded-lg border border-amber-300 text-amber-800 hover:bg-amber-50 font-bold text-[11px] transition flex items-center gap-1"
-                                  title="Kembalikan ke status Menunggu Verifikasi (Pending)"
-                                >
-                                  <Clock className="w-3 h-3 text-amber-600" />
-                                  <span>Pending</span>
-                                </button>
                               )}
                             </div>
                           </td>
@@ -630,36 +612,39 @@ export const AdminVerificationPage: React.FC = () => {
                   />
                 </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-                  <div className="flex flex-wrap items-center gap-2">
+                {selectedMember.verificationStatus === 'menunggu' ? (
+                  <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
                     <button
                       onClick={() => setIsRejectMode(true)}
                       className="px-4 py-2.5 rounded-full border border-rose-300 text-rose-700 font-bold text-xs hover:bg-rose-50 transition"
                     >
                       Tolak / Beri Arahan Revisi
                     </button>
-                    {selectedMember.verificationStatus !== 'menunggu' && (
-                      <button
-                        onClick={() => {
-                          pendingMember(selectedMember.id);
-                          setSelectedMember(null);
-                        }}
-                        className="px-4 py-2.5 rounded-full border border-amber-300 text-amber-800 font-bold text-xs hover:bg-amber-50 transition flex items-center gap-1"
-                      >
-                        <Clock className="w-3.5 h-3.5 text-amber-600" />
-                        <span>Kembalikan ke Pending</span>
-                      </button>
-                    )}
-                  </div>
 
-                  <button
-                    onClick={handleApproveMember}
-                    className="px-6 py-2.5 rounded-full bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition flex items-center gap-1.5 shadow-md shadow-emerald-600/20"
-                  >
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span>ACC & Aktifkan Anggota</span>
-                  </button>
-                </div>
+                    <button
+                      onClick={handleApproveMember}
+                      className="px-6 py-2.5 rounded-full bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition flex items-center gap-1.5 shadow-md shadow-emerald-600/20"
+                    >
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span>ACC & Aktifkan Anggota</span>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between pt-2 border-t border-neutral-100">
+                    <span className="text-xs text-neutral-500 font-medium">
+                      Status pendaftaran:{' '}
+                      <strong className={selectedMember.verificationStatus === 'disetujui' ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold'}>
+                        {selectedMember.verificationStatus === 'disetujui' ? '✓ Telah Disetujui (ACC)' : 'Ditolak (Perlu Revisi)'}
+                      </strong>
+                    </span>
+                    <button
+                      onClick={() => setSelectedMember(null)}
+                      className="px-5 py-2 rounded-full bg-neutral-900 text-white font-bold text-xs hover:bg-neutral-800 transition"
+                    >
+                      Tutup
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="space-y-3 pt-2 bg-rose-50/60 p-4 rounded-2xl border border-rose-200">
@@ -788,36 +773,39 @@ export const AdminVerificationPage: React.FC = () => {
                   />
                 </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-                  <div className="flex flex-wrap items-center gap-2">
+                {selectedVerif.status === 'menunggu' ? (
+                  <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
                     <button
                       onClick={() => setIsRejectMode(true)}
                       className="px-4 py-2.5 rounded-full border border-rose-300 text-rose-700 font-bold text-xs hover:bg-rose-50 transition"
                     >
                       Tolak / Minta Revisi Dokumen
                     </button>
-                    {selectedVerif.status !== 'menunggu' && (
-                      <button
-                        onClick={() => {
-                          pendingVerification(selectedVerif.id);
-                          setSelectedVerif(null);
-                        }}
-                        className="px-4 py-2.5 rounded-full border border-amber-300 text-amber-800 font-bold text-xs hover:bg-amber-50 transition flex items-center gap-1"
-                      >
-                        <Clock className="w-3.5 h-3.5 text-amber-600" />
-                        <span>Kembalikan ke Pending</span>
-                      </button>
-                    )}
-                  </div>
 
-                  <button
-                    onClick={handleApproveLegal}
-                    className="px-6 py-2.5 rounded-full bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition flex items-center gap-1.5 shadow-md shadow-emerald-600/20"
-                  >
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span>Setujui (Lolos Permendag 19/2026)</span>
-                  </button>
-                </div>
+                    <button
+                      onClick={handleApproveLegal}
+                      className="px-6 py-2.5 rounded-full bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition flex items-center gap-1.5 shadow-md shadow-emerald-600/20"
+                    >
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span>Setujui (Lolos Permendag 19/2026)</span>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between pt-2 border-t border-neutral-100">
+                    <span className="text-xs text-neutral-500 font-medium">
+                      Status legalitas:{' '}
+                      <strong className={selectedVerif.status === 'disetujui' ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold'}>
+                        {selectedVerif.status === 'disetujui' ? '✓ Telah Disetujui (ACC)' : 'Ditolak (Perlu Revisi)'}
+                      </strong>
+                    </span>
+                    <button
+                      onClick={() => setSelectedVerif(null)}
+                      className="px-5 py-2 rounded-full bg-neutral-900 text-white font-bold text-xs hover:bg-neutral-800 transition"
+                    >
+                      Tutup
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="space-y-3 pt-2 bg-rose-50/60 p-4 rounded-2xl border border-rose-200">

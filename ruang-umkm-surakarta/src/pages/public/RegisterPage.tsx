@@ -22,6 +22,7 @@ import {
 import { useApp } from '../../context/AppContext';
 import { ProductCategory, User, Gender, AgeGroup } from '../../types';
 import { JAWA_TENGAH_REGIONS } from '../../data/memberData';
+import { BatikParang } from '../../components/common/BatikOrnament';
 
 interface DocumentState {
   file: File | null;
@@ -32,7 +33,7 @@ interface DocumentState {
 }
 
 export const RegisterPage: React.FC = () => {
-  const { setCurrentUser, submitVerification, addMember, showToast } = useApp();
+  const { setCurrentUser, addUser, submitVerification, addMember, showToast } = useApp();
   const navigate = useNavigate();
 
   const [registerType, setRegisterType] = useState<'penjual' | 'pembeli'>('penjual');
@@ -219,8 +220,9 @@ export const RegisterPage: React.FC = () => {
         sellerVerificationStatus: 'Waiting Verification', // Feature 3 & 4
       };
 
-      // Set user into session
+      // Set user into session and permanent users list
       setCurrentUser(newSeller);
+      addUser(newSeller);
 
       // Add to member registry with status 'menunggu'
       addMember({
@@ -294,6 +296,7 @@ export const RegisterPage: React.FC = () => {
         address: selectedRegion,
       };
       setCurrentUser(newBuyer);
+      addUser(newBuyer);
       showToast('Pendaftaran akun pembeli berhasil! Selamat berbelanja di Djoeragan Nusantara.', 'success');
       navigate('/katalog');
     }
@@ -315,28 +318,28 @@ export const RegisterPage: React.FC = () => {
       <div
         className={`p-4 rounded-2xl border transition-all space-y-3 ${
           isUploadValid
-            ? 'bg-emerald-50/40 border-emerald-300'
+            ? 'bg-emerald-50/50 border-emerald-300'
             : doc.status === 'invalid'
-            ? 'bg-rose-50/40 border-rose-300'
-            : 'bg-[#FAF8F7] border-neutral-200'
+            ? 'bg-rose-50/50 border-rose-300'
+            : 'bg-[#FAF7F2] border-[#E7DFD5]'
         }`}
       >
         <div className="flex items-start justify-between gap-2">
           <div>
             <div className="flex items-center gap-2">
-              <FileText className={`w-4 h-4 ${isUploadValid ? 'text-emerald-700' : 'text-[#D90816]'}`} />
-              <strong className="text-xs font-bold text-neutral-900">{title}</strong>
+              <FileText className={`w-4 h-4 ${isUploadValid ? 'text-emerald-700' : 'text-[#8C5835]'}`} />
+              <strong className="text-xs font-serif font-extrabold text-[#1C1917]">{title}</strong>
               {isRequired && (
-                <span className="text-[10px] font-bold text-[#D90816] bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
+                <span className="text-[10px] font-bold text-[#98141A] bg-[#B81D24]/10 px-2.5 py-0.5 rounded-full border border-[#B81D24]/20">
                   Wajib
                 </span>
               )}
             </div>
-            <p className="text-[11px] text-neutral-500 mt-0.5">{description}</p>
+            <p className="text-[11px] text-[#78716C] mt-0.5">{description}</p>
           </div>
 
           {isUploadValid && (
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">
               <CheckCircle2 className="w-3 h-3 text-emerald-600" />
               Tervalidasi
             </span>
@@ -346,8 +349,8 @@ export const RegisterPage: React.FC = () => {
         {/* Step 1: Upload Dropzone / Button */}
         <div className="pt-1">
           {doc.status === 'empty' ? (
-            <label className="flex items-center justify-center gap-2 p-3 border border-dashed border-neutral-300 hover:border-[#D90816] rounded-xl bg-white hover:bg-neutral-50 cursor-pointer transition text-xs font-bold text-neutral-700">
-              <Upload className="w-4 h-4 text-neutral-400" />
+            <label className="flex items-center justify-center gap-2 p-3 border border-dashed border-[#D6CEC2] hover:border-[#C5A059] rounded-xl bg-white hover:bg-[#FAF7F2] cursor-pointer transition text-xs font-bold text-[#1C1917]">
+              <Upload className="w-4 h-4 text-[#8C5835]" />
               <span>Unggah Dokumen ({acceptedTypes})</span>
               <input
                 type="file"
@@ -365,13 +368,13 @@ export const RegisterPage: React.FC = () => {
             <div className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-emerald-200 text-xs">
               <div className="flex items-center gap-2 min-w-0">
                 <FileCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span className="font-semibold text-neutral-900 truncate">{doc.fileName}</span>
-                <span className="text-[10px] text-neutral-400 shrink-0">({doc.fileSize})</span>
+                <span className="font-semibold text-[#1C1917] truncate">{doc.fileName}</span>
+                <span className="text-[10px] text-[#78716C] shrink-0">({doc.fileSize})</span>
               </div>
               <button
                 type="button"
                 onClick={() => removeDoc(key)}
-                className="text-xs text-rose-600 hover:text-rose-800 font-bold shrink-0 ml-2"
+                className="text-xs text-rose-700 hover:text-rose-900 font-bold shrink-0 ml-2 cursor-pointer"
               >
                 Ganti Berkas
               </button>
@@ -384,7 +387,7 @@ export const RegisterPage: React.FC = () => {
                   <span>{doc.error || 'Dokumen gagal divalidasi.'}</span>
                 </div>
               </div>
-              <label className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-900 text-white text-xs font-bold hover:bg-neutral-800 cursor-pointer transition">
+              <label className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1C1917] text-[#FAF7F2] text-xs font-bold hover:bg-[#292524] cursor-pointer transition">
                 <Upload className="w-3.5 h-3.5" />
                 <span>Pilih Berkas Lain</span>
                 <input
@@ -399,15 +402,15 @@ export const RegisterPage: React.FC = () => {
         </div>
 
         {/* Step 2: Requirement Checklist (MUST stay disabled until upload succeeds) */}
-        <div className="pt-2 border-t border-neutral-200/80">
+        <div className="pt-2 border-t border-[#E7DFD5]">
           <label
             onClick={() => {
               if (isUploadValid) toggleCheck(key);
             }}
             className={`flex items-start gap-2.5 p-2 rounded-xl transition ${
               !isUploadValid
-                ? 'opacity-60 cursor-not-allowed bg-neutral-100 text-neutral-400'
-                : 'cursor-pointer hover:bg-white/80 text-neutral-800'
+                ? 'opacity-60 cursor-not-allowed bg-stone-100 text-[#A8A29E]'
+                : 'cursor-pointer hover:bg-white/80 text-[#1C1917]'
             }`}
           >
             <input
@@ -415,15 +418,15 @@ export const RegisterPage: React.FC = () => {
               disabled={!isUploadValid}
               checked={isChecked}
               onChange={() => {}}
-              className="mt-0.5 rounded accent-[#D90816] disabled:opacity-40"
+              className="mt-0.5 rounded accent-[#B81D24] disabled:opacity-40"
             />
             <div className="text-xs flex-1">
               <span className="font-bold">
                 Konfirmasi Kelengkapan & Keaslian Dokumen {title}
               </span>
-              <p className="text-[10px] mt-0.5 text-neutral-500">
+              <p className="text-[10px] mt-0.5 text-[#78716C]">
                 {!isUploadValid ? (
-                  <span className="text-amber-700 font-medium flex items-center gap-1">
+                  <span className="text-amber-800 font-medium flex items-center gap-1">
                     <Lock className="w-2.5 h-2.5" /> Unggah dokumen terlebih dahulu untuk mengaktifkan checklist ini.
                   </span>
                 ) : isChecked ? (
@@ -444,36 +447,40 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-theme-auth min-h-screen py-10 sm:py-14">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
+    <div className="bg-theme-auth min-h-screen py-10 sm:py-14 relative overflow-hidden bg-heritage-artisan-watermark">
+      <div className="absolute right-0 top-0 bottom-0 w-64 pointer-events-none opacity-30 hidden lg:block">
+        <BatikParang className="h-full w-full" color="#C5A059" opacity={0.12} />
+      </div>
+
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <div className="text-center space-y-3 mb-8">
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#FDEBEC] text-[#D90816] text-xs font-bold border border-[#D90816]/15">
-            <Sparkles className="w-3.5 h-3.5" />
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#B81D24]/10 text-[#98141A] text-xs font-bold border border-[#B81D24]/20">
+            <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
             Pendaftaran Djoeragan Nusantara
           </span>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-[#171717] tracking-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-[#1C1917] tracking-tight">
             Gabung Menjadi Anggota UMKM
           </h1>
-          <p className="text-xs sm:text-sm text-neutral-600 max-w-lg mx-auto">
+          <p className="text-xs sm:text-sm text-[#57534E] max-w-lg mx-auto leading-relaxed">
             Dapatkan pendampingan izin resmi, sertifikasi mutu, akses pelatihan gratis, serta peluang pasar pengadaan resmi.
           </p>
         </div>
 
         {/* Registration Form */}
-        <div className="bg-white rounded-3xl border border-neutral-200 p-6 sm:p-10 shadow-xs space-y-7">
+        <div className="card-heritage p-6 sm:p-10 space-y-7">
           {/* Toggle Role Selector */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-1.5 bg-[#FAF8F7] rounded-2xl border border-neutral-200">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-1.5 bg-[#F5EFEB] rounded-2xl border border-[#E7DFD5]">
             <button
               type="button"
               onClick={() => setRegisterType('penjual')}
               className={`py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition cursor-pointer ${
                 registerType === 'penjual'
-                  ? 'bg-[#D90816] text-white shadow-md'
-                  : 'text-neutral-600 hover:text-neutral-900'
+                  ? 'bg-[#B81D24] text-white shadow-md'
+                  : 'text-[#57534E] hover:text-[#1C1917]'
               }`}
             >
-              <Store className="w-4 h-4" />
+              <Store className="w-4 h-4 text-[#C5A059]" />
               <span>Daftar Anggota / Pelaku UMKM</span>
             </button>
 
@@ -482,8 +489,8 @@ export const RegisterPage: React.FC = () => {
               onClick={() => setRegisterType('pembeli')}
               className={`py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition cursor-pointer ${
                 registerType === 'pembeli'
-                  ? 'bg-[#171717] text-white shadow-md'
-                  : 'text-neutral-600 hover:text-neutral-900'
+                  ? 'bg-[#1C1917] text-[#FAF7F2] shadow-md border border-[#C5A059]'
+                  : 'text-[#57534E] hover:text-[#1C1917]'
               }`}
             >
               <ShoppingBag className="w-4 h-4" />
@@ -494,13 +501,13 @@ export const RegisterPage: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-6 text-left">
             {/* SECTION 1: IDENTITAS DIRI */}
             <div className="space-y-4">
-              <h3 className="text-sm font-extrabold text-neutral-900 flex items-center gap-2 pb-2 border-b border-neutral-100">
+              <h3 className="text-sm font-serif font-extrabold text-[#1C1917] flex items-center gap-2 pb-2 border-b border-[#E7DFD5]">
                 <span>1. Identitas Penanggung Jawab</span>
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">
+                  <label className="text-xs font-bold text-[#1C1917] block mb-1">
                     Nama Lengkap *
                   </label>
                   <input
@@ -509,12 +516,12 @@ export const RegisterPage: React.FC = () => {
                     placeholder="Sesuai KTP"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">
+                  <label className="text-xs font-bold text-[#1C1917] block mb-1">
                     Nomor KTP / NIK *
                   </label>
                   <input
@@ -523,20 +530,20 @@ export const RegisterPage: React.FC = () => {
                     placeholder="16 digit NIK"
                     value={nik}
                     onChange={(e) => setNik(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816] font-mono"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] font-mono"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">
+                  <label className="text-xs font-bold text-[#1C1917] block mb-1">
                     Jenis Kelamin *
                   </label>
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value as Gender)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                   >
                     <option value="Laki-laki">Laki-laki</option>
                     <option value="Perempuan">Perempuan</option>
@@ -544,7 +551,7 @@ export const RegisterPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">
+                  <label className="text-xs font-bold text-[#1C1917] block mb-1">
                     Usia (Tahun) *
                   </label>
                   <input
@@ -554,12 +561,12 @@ export const RegisterPage: React.FC = () => {
                     max={90}
                     value={age}
                     onChange={(e) => setAge(Number(e.target.value))}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">
+                  <label className="text-xs font-bold text-[#1C1917] block mb-1">
                     Nomor WhatsApp *
                   </label>
                   <input
@@ -568,14 +575,14 @@ export const RegisterPage: React.FC = () => {
                     placeholder="0812-xxxx-xxxx"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">
+                  <label className="text-xs font-bold text-[#1C1917] block mb-1">
                     Alamat Email *
                   </label>
                   <input
@@ -584,18 +591,18 @@ export const RegisterPage: React.FC = () => {
                     placeholder="email@anda.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">
+                  <label className="text-xs font-bold text-[#1C1917] block mb-1">
                     Wilayah Kabupaten / Kota Jawa Tengah *
                   </label>
                   <select
                     value={selectedRegion}
                     onChange={(e) => setSelectedRegion(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                   >
                     <optgroup label="6 Kota di Jawa Tengah">
                       {JAWA_TENGAH_REGIONS.filter((r) => r.type === 'Kota').map((r) => (
@@ -615,14 +622,14 @@ export const RegisterPage: React.FC = () => {
             {/* SECTION 2: DATA USAHA (KHUSUS PENJUAL) */}
             {registerType === 'penjual' && (
               <div className="space-y-4 pt-2">
-                <h3 className="text-sm font-extrabold text-neutral-900 flex items-center justify-between pb-2 border-b border-neutral-100">
+                <h3 className="text-sm font-serif font-extrabold text-[#1C1917] flex items-center justify-between pb-2 border-b border-[#E7DFD5]">
                   <span>2. Informasi Usaha UMKM</span>
-                  <label className="flex items-center gap-2 cursor-pointer font-normal text-xs text-neutral-600">
+                  <label className="flex items-center gap-2 cursor-pointer font-normal text-xs text-[#57534E]">
                     <input
                       type="checkbox"
                       checked={hasBusiness}
                       onChange={(e) => setHasBusiness(e.target.checked)}
-                      className="rounded accent-[#D90816]"
+                      className="rounded accent-[#B81D24]"
                     />
                     <span>Sudah Memiliki Usaha Berjalan</span>
                   </label>
@@ -632,7 +639,7 @@ export const RegisterPage: React.FC = () => {
                   <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="text-xs font-bold text-neutral-700 block mb-1">
+                        <label className="text-xs font-bold text-[#1C1917] block mb-1">
                           Nama Toko / Usaha UMKM *
                         </label>
                         <input
@@ -641,12 +648,12 @@ export const RegisterPage: React.FC = () => {
                           placeholder="Contoh: Batik Danar Solo"
                           value={storeName}
                           onChange={(e) => setStoreName(e.target.value)}
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                         />
                       </div>
 
                       <div>
-                        <label className="text-xs font-bold text-neutral-700 block mb-1">
+                        <label className="text-xs font-bold text-[#1C1917] block mb-1">
                           Nomor Induk Berusaha (NIB) OSS *
                         </label>
                         <input
@@ -655,20 +662,20 @@ export const RegisterPage: React.FC = () => {
                           placeholder="13 digit NIB OSS"
                           value={nib}
                           onChange={(e) => setNib(e.target.value)}
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816] font-mono"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] font-mono"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="text-xs font-bold text-neutral-700 block mb-1">
+                        <label className="text-xs font-bold text-[#1C1917] block mb-1">
                           Kategori Komoditas Usaha
                         </label>
                         <select
                           value={category}
                           onChange={(e) => setCategory(e.target.value as ProductCategory)}
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                         >
                           <option value="Batik & Fashion">Batik & Fashion</option>
                           <option value="Kuliner Tradisional">Kuliner Tradisional</option>
@@ -680,13 +687,13 @@ export const RegisterPage: React.FC = () => {
                       </div>
 
                       <div>
-                        <label className="text-xs font-bold text-neutral-700 block mb-1">
+                        <label className="text-xs font-bold text-[#1C1917] block mb-1">
                           Skala Usaha
                         </label>
                         <select
                           value={businessScale}
                           onChange={(e) => setBusinessScale(e.target.value as any)}
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                         >
                           <option value="Mikro">Usaha Mikro (Omzet &lt; 2 Miliar/th)</option>
                           <option value="Kecil">Usaha Kecil (Omzet 2 - 15 Miliar/th)</option>
@@ -696,7 +703,7 @@ export const RegisterPage: React.FC = () => {
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold text-neutral-700 block mb-1">
+                      <label className="text-xs font-bold text-[#1C1917] block mb-1">
                         Alamat Lengkap Tempat Usaha / Produksi *
                       </label>
                       <textarea
@@ -705,14 +712,14 @@ export const RegisterPage: React.FC = () => {
                         placeholder="Jalan, RT/RW, Kelurahan, Kecamatan..."
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-xs focus:outline-none focus:border-[#D90816]"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                       />
                     </div>
                   </>
                 ) : (
-                  <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-100 text-xs text-blue-900 space-y-1">
+                  <div className="p-4 rounded-2xl bg-[#C5A059]/10 border border-[#C5A059]/30 text-xs text-[#8C5835] space-y-1">
                     <p className="font-bold">Mendaftar sebagai Rintisan Pemula / Inkubasi:</p>
-                    <p className="leading-relaxed">
+                    <p className="leading-relaxed text-[#57534E]">
                       Belum punya usaha? Tidak masalah! Anda akan didampingi mulai dari pembuatan NIB mandiri gratis, riset ide produk, hingga kelas kewirausahaan bersama Djoeragan Nusantara.
                     </p>
                   </div>
@@ -720,30 +727,30 @@ export const RegisterPage: React.FC = () => {
               </div>
             )}
 
-            {/* SECTION 3: UNGGAH DOKUMEN & CHECKLIST PERSYARATAN (FEATURE 3 FLOW) */}
+            {/* SECTION 3: UNGGAH DOKUMEN & CHECKLIST PERSYARATAN */}
             {registerType === 'penjual' && (
               <div className="space-y-4 pt-2">
-                <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
+                <div className="flex items-center justify-between pb-2 border-b border-[#E7DFD5]">
                   <div>
-                    <h3 className="text-sm font-extrabold text-neutral-900">
+                    <h3 className="text-sm font-serif font-extrabold text-[#1C1917]">
                       3. Unggah Dokumen & Checklist Persyaratan
                     </h3>
-                    <p className="text-[11px] text-neutral-500 mt-0.5">
+                    <p className="text-[11px] text-[#78716C] mt-0.5">
                       Alur: Unggah berkas dokumen terlebih dahulu → Sistem memvalidasi dokumen → Checklist aktif → Centang checklist persetujuan.
                     </p>
                   </div>
-                  <span className="text-[10px] text-[#D90816] font-bold bg-[#FDEBEC] px-2.5 py-1 rounded-full border border-[#D90816]/15 shrink-0">
+                  <span className="text-[10px] text-[#98141A] font-bold bg-[#B81D24]/10 px-2.5 py-1 rounded-full border border-[#B81D24]/20 shrink-0">
                     Wajib Validasi Admin
                   </span>
                 </div>
 
                 {/* Workflow Guidance Card */}
-                <div className="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-xs text-amber-900 space-y-1">
-                  <div className="flex items-center gap-2 font-bold">
-                    <ShieldCheck className="w-4 h-4 text-amber-700" />
+                <div className="p-3.5 rounded-2xl bg-[#F5EFEB] border border-[#E7DFD5] text-xs text-[#57534E] space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-[#1C1917]">
+                    <ShieldCheck className="w-4 h-4 text-[#8C5835]" />
                     <span>Perhatian Ketentuan Verifikasi:</span>
                   </div>
-                  <p className="text-[11px] text-amber-800 leading-relaxed">
+                  <p className="text-[11px] text-[#78716C] leading-relaxed">
                     Checklist persyaratan <strong>dikunci otomatis</strong> dan hanya dapat dicentang setelah Anda mengunggah dokumen yang valid (PDF/JPG/PNG maksimal 5MB).
                   </p>
                 </div>
@@ -791,13 +798,13 @@ export const RegisterPage: React.FC = () => {
             )}
 
             {/* Notice regarding verification flow */}
-            <div className="p-4 rounded-2xl bg-[#FAF8F7] border border-neutral-200 text-xs text-neutral-600 flex items-start gap-2.5">
-              <AlertCircle className="w-4 h-4 text-neutral-500 shrink-0 mt-0.5" />
+            <div className="p-4 rounded-2xl bg-[#F5EFEB] border border-[#E7DFD5] text-xs text-[#57534E] flex items-start gap-2.5">
+              <AlertCircle className="w-4 h-4 text-[#8C5835] shrink-0 mt-0.5" />
               <div className="leading-relaxed space-y-1">
                 <p>
-                  <strong>Alur Setelah Pengajuan:</strong> Setelah formulir ini dikirimkan, Anda akan diarahkan ke <strong>Halaman Menunggu Verifikasi</strong>.
+                  <strong className="text-[#1C1917]">Alur Setelah Pengajuan:</strong> Setelah formulir ini dikirimkan, Anda akan diarahkan ke <strong>Halaman Menunggu Verifikasi</strong>.
                 </p>
-                <p className="text-[11px] text-neutral-500">
+                <p className="text-[11px] text-[#78716C]">
                   Dashboard Penjual belum dapat diakses sebelum pengajuan Anda disetujui resmi oleh Kurator Admin (estimasi 1–3 hari kerja).
                 </p>
               </div>
@@ -806,15 +813,15 @@ export const RegisterPage: React.FC = () => {
             {/* Submit CTA */}
             <button
               type="submit"
-              className="w-full py-3.5 rounded-full bg-[#D90816] text-white font-bold text-xs hover:bg-[#b80512] transition shadow-lg shadow-[#D90816]/25 flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3.5 rounded-xl bg-[#B81D24] text-white font-bold text-xs hover:bg-[#98141A] transition shadow-lg shadow-[#B81D24]/20 flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Ajukan Pendaftaran & Masuk Antrean Verifikasi</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
-            <p className="text-center text-xs text-neutral-500">
+            <p className="text-center text-xs text-[#78716C]">
               Sudah memiliki akun terverifikasi?{' '}
-              <Link to="/masuk" className="text-[#D90816] font-bold hover:underline">
+              <Link to="/masuk" className="text-[#98141A] font-bold hover:underline">
                 Masuk di sini
               </Link>
             </p>
