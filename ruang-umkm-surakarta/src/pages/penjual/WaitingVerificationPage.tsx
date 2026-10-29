@@ -75,20 +75,19 @@ export const WaitingVerificationPage: React.FC = () => {
             {isApproved
               ? 'Akun Penjual Anda Telah Aktif!'
               : isRejected
-              ? 'Pengajuan Memerlukan Perbaikan'
-              : 'Verifikasi Pendaftaran Penjual UMKM'}
+                ? 'Pengajuan Memerlukan Perbaikan'
+                : 'Verifikasi Pendaftaran Penjual UMKM'}
           </h1>
         </div>
 
         {/* Mandatory Prompt Message Box */}
         <div
-          className={`p-5 sm:p-6 rounded-2xl border text-left space-y-3 ${
-            isApproved
+          className={`p-5 sm:p-6 rounded-2xl border text-left space-y-3 ${isApproved
               ? 'bg-emerald-50/70 border-emerald-200 text-emerald-950'
               : isRejected
-              ? 'bg-rose-50/70 border-rose-200 text-rose-950'
-              : 'bg-[#F5EFEB] border-[#E7DFD5] text-[#1C1917]'
-          }`}
+                ? 'bg-rose-50/70 border-rose-200 text-rose-950'
+                : 'bg-[#F5EFEB] border-[#E7DFD5] text-[#1C1917]'
+            }`}
         >
           {isApproved ? (
             <div className="space-y-2 text-xs sm:text-sm">
