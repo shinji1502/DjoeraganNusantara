@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  TrendingUp,
   Landmark,
   Handshake,
   Building2,
@@ -14,7 +13,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { formatRupiah } from '../../utils/formatters';
-import { BatikParang, BatikDivider } from '../../components/common/BatikOrnament';
+import { BatikParang } from '../../components/common/BatikOrnament';
 
 export const AksesBertumbuhPage: React.FC = () => {
   const { showToast } = useApp();
@@ -71,17 +70,13 @@ export const AksesBertumbuhPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-24 bg-theme-beranda min-h-screen">
+    <div className="space-y-12 sm:space-y-16 pb-24 bg-theme-akses-bertumbuh min-h-screen">
       {/* Editorial Header with Square Grid, Parang watermark, & Faint Artisan Photo */}
       <section className="relative overflow-hidden bg-transparent border-b border-[#E7DFD5] bg-heritage-artisan-watermark py-14 sm:py-16">
         <div className="absolute right-0 top-0 bottom-0 w-64 pointer-events-none opacity-40 hidden md:block">
           <BatikParang className="h-full w-full" color="#C5A059" opacity={0.12} />
         </div>
         <div className="max-w-4xl mx-auto px-4 text-center space-y-4 relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B81D24]/10 text-[#98141A] text-xs font-bold border border-[#B81D24]/20">
-            <TrendingUp className="w-3.5 h-3.5 text-[#C5A059]" />
-            <span>Ekspansi Skala Bisnis & Kemitraan</span>
-          </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-[#1C1917] tracking-tight">
             Akses Bertumbuh Djoeragan Nusantara
           </h1>

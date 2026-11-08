@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import {
-  ShieldCheck,
   ExternalLink,
   CheckCircle2,
   Clock,
   Sparkles,
   Send,
-  Building2,
-  FileCheck,
-  Award,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { BatikParang, BatikDivider } from '../../components/common/BatikOrnament';
@@ -139,10 +135,6 @@ export const SertifikasiUsahaPage: React.FC = () => {
           <BatikParang className="h-full w-full" color="#C5A059" opacity={0.12} />
         </div>
         <div className="max-w-4xl mx-auto px-4 text-center space-y-4 relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B81D24]/10 text-[#98141A] text-xs font-bold border border-[#B81D24]/20">
-            <ShieldCheck className="w-4 h-4 text-[#C5A059]" />
-            <span>Pusat Layanan Legalitas & Perizinan Usaha</span>
-          </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-[#1C1917] tracking-tight">
             Sertifikasi Usaha & Kepastian Hukum
           </h1>

@@ -4,27 +4,18 @@ import {
   ArrowRight,
   ShieldCheck,
   ShoppingBag,
-  Store,
-  Sparkles,
   BookOpen,
   Calendar,
-  Users,
   ChevronRight,
   MapPin,
-  Flame,
-  CreditCard,
   Building2,
   Landmark,
-  BadgeCheck,
-  TrendingUp,
-  FileCheck,
   Handshake,
-  Award,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { ProductCard } from '../../components/common/ProductCard';
 import { NumberCounter } from '../../components/common/NumberCounter';
-import { BatikFlank, BatikDivider, BatikKawung } from '../../components/common/BatikOrnament';
+import { BatikDivider } from '../../components/common/BatikOrnament';
 
 export const HomePage: React.FC = () => {
   const { products, programs, events, registerProgram } = useApp();
@@ -294,26 +285,17 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="space-y-16 sm:space-y-20 pb-20 bg-theme-beranda min-h-screen relative overflow-x-clip">
-      {/* HERO SECTION — Modern Javanese Elegance with Square Grid & Faint Artisan Photo */}
+      {/* HERO SECTION — Modern Javanese Elegance with Geometric Pattern & Faint Artisan Photo */}
       <section className="relative overflow-hidden bg-transparent border-b border-[#E7E2D9] bg-heritage-solo-hero pt-12 pb-16 lg:pt-20 lg:pb-24">
-        {/* Batik Parang flanking strips on screen edges */}
-        <BatikFlank position="left" opacity={0.065} />
-        <BatikFlank position="right" opacity={0.065} />
 
-        {/* Ambient atmospheric warm glows */}
-        <div className="absolute top-0 right-1/4 -mt-24 w-96 h-96 rounded-full bg-[#B81D24]/5 blur-3xl pointer-events-none animate-ambient-glow" />
-        <div className="absolute bottom-0 left-10 -mb-24 w-[420px] h-[420px] rounded-full bg-[#C5A059]/5 blur-3xl pointer-events-none animate-ambient-glow" style={{ animationDelay: '4s' }} />
+        {/* Ambient atmospheric warm glows — neutral palette */}
+        <div className="absolute top-0 right-1/4 -mt-24 w-96 h-96 rounded-full bg-[#A88B55]/5 blur-3xl pointer-events-none animate-ambient-glow" />
+        <div className="absolute bottom-0 left-10 -mb-24 w-[420px] h-[420px] rounded-full bg-[#D8D0C3]/8 blur-3xl pointer-events-none animate-ambient-glow" style={{ animationDelay: '4s' }} />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Left Column: Editorial Headline & CTAs */}
             <div className="lg:col-span-7 space-y-6 text-left animate-hero-enter">
-              {/* Friendly Eyebrow Label matching user reference */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#B81D24]/10 border border-[#B81D24]/20 text-[#B81D24] text-xs font-semibold tracking-wide shadow-2xs">
-                <Sparkles className="w-3.5 h-3.5 text-[#B81D24]" />
-                <span>Selamat Datang di Djoeragan Nusantara</span>
-              </div>
-
               {/* Headline with High-Class Contrast */}
               <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-[#1C1917] tracking-tight leading-[1.12]">
                 Wadah Tumbuh & <br className="hidden sm:inline" />
@@ -426,10 +408,6 @@ export const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header Title & Subtitle */}
           <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 space-y-3">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F9F4EB] border border-[#C5A059]/30 text-[#8C5835] text-xs font-bold">
-              <Award className="w-3.5 h-3.5 text-[#C5A059]" />
-              <span>Ekosistem Terintegrasi</span>
-            </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1C1917] tracking-tight">
               Pilar Fasilitas <span className="text-[#B81D24]">Djoeragan Nusantara</span>
             </h2>
@@ -473,10 +451,6 @@ export const HomePage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF7F2] text-[#8C5835] border border-amber-900/10 text-xs font-bold mb-2">
-              <Flame className="w-3.5 h-3.5 text-[#B81D24]" />
-              Karya Pilihan Nusantara
-            </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1C1917] tracking-tight">
               Karya Pilihan UMKM Terverifikasi
             </h2>
@@ -506,7 +480,6 @@ export const HomePage: React.FC = () => {
       <section className="bg-white/80 backdrop-blur-xs py-16 border-y border-[#E7E2D9]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold text-[#9A6B39] uppercase tracking-wider">Akses Bertumbuh</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1C1917] tracking-tight">
               Buka Peluang Pasar Besar: B2B, B2G, & Ruang Komersial
             </h2>
@@ -677,11 +650,6 @@ export const HomePage: React.FC = () => {
       {/* SECTION: CTA DAFTAR MITRA DJOERAGAN NUSANTARA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden bg-white rounded-3xl border border-[#E7E2D9] p-8 sm:p-12 text-center max-w-4xl mx-auto space-y-6 shadow-sm">
-          {/* Subtle Kawung watermark in CTA box */}
-          <div className="absolute inset-0 pointer-events-none opacity-[0.035]">
-            <BatikKawung color="#C5A059" opacity={0.08} className="w-full h-full" />
-          </div>
-
           <div className="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br from-[#B81D24] to-[#7A0D13] ring-1 ring-[#C5A059]/40 text-white mx-auto flex items-center justify-center font-black text-2xl shadow-lg shadow-[#B81D24]/20">
             <span className="tracking-tighter">DN</span>
           </div>

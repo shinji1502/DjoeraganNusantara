@@ -115,10 +115,6 @@ export const CatalogPage: React.FC = () => {
         <div className="card-heritage bg-heritage-artisan-watermark relative overflow-hidden rounded-3xl p-6 sm:p-8 border border-[#E7E2D9] shadow-2xs space-y-4">
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F9F4EB] text-[#8C5835] border border-[#C5A059]/30 text-xs font-bold mb-2">
-                <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
-                Katalog Resmi Djoeragan Nusantara
-              </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1C1917] tracking-tight">
                 Karya & Produk Pilihan UMKM Terverifikasi
               </h1>
