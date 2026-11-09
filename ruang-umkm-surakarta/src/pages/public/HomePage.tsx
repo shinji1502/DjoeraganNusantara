@@ -358,43 +358,43 @@ export const HomePage: React.FC = () => {
             {/* Right Column: Hero Visual Card with Verified Badges */}
             <div className="lg:col-span-5 relative animate-hero-enter">
               <div className="relative rounded-3xl overflow-hidden border border-[#E7E2D9] bg-white shadow-xl shadow-stone-900/5 ring-1 ring-amber-900/5">
-                <div className="relative aspect-4/3 sm:aspect-5/4 lg:aspect-4/3 w-full overflow-hidden bg-stone-100">
+                <div className="relative aspect-[4/3] sm:aspect-[5/4] lg:aspect-[4/3.2] min-h-[360px] sm:min-h-[400px] w-full overflow-hidden bg-stone-950">
                   <img
-                    src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=1200&q=80"
-                    alt="Pemberdayaan Pengrajin Batik & Kriya Tradisi Djoeragan Nusantara"
+                    src="/images/batik_tulis_artisan.jpg"
+                    alt="Pembatik Tulis Tradisi Jawa Tengah - Dari Rumah Produksi Menuju Pasar Ritel & LKPP"
                     className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none" />
 
                   {/* Top-Right Badge */}
-                  <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[11px] font-semibold shadow-xs">
+                  <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[11px] font-semibold shadow-xs">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span>Legalitas & Kurasi Terjamin</span>
                   </div>
 
                   {/* Bottom Integrated Caption */}
-                  <div className="absolute bottom-0 inset-x-0 p-5 text-white space-y-1.5">
-                    <div className="flex items-center gap-2 text-[11px] font-mono tracking-wider text-[#C5A059] uppercase font-semibold">
-                      <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
-                      <span>Jawa Tengah • Surakarta & Sekitarnya</span>
+                  <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 text-white space-y-2">
+                    <div className="flex items-center gap-1.5 text-[11px] font-mono tracking-wider text-[#C5A059] uppercase font-semibold">
+                      <MapPin className="w-3.5 h-3.5 text-[#C5A059] shrink-0" />
+                      <span>JAWA TENGAH • SURAKARTA & SEKITARNYA</span>
                     </div>
-                    <p className="font-bold text-sm sm:text-base leading-snug text-white">
+                    <h3 className="font-extrabold text-base sm:text-lg leading-snug text-white font-serif">
                       Dari Rumah Produksi Tradisi Menuju Pasar Ritel Modern & LKPP
-                    </p>
-                    <p className="text-xs text-stone-300 font-normal">
-                      Mendukung pelaku UMKM kuliner, batik, kerajinan kriya, hingga agribisnis lokal.
+                    </h3>
+                    <p className="text-xs text-stone-200 font-normal leading-relaxed">
+                      Mendukung transformasi pelaku UMKM kriya, batik tulis, hingga produk unggulan lokal Jawa Tengah agar siap kurasi pengadaan dan pasar ritel nasional.
                     </p>
                   </div>
                 </div>
 
                 {/* Sub-strip Bar */}
-                <div className="px-5 py-3 bg-[#1C1917] border-t border-stone-800 flex items-center justify-between text-[11px] text-stone-400">
+                <div className="px-5 py-3.5 bg-[#1C1917] border-t border-stone-800 flex items-center justify-between text-[11px] text-stone-400">
                   <span className="flex items-center gap-1.5 font-medium text-stone-200">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#C5A059]" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#C5A059] shrink-0" />
                     Terverifikasi Admin Djoeragan Nusantara
                   </span>
-                  <Link to="/anggota" className="text-[#C5A059] hover:underline font-bold">
-                    Lihat Direktori Anggota &rarr;
+                  <Link to="/anggota" className="text-[#C5A059] hover:underline font-bold flex items-center gap-1">
+                    <span>Lihat Direktori Anggota &rarr;</span>
                   </Link>
                 </div>
               </div>
