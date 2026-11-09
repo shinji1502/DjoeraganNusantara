@@ -11,21 +11,39 @@ import {
   ChevronRight,
   ArrowLeft,
   Sparkles,
+  MessageCircle,
+  ThumbsUp,
+  User as UserIcon,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-import { formatRupiah } from '../../utils/formatters';
+import { formatRupiah, formatTanggal } from '../../utils/formatters';
 import { ProductCard } from '../../components/common/ProductCard';
 import { BatikDivider } from '../../components/common/BatikOrnament';
 
 export const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { products, currentUser, addToCart, wishlist, toggleWishlist } = useApp();
+  const { products, currentUser, addToCart, wishlist, toggleWishlist, reviews, users } = useApp();
 
   const product = products.find((p) => p.id === id);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
+
+  const productReviews = reviews.filter((r) => r.productId === id);
+
+  const sellerUser = users.find((u) => u.id === product?.sellerId || (product && u.storeName === product.sellerName));
+  const sellerPhone = sellerUser?.phone || '0813-8899-7711';
+
+  const handleWhatsAppChat = () => {
+    if (!product) return;
+    const cleanPhone = sellerPhone.replace(/\D/g, '');
+    const waNumber = cleanPhone.startsWith('0') ? '62' + cleanPhone.slice(1) : cleanPhone;
+    const msg = encodeURIComponent(
+      `Halo ${product.sellerName}, saya melihat produk "${product.name}" di Ruang UMKM Surakarta (ID: ${product.id}). Apakah stok masih tersedia?`
+    );
+    window.open(`https://wa.me/${waNumber}?text=${msg}`, '_blank');
+  };
 
   if (!product || (currentUser.role !== 'admin' && currentUser.id !== product.sellerId && product.status !== 'aktif')) {
     return (
@@ -177,7 +195,11 @@ export const ProductDetailPage: React.FC = () => {
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <h4 className="font-bold text-sm text-[#1C1917]">{product.sellerName}</h4>
+                    <Link to={`/toko/${product.sellerId}`}>
+                      <h4 className="font-bold text-sm text-[#1C1917] hover:text-[#B81D24] transition">
+                        {product.sellerName}
+                      </h4>
+                    </Link>
                     <ShieldCheck className="w-4 h-4 text-emerald-600" />
                   </div>
                   <p className="text-xs text-[#78716C]">Izin Usaha NIB Terverifikasi OSS • Surakarta</p>
@@ -185,8 +207,8 @@ export const ProductDetailPage: React.FC = () => {
               </div>
 
               <Link
-                to={`/katalog?cari=${encodeURIComponent(product.sellerName)}`}
-                className="px-4 py-2 rounded-xl border border-[#D6CEC2] bg-white text-xs font-semibold text-[#1C1917] hover:border-[#C5A059] hover:bg-[#FAF7F2] transition whitespace-nowrap"
+                to={`/toko/${product.sellerId}`}
+                className="px-4 py-2 rounded-xl border border-[#D6CEC2] bg-white text-xs font-semibold text-[#1C1917] hover:border-[#C5A059] hover:bg-[#FAF7F2] transition whitespace-nowrap shadow-2xs"
               >
                 Kunjungi Toko
               </Link>
@@ -276,6 +298,15 @@ export const ProductDetailPage: React.FC = () => {
                   <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-white' : ''}`} />
                 </button>
               </div>
+
+              {/* Chat Penjual via WhatsApp */}
+              <button
+                onClick={handleWhatsAppChat}
+                className="w-full py-3 px-4 rounded-xl border border-emerald-600/30 bg-emerald-50 text-emerald-800 text-xs font-bold hover:bg-emerald-100 transition flex items-center justify-center gap-2"
+              >
+                <MessageCircle className="w-4 h-4 text-emerald-600" />
+                <span>Tanya Penjual via WhatsApp Langsung</span>
+              </button>
             </div>
 
             {/* Permendag 19/2026 Customer Protection Notice */}
@@ -290,6 +321,122 @@ export const ProductDetailPage: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* SECTION: Customer Reviews & Ratings */}
+        <section className="pt-8">
+          <BatikDivider />
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+              <span className="text-xs font-bold text-[#8C5835] uppercase tracking-wider">Testimoni Konsumen</span>
+              <h3 className="text-2xl font-serif font-extrabold text-[#1C1917] mt-1 flex items-center gap-2">
+                <span>Ulasan & Penilaian Pembeli</span>
+                <span className="text-sm font-normal text-[#78716C]">({productReviews.length} Ulasan)</span>
+              </h3>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Left: Overall Rating Card */}
+            <div className="lg:col-span-4 card-heritage p-6 space-y-5 h-fit">
+              <div className="text-center pb-5 border-b border-[#E7DFD5]">
+                <span className="text-5xl font-serif font-extrabold text-[#1C1917]">
+                  {product.rating}
+                </span>
+                <div className="flex items-center justify-center text-amber-500 my-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star
+                      key={star}
+                      className={`w-5 h-5 ${
+                        star <= Math.round(product.rating) ? 'fill-amber-400 text-amber-400' : 'text-stone-300'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <p className="text-xs text-[#78716C]">Berdasarkan {productReviews.length || product.reviewCount} ulasan pembeli terverifikasi</p>
+              </div>
+
+              {/* Rating Bars */}
+              <div className="space-y-2 text-xs">
+                {[5, 4, 3, 2, 1].map((stars) => {
+                  const count = productReviews.filter((r) => Math.round(r.rating) === stars).length;
+                  const total = productReviews.length || 1;
+                  const percent = Math.round((count / total) * 100);
+                  return (
+                    <div key={stars} className="flex items-center gap-2">
+                      <span className="w-12 text-[#57534E] font-medium flex items-center gap-1">
+                        {stars} <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                      </span>
+                      <div className="flex-1 h-2 rounded-full bg-[#E7DFD5] overflow-hidden">
+                        <div
+                          className="h-full bg-amber-500 rounded-full transition-all duration-500"
+                          style={{ width: `${percent}%` }}
+                        />
+                      </div>
+                      <span className="w-8 text-right text-[11px] text-[#A8A29E] font-mono">{count}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E7DFD5] text-[11px] text-[#57534E] flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>100% ulasan berasal dari transaksi yang telah selesai di platform Ruang UMKM.</span>
+              </div>
+            </div>
+
+            {/* Right: Reviews List */}
+            <div className="lg:col-span-8 space-y-4">
+              {productReviews.length > 0 ? (
+                productReviews.map((rev) => (
+                  <div key={rev.id} className="card-heritage p-5 sm:p-6 space-y-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={rev.buyerAvatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=160&q=80'}
+                          alt={rev.buyerName}
+                          className="w-10 h-10 rounded-full object-cover border border-[#E7DFD5]"
+                        />
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-bold text-xs sm:text-sm text-[#1C1917]">{rev.buyerName}</h4>
+                            <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-200">
+                              <CheckCircle2 className="w-3 h-3" />
+                              <span>Pembeli Terverifikasi</span>
+                            </span>
+                          </div>
+                          <span className="text-[11px] text-[#A8A29E]">{formatTanggal(rev.createdAt)}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center text-amber-400">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star
+                            key={s}
+                            className={`w-4 h-4 ${s <= rev.rating ? 'fill-amber-400 text-amber-400' : 'text-stone-300'}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-[#57534E] leading-relaxed">
+                      "{rev.comment}"
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <div className="card-heritage p-12 text-center space-y-3">
+                  <div className="w-12 h-12 rounded-full bg-[#FAF7F2] text-[#8C5835] mx-auto flex items-center justify-center border border-[#E7DFD5]">
+                    <Star className="w-6 h-6 text-[#C5A059]" />
+                  </div>
+                  <h4 className="font-bold text-sm text-[#1C1917]">Belum Ada Ulasan untuk Produk Ini</h4>
+                  <p className="text-xs text-[#78716C] max-w-sm mx-auto">
+                    Jadilah pembeli pertama yang memberikan testimoni setelah barang Anda terima dari perajin!
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (

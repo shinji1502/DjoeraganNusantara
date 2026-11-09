@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import {
+  INITIAL_ADDRESSES,
   INITIAL_ADMIN_ACTIVITIES,
   INITIAL_COMPLAINTS,
   INITIAL_EVENTS,
@@ -7,11 +8,13 @@ import {
   INITIAL_ORDERS,
   INITIAL_PRODUCTS,
   INITIAL_PROGRAMS,
+  INITIAL_REVIEWS,
   INITIAL_USERS,
   INITIAL_VERIFICATIONS,
 } from '../data/mockData';
 import { INITIAL_MEMBERS } from '../data/memberData';
 import {
+  Address,
   AdminActivity,
   CartItem,
   Complaint,
@@ -21,6 +24,7 @@ import {
   Order,
   OrderStatus,
   Product,
+  ProductReview,
   Program,
   User,
   UserRole,
@@ -88,6 +92,17 @@ interface AppContextType {
   wishlist: string[];
   toggleWishlist: (productId: string) => void;
 
+  // Addresses
+  addresses: Address[];
+  addAddress: (addr: Omit<Address, 'id'>) => void;
+  updateAddress: (id: string, updates: Partial<Address>) => void;
+  deleteAddress: (id: string) => void;
+  setPrimaryAddress: (id: string) => void;
+
+  // Reviews
+  reviews: ProductReview[];
+  addReview: (review: Omit<ProductReview, 'id' | 'createdAt'>) => void;
+
   // Verifications & Seller Status
   verifications: VerificationRequest[];
   approveVerification: (id: string, notes?: string) => void;
@@ -110,6 +125,7 @@ interface AppContextType {
 
   // Complaints & Activity
   complaints: Complaint[];
+  addComplaint: (complaint: Omit<Complaint, 'id' | 'ticketNumber' | 'createdAt' | 'status' | 'slaHoursLeft'>) => void;
   updateComplaintStatus: (id: string, status: Complaint['status']) => void;
   adminActivities: AdminActivity[];
 
@@ -220,6 +236,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [wishlist, setWishlist] = useState<string[]>(() =>
     loadFromStorage<string[]>('wishlist', ['prod-1', 'prod-3'])
   );
+  const [addresses, setAddresses] = useState<Address[]>(() =>
+    loadFromStorage<Address[]>('addresses', INITIAL_ADDRESSES)
+  );
+  const [reviews, setReviews] = useState<ProductReview[]>(() =>
+    loadFromStorage<ProductReview[]>('reviews', INITIAL_REVIEWS)
+  );
   const [toasts, setToasts] = useState<ToastNotification[]>([]);
 
   // Sync to local storage
@@ -235,6 +257,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   useEffect(() => { saveToStorage('admin_activities', adminActivities); }, [adminActivities]);
   useEffect(() => { saveToStorage('cart', cart); }, [cart]);
   useEffect(() => { saveToStorage('wishlist', wishlist); }, [wishlist]);
+  useEffect(() => { saveToStorage('addresses', addresses); }, [addresses]);
+  useEffect(() => { saveToStorage('reviews', reviews); }, [reviews]);
 
   // Toast System
   const showToast = (message: string, type: 'success' | 'error' | 'info' = 'success') => {
@@ -905,7 +929,90 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return success;
   };
 
+  // Addresses
+  const addAddress = (addr: Omit<Address, 'id'>) => {
+    const newAddr: Address = {
+      ...addr,
+      id: 'addr-' + Date.now(),
+    };
+    setAddresses((prev) => {
+      const updated = addr.isPrimary ? prev.map((a) => ({ ...a, isPrimary: false })) : [...prev];
+      return [newAddr, ...updated];
+    });
+    showToast('Alamat pengiriman baru berhasil disimpan!');
+  };
+
+  const updateAddress = (id: string, updates: Partial<Address>) => {
+    setAddresses((prev) =>
+      prev.map((a) => {
+        if (a.id === id) {
+          return { ...a, ...updates };
+        }
+        if (updates.isPrimary) {
+          return { ...a, isPrimary: false };
+        }
+        return a;
+      })
+    );
+    showToast('Alamat berhasil diperbarui!');
+  };
+
+  const deleteAddress = (id: string) => {
+    setAddresses((prev) => prev.filter((a) => a.id !== id));
+    showToast('Alamat berhasil dihapus.');
+  };
+
+  const setPrimaryAddress = (id: string) => {
+    setAddresses((prev) =>
+      prev.map((a) => ({ ...a, isPrimary: a.id === id }))
+    );
+    showToast('Alamat utama berhasil ditetapkan.');
+  };
+
+  // Reviews
+  const addReview = (reviewData: Omit<ProductReview, 'id' | 'createdAt'>) => {
+    const newRev: ProductReview = {
+      ...reviewData,
+      id: 'rev-' + Date.now(),
+      createdAt: new Date().toISOString(),
+      helpfulCount: 0,
+    };
+    setReviews((prev) => [newRev, ...prev]);
+
+    // Update product rating and review count
+    setProducts((prev) =>
+      prev.map((p) => {
+        if (p.id === reviewData.productId) {
+          const productReviews = [...reviews.filter((r) => r.productId === p.id), newRev];
+          const avg = Number((productReviews.reduce((sum, r) => sum + r.rating, 0) / productReviews.length).toFixed(1));
+          return {
+            ...p,
+            rating: avg,
+            reviewCount: productReviews.length,
+          };
+        }
+        return p;
+      })
+    );
+    showToast('Terima kasih! Ulasan & penilaian Anda berhasil dikirim.', 'success');
+  };
+
   // Complaints
+  const addComplaint = (c: Omit<Complaint, 'id' | 'ticketNumber' | 'createdAt' | 'status' | 'slaHoursLeft'>) => {
+    const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const rand = Math.floor(100 + Math.random() * 900);
+    const newComplaint: Complaint = {
+      ...c,
+      id: 'complaint-' + Date.now(),
+      ticketNumber: `TKT-${dateStr}-${rand}`,
+      status: 'baru',
+      slaHoursLeft: 24,
+      createdAt: new Date().toISOString(),
+    };
+    setComplaints((prev) => [newComplaint, ...prev]);
+    showToast(`Tiket pengaduan ${newComplaint.ticketNumber} berhasil didaftarkan. Tim kurator akan menindaklanjuti.`, 'success');
+  };
+
   const updateComplaintStatus = (id: string, status: Complaint['status']) => {
     setComplaints((prev) =>
       prev.map((c) => (c.id === id ? { ...c, status } : c))
@@ -924,6 +1031,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setEvents(INITIAL_EVENTS);
     setComplaints(INITIAL_COMPLAINTS);
     setAdminActivities(INITIAL_ADMIN_ACTIVITIES);
+    setAddresses(INITIAL_ADDRESSES);
+    setReviews(INITIAL_REVIEWS);
     setCart([
       {
         productId: 'prod-1',
@@ -968,6 +1077,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         updateOrderStatus,
         wishlist,
         toggleWishlist,
+        addresses,
+        addAddress,
+        updateAddress,
+        deleteAddress,
+        setPrimaryAddress,
+        reviews,
+        addReview,
         verifications,
         approveVerification,
         rejectVerification,
@@ -981,6 +1097,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         addEvent,
         marketChannels: INITIAL_MARKET_CHANNELS,
         complaints,
+        addComplaint,
         updateComplaintStatus,
         adminActivities,
         toasts,

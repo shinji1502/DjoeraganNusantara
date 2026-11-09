@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Trash2, ShoppingBag, ArrowRight, ShieldCheck, Tag, ChevronLeft } from 'lucide-react';
+import { Trash2, ShoppingBag, ArrowRight, ShieldCheck, Tag, ChevronLeft, Store } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { formatRupiah } from '../../utils/formatters';
 
@@ -10,6 +10,20 @@ export const CartPage: React.FC = () => {
 
   const [couponCode, setCouponCode] = useState('');
   const [discountAmount, setDiscountAmount] = useState(0);
+
+  // Group cart items by seller
+  const itemsBySeller = useMemo(() => {
+    const map = new Map<string, { sellerId: string; sellerName: string; items: typeof cart }>();
+    cart.forEach((item) => {
+      const sId = item.product.sellerId;
+      const sName = item.product.sellerName;
+      if (!map.has(sId)) {
+        map.set(sId, { sellerId: sId, sellerName: sName, items: [] });
+      }
+      map.get(sId)!.items.push(item);
+    });
+    return Array.from(map.values());
+  }, [cart]);
 
   const shippingFee = cartSubtotal > 150000 || cartSubtotal === 0 ? 0 : 15000;
   const grandTotal = Math.max(0, cartSubtotal + shippingFee - discountAmount);
@@ -63,72 +77,99 @@ export const CartPage: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Cart Item List */}
-        <div className="lg:col-span-8 space-y-4">
-          {cart.map((item) => (
-            <div
-              key={item.productId}
-              className="card-heritage p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-            >
-              <div className="flex items-center gap-4">
-                <img
-                  src={item.product.images?.[0] || 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=800&q=80'}
-                  alt={item.product.name}
-                  className="w-20 h-20 rounded-2xl object-cover border border-[#E7DFD5] shrink-0"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=800&q=80';
-                  }}
-                />
-                <div className="space-y-1">
-                  <span className="text-[10px] font-bold text-[#8C5835] uppercase tracking-wider block">
-                    {item.product.sellerName}
-                  </span>
-                  <Link
-                    to={`/produk/${item.product.id}`}
-                    className="font-bold text-sm text-[#1C1917] hover:text-[#B81D24] transition line-clamp-1"
-                  >
-                    {item.product.name}
-                  </Link>
-                  <p className="text-xs font-extrabold text-[#B81D24]">
-                    {formatRupiah(item.product.price)}
-                  </p>
-                </div>
+        {/* Cart Item List Grouped by Seller */}
+        <div className="lg:col-span-8 space-y-6">
+          {itemsBySeller.map((group) => (
+            <div key={group.sellerId} className="card-heritage p-5 sm:p-6 space-y-4">
+              {/* Store Header */}
+              <div className="flex items-center justify-between pb-3 border-b border-[#E7DFD5]">
+                <Link
+                  to={`/toko/${group.sellerId}`}
+                  className="flex items-center gap-2 group/store"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-[#C5A059]/15 text-[#8C5835] flex items-center justify-center font-bold border border-[#C5A059]/30">
+                    <Store className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-sm text-[#1C1917] group-hover/store:text-[#B81D24] transition">
+                      {group.sellerName}
+                    </h3>
+                    <p className="text-[10px] text-[#78716C]">Mitra Terverifikasi OSS Surakarta</p>
+                  </div>
+                </Link>
+
+                <span className="px-2.5 py-0.5 rounded-full bg-[#FAF7F2] text-[#8C5835] text-[10px] font-bold border border-[#E7DFD5]">
+                  {group.items.length} Barang
+                </span>
               </div>
 
-              {/* Quantity Controls & Remove */}
-              <div className="flex items-center justify-between w-full sm:w-auto gap-6 border-t sm:border-t-0 pt-3 sm:pt-0 border-[#E7DFD5]/80">
-                <div className="flex items-center border border-[#D6CEC2] rounded-xl overflow-hidden bg-[#FAF7F2]">
-                  <button
-                    onClick={() => updateCartQuantity(item.productId, item.quantity - 1)}
-                    className="px-2.5 py-1 text-[#57534E] hover:bg-[#E7DFD5] font-bold text-xs transition"
+              {/* Items in this Store */}
+              <div className="space-y-3 divide-y divide-[#E7DFD5]/60">
+                {group.items.map((item) => (
+                  <div
+                    key={item.productId}
+                    className="pt-3 first:pt-0 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
                   >
-                    -
-                  </button>
-                  <span className="px-3 py-1 text-xs font-bold text-[#1C1917] min-w-[30px] text-center">
-                    {item.quantity}
-                  </span>
-                  <button
-                    onClick={() => updateCartQuantity(item.productId, item.quantity + 1)}
-                    className="px-2.5 py-1 text-[#57534E] hover:bg-[#E7DFD5] font-bold text-xs transition"
-                  >
-                    +
-                  </button>
-                </div>
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={item.product.images?.[0] || 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=800&q=80'}
+                        alt={item.product.name}
+                        className="w-16 h-16 rounded-2xl object-cover border border-[#E7DFD5] shrink-0"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=800&q=80';
+                        }}
+                      />
+                      <div className="space-y-1">
+                        <Link
+                          to={`/produk/${item.product.id}`}
+                          className="font-bold text-sm text-[#1C1917] hover:text-[#B81D24] transition line-clamp-1 max-w-[280px]"
+                        >
+                          {item.product.name}
+                        </Link>
+                        <p className="text-xs font-extrabold text-[#B81D24]">
+                          {formatRupiah(item.product.price)}
+                        </p>
+                      </div>
+                    </div>
 
-                <div className="text-right min-w-[100px]">
-                  <span className="text-[10px] text-[#A8A29E] block">Subtotal:</span>
-                  <span className="text-xs font-extrabold text-[#1C1917]">
-                    {formatRupiah(item.product.price * item.quantity)}
-                  </span>
-                </div>
+                    {/* Quantity Controls & Remove */}
+                    <div className="flex items-center justify-between w-full sm:w-auto gap-5">
+                      <div className="flex items-center border border-[#D6CEC2] rounded-xl overflow-hidden bg-[#FAF7F2]">
+                        <button
+                          onClick={() => updateCartQuantity(item.productId, item.quantity - 1)}
+                          className="px-2.5 py-1 text-[#57534E] hover:bg-[#E7DFD5] font-bold text-xs transition"
+                        >
+                          -
+                        </button>
+                        <span className="px-3 py-1 text-xs font-bold text-[#1C1917] min-w-[30px] text-center">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => updateCartQuantity(item.productId, item.quantity + 1)}
+                          className="px-2.5 py-1 text-[#57534E] hover:bg-[#E7DFD5] font-bold text-xs transition"
+                        >
+                          +
+                        </button>
+                      </div>
 
-                <button
-                  onClick={() => removeFromCart(item.productId)}
-                  className="p-1.5 text-[#A8A29E] hover:text-rose-600 transition"
-                  title="Hapus dari keranjang"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                      <div className="text-right min-w-[90px]">
+                        <span className="text-[10px] text-[#A8A29E] block">Subtotal:</span>
+                        <span className="text-xs font-extrabold text-[#1C1917]">
+                          {formatRupiah(item.product.price * item.quantity)}
+                        </span>
+                      </div>
+
+                      <button
+                        onClick={() => removeFromCart(item.productId)}
+                        className="p-1.5 text-[#A8A29E] hover:text-rose-600 transition"
+                        title="Hapus dari keranjang"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}

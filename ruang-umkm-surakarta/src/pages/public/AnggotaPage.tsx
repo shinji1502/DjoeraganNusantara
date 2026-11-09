@@ -558,13 +558,22 @@ export const AnggotaPage: React.FC = () => {
               </div>
             )}
 
-            <div className="pt-2 flex justify-end gap-2">
+            <div className="pt-2 flex flex-wrap justify-end items-center gap-2">
               <button
                 onClick={() => setSelectedMember(null)}
                 className="px-5 py-2.5 rounded-full border border-[#D6CEC2] text-xs font-bold text-stone-700 hover:bg-[#FAF7F2] transition"
               >
                 Tutup
               </button>
+              {selectedMember.hasBusiness && selectedMember.businessName && (
+                <Link
+                  to={`/katalog?cari=${encodeURIComponent(selectedMember.businessName)}`}
+                  className="px-5 py-2.5 rounded-full bg-[#1C1917] text-[#FAF7F2] border border-[#C5A059]/40 text-xs font-bold hover:bg-[#292524] transition shadow-xs flex items-center gap-1.5"
+                >
+                  <Store className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <span>Lihat Toko / Produk</span>
+                </Link>
+              )}
               <Link
                 to="/daftar"
                 className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#B81D24] to-[#98141A] text-white text-xs font-bold hover:from-[#98141A] hover:to-[#7A0D13] transition shadow-xs"

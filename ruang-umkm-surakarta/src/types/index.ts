@@ -228,3 +228,64 @@ export interface AdminActivity {
   timestamp: string;
   type: 'verifikasi' | 'moderasi' | 'pengguna' | 'sistem';
 }
+
+export interface Address {
+  id: string;
+  userId: string;
+  title: string;
+  recipientName: string;
+  phone: string;
+  district: string;
+  fullAddress: string;
+  postalCode?: string;
+  isPrimary: boolean;
+}
+
+export interface ProductReview {
+  id: string;
+  productId: string;
+  orderId?: string;
+  buyerId: string;
+  buyerName: string;
+  buyerAvatar?: string;
+  rating: number; // 1 to 5
+  comment: string;
+  createdAt: string;
+  helpfulCount?: number;
+}
+
+export interface Article {
+  id: string;
+  title: string;
+  slug: string;
+  date: string;
+  category: string;
+  summary: string;
+  content: string[];
+  image: string;
+  tag: string;
+  author: string;
+  readTime: string;
+  quotes?: string;
+  keyPoints?: string[];
+}
+
+export interface SellerStore {
+  sellerId: string;
+  storeName: string;
+  ownerName: string;
+  avatar: string;
+  banner?: string;
+  phone: string;
+  email?: string;
+  address: string;
+  district: string;
+  nib: string;
+  isVerified: boolean;
+  bio: string;
+  joinedYear?: number;
+  rating?: number;
+  totalSold?: number;
+  categories: string[];
+}
+

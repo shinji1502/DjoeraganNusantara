@@ -11,10 +11,12 @@ import { HomePage } from './pages/public/HomePage';
 import { AnggotaPage } from './pages/public/AnggotaPage';
 import { CatalogPage } from './pages/public/CatalogPage';
 import { ProductDetailPage } from './pages/public/ProductDetailPage';
+import { StoreProfilePage } from './pages/public/StoreProfilePage';
 import { PelatihanPage } from './pages/public/PelatihanPage';
 import { EventPage } from './pages/public/EventPage';
 import { SertifikasiUsahaPage } from './pages/public/SertifikasiUsahaPage';
 import { InformasiPage } from './pages/public/InformasiPage';
+import { ArticleDetailPage } from './pages/public/ArticleDetailPage';
 import { AksesBertumbuhPage } from './pages/public/AksesBertumbuhPage';
 import { LoginPage } from './pages/public/LoginPage';
 import { RegisterPage } from './pages/public/RegisterPage';
@@ -64,9 +66,10 @@ export function App() {
             <Route path="/anggota" element={<AnggotaPage />} />
             <Route path="/tentang" element={<Navigate to="/anggota" replace />} />
 
-            {/* 3. Katalog */}
+            {/* 3. Katalog & Toko */}
             <Route path="/katalog" element={<CatalogPage />} />
             <Route path="/produk/:id" element={<ProductDetailPage />} />
+            <Route path="/toko/:sellerId" element={<StoreProfilePage />} />
 
             {/* 4. Pelatihan (Sebelumnya Akademi) */}
             <Route path="/pelatihan" element={<PelatihanPage />} />
@@ -82,6 +85,7 @@ export function App() {
 
             {/* 7. Informasi (Sebelumnya Berita) */}
             <Route path="/informasi" element={<InformasiPage />} />
+            <Route path="/informasi/:id" element={<ArticleDetailPage />} />
             <Route path="/berita" element={<Navigate to="/informasi" replace />} />
 
             {/* 8. Akses Bertumbuh (Sebelumnya Akses Keuangan) */}

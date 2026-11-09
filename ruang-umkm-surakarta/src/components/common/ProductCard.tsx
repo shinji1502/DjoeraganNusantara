@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Star, ShoppingBag, ShieldCheck, MapPin } from 'lucide-react';
+import { Heart, Star, ShoppingBag, ShieldCheck, MapPin, Store } from 'lucide-react';
 import { Product } from '../../types';
 import { formatRupiah } from '../../utils/formatters';
 import { useApp } from '../../context/AppContext';
@@ -78,9 +78,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="p-4 sm:p-5">
           {/* Toko & Badge Kurasi */}
           <div className="flex items-center justify-between text-xs text-stone-500 mb-1.5">
-            <span className="font-medium truncate max-w-[170px] hover:text-[#B81D24] transition">
-              {product.sellerName}
-            </span>
+            <Link
+              to={`/toko/${product.sellerId}`}
+              className="font-medium truncate max-w-[170px] hover:text-[#B81D24] transition flex items-center gap-1"
+              title={`Kunjungi Toko ${product.sellerName}`}
+            >
+              <Store className="w-3 h-3 text-[#C5A059] shrink-0" />
+              <span className="truncate">{product.sellerName}</span>
+            </Link>
             {product.isCurated && (
               <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#9A6B39] bg-[#F9F4EB] border border-[#C5A059]/30 px-2 py-0.5 rounded-md">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#C5A059]" />
