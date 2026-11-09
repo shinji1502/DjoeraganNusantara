@@ -3,22 +3,18 @@ import { Link } from 'react-router-dom';
 import {
   Users,
   Search,
-  Filter,
   CheckCircle2,
   MapPin,
   Briefcase,
   Store,
   Sparkles,
-  UserCheck,
   Calendar,
   X,
   ChevronRight,
   ShieldCheck,
-  Building2,
-  Award,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-import { Member, Gender, AgeGroup } from '../../types';
+import { Member } from '../../types';
 import { JAWA_TENGAH_REGIONS } from '../../data/memberData';
 import { NumberCounter } from '../../components/common/NumberCounter';
 import { BatikKawung } from '../../components/common/BatikOrnament';
@@ -106,9 +102,6 @@ export const AnggotaPage: React.FC = () => {
   const countWithBusiness = members.filter(
     (m) => m.verificationStatus === 'disetujui' && m.hasBusiness
   ).length;
-  const countWithoutBusiness = members.filter(
-    (m) => m.verificationStatus === 'disetujui' && !m.hasBusiness
-  ).length;
 
   const resetFilters = () => {
     setSearchQuery('');
@@ -125,10 +118,6 @@ export const AnggotaPage: React.FC = () => {
       <section className="relative overflow-hidden bg-transparent border-b border-[#E7E2D9] bg-heritage-artisan-watermark py-14 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F9F4EB] text-[#8C5835] border border-[#C5A059]/30 text-xs font-bold shadow-2xs">
-              <Users className="w-3.5 h-3.5 text-[#C5A059]" />
-              <span>Direktori Resmi Komunitas UMKM</span>
-            </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1C1917] tracking-tight">
               Anggota <span className="text-[#B81D24]">Djoeragan Nusantara</span>
             </h1>
@@ -138,7 +127,7 @@ export const AnggotaPage: React.FC = () => {
           </div>
 
           {/* Animated Statistics Bar */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-10">
             <div className="card-heritage p-5 rounded-2xl flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-red-50 text-[#B81D24] flex items-center justify-center shrink-0 border border-red-100">
                 <Users className="w-6 h-6" />
@@ -160,18 +149,6 @@ export const AnggotaPage: React.FC = () => {
                   <NumberCounter target={countWithBusiness} suffix="+" />
                 </div>
                 <p className="text-xs text-stone-500 font-medium mt-0.5">Memiliki Usaha Aktif</p>
-              </div>
-            </div>
-
-            <div className="card-heritage p-5 rounded-2xl flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#F9F4EB] text-[#8C5835] flex items-center justify-center shrink-0 border border-[#C5A059]/30">
-                <Sparkles className="w-6 h-6 text-[#C5A059]" />
-              </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#1C1917] leading-tight">
-                  <NumberCounter target={countWithoutBusiness} />
-                </div>
-                <p className="text-xs text-stone-500 font-medium mt-0.5">Rintisan & Inkubasi</p>
               </div>
             </div>
 
@@ -213,40 +190,6 @@ export const AnggotaPage: React.FC = () => {
                   <X className="w-4 h-4" />
                 </button>
               )}
-            </div>
-
-            {/* Quick Status Toggle */}
-            <div className="flex items-center gap-1.5 p-1 bg-[#FAF7F2] border border-[#E7E2D9] rounded-full text-xs shrink-0">
-              <button
-                onClick={() => setSelectedBusinessStatus('Semua')}
-                className={`px-3.5 py-1.5 rounded-full font-semibold transition ${
-                  selectedBusinessStatus === 'Semua'
-                    ? 'bg-white text-[#1C1917] shadow-2xs border border-stone-200'
-                    : 'text-stone-600 hover:text-[#1C1917]'
-                }`}
-              >
-                Semua Status
-              </button>
-              <button
-                onClick={() => setSelectedBusinessStatus('punya_usaha')}
-                className={`px-3.5 py-1.5 rounded-full font-semibold transition ${
-                  selectedBusinessStatus === 'punya_usaha'
-                    ? 'bg-gradient-to-r from-[#B81D24] to-[#98141A] text-white shadow-2xs'
-                    : 'text-stone-600 hover:text-[#1C1917]'
-                }`}
-              >
-                Memiliki Usaha
-              </button>
-              <button
-                onClick={() => setSelectedBusinessStatus('belum_usaha')}
-                className={`px-3.5 py-1.5 rounded-full font-semibold transition ${
-                  selectedBusinessStatus === 'belum_usaha'
-                    ? 'bg-[#1C1917] text-white shadow-2xs'
-                    : 'text-stone-600 hover:text-[#1C1917]'
-                }`}
-              >
-                Rintisan Pemula
-              </button>
             </div>
           </div>
 
@@ -594,10 +537,6 @@ export const AnggotaPage: React.FC = () => {
           </div>
 
           <div className="relative z-10 space-y-3 max-w-xl">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF7F2]/10 text-[#C5A059] text-xs font-bold border border-[#C5A059]/30">
-              <Sparkles className="w-3.5 h-3.5" />
-              Komunitas Tumbuh Bersama
-            </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Ingin Bergabung dalam Direktori Anggota Djoeragan Nusantara?
             </h2>

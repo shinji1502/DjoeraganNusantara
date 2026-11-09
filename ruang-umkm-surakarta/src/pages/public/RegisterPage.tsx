@@ -11,13 +11,9 @@ import {
   AlertCircle,
   Clock,
   ArrowRight,
-  CheckSquare,
-  Square,
   Lock,
   XCircle,
   FileCheck,
-  Building2,
-  HelpCircle,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { ProductCategory, User, Gender, AgeGroup } from '../../types';

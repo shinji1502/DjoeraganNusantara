@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import {
   Calendar,
   ArrowUpRight,
-  Sparkles,
 } from 'lucide-react';
 import { BatikParang } from '../../components/common/BatikOrnament';
 import { INITIAL_ARTICLES } from '../../data/articleData';
@@ -25,10 +24,6 @@ export const InformasiPage: React.FC = () => {
           <BatikParang className="h-full w-full" color="#C5A059" opacity={0.12} />
         </div>
         <div className="max-w-4xl mx-auto px-4 text-center space-y-4 relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B81D24]/10 text-[#98141A] text-xs font-bold border border-[#B81D24]/20">
-            <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
-            <span>Pusat Wawasan, Edukasi & Kabar Usaha</span>
-          </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-[#1C1917] tracking-tight">
             Informasi & Edukasi Ruang UMKM Surakarta
           </h1>

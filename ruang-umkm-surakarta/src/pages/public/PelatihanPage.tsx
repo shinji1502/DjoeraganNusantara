@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 import {
-  BookOpen,
   Calendar,
   MapPin,
   User,
-  CheckCircle2,
-  Sparkles,
-  Clock,
-  Award,
-  Video,
-  Users,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
@@ -28,10 +21,6 @@ export const PelatihanPage: React.FC = () => {
       {/* Header with friendly tone, square grid, & faint artisan watermark */}
       <section className="relative overflow-hidden bg-transparent border-b border-[#E7E2D9] bg-heritage-artisan-watermark py-14 sm:py-16">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-4 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F9F4EB] text-[#8C5835] text-xs font-bold border border-[#C5A059]/30 shadow-2xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
-            <span>Pusat Pelatihan & Bimbingan Wirausaha</span>
-          </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1C1917] tracking-tight">
             Pelatihan Anggota <span className="text-[#B81D24]">Djoeragan Nusantara</span>
           </h1>

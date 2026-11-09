@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, MapPin, Target, Users, Award, FileText, ArrowRight } from 'lucide-react';
+import { MapPin, Target, Award } from 'lucide-react';
 
 export const AboutPage: React.FC = () => {
   const districtsData = [
