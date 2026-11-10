@@ -110,6 +110,56 @@ body {
   z-index: 0;
 }
 
+/* Akses Bertumbuh Dedicated Hero — Photo cover without batik, radial text overlay & bottom gradient fade */
+.akses-hero {
+  position: relative;
+  background-color: var(--dn-surface-bg, #FFFFFF);
+  background-image: url('/images/solo_umkm_artisan.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.akses-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Radial gradient overlay: putih pekat di tengah area teks, memudar ke tepi agar karakter foto samping tetap tajam */
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(255, 255, 255, 0.55) 45%,
+    rgba(255, 255, 255, 0.15) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 640px) {
+  .akses-hero::before {
+    /* Pada mobile, overlay radial diperluas agar teks penuh tetap sangat mudah dibaca */
+    background: radial-gradient(
+      ellipse at 50% 50%,
+      rgba(255, 255, 255, 0.94) 0%,
+      rgba(255, 255, 255, 0.80) 60%,
+      rgba(255, 255, 255, 0.50) 100%
+    );
+  }
+}
+
+.akses-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 38%; /* 35-40% gradient fade to seamless bottom */
+  background: linear-gradient(to bottom, transparent 0%, var(--dn-surface-bg, #FFFFFF) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
 /* Katalog: Ivory polos — bersih tanpa pattern di belakang produk */
 .bg-theme-katalog {
   background-color: var(--dn-global-bg);

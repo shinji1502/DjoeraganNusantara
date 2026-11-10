@@ -13,7 +13,6 @@ import {
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { formatRupiah } from '../../utils/formatters';
-import { BatikParang } from '../../components/common/BatikOrnament';
 
 export const AksesBertumbuhPage: React.FC = () => {
   const { showToast } = useApp();
@@ -71,21 +70,24 @@ export const AksesBertumbuhPage: React.FC = () => {
 
   return (
     <div className="space-y-12 sm:space-y-16 pb-24 bg-theme-akses-bertumbuh min-h-screen">
-      {/* Editorial Header with Square Grid, Parang watermark, & Faint Artisan Photo */}
-      <section className="relative overflow-hidden bg-transparent border-b border-[#E7DFD5] bg-heritage-artisan-watermark py-14 sm:py-16">
-        <div className="absolute right-0 top-0 bottom-0 w-64 pointer-events-none opacity-40 hidden md:block">
-          <BatikParang className="h-full w-full" color="#C5A059" opacity={0.12} />
-        </div>
-        <div className="max-w-4xl mx-auto px-4 text-center space-y-4 relative z-10">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-[#1C1917] tracking-tight">
+      {/* Editorial Header — Akses Bertumbuh Dedicated Hero */}
+      <section className="akses-hero overflow-hidden py-10 sm:py-12">
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-3.5 relative z-10">
+          <h1
+            style={{ textShadow: '0 1px 12px rgba(255, 255, 255, 0.9)' }}
+            className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-[#1C1917] tracking-tight"
+          >
             Akses Bertumbuh Djoeragan Nusantara
           </h1>
-          <p className="text-sm sm:text-base text-[#57534E] max-w-2xl mx-auto leading-relaxed">
+          <p
+            style={{ textShadow: '0 1px 12px rgba(255, 255, 255, 0.9)' }}
+            className="text-sm sm:text-base text-[#2B2118] font-medium max-w-2xl mx-auto leading-relaxed"
+          >
             Wadah kolaborasi terpadu untuk mengakselerasi UMKM menuju pasar yang lebih besar. Akses modal kredit perbankan, jalin kemitraan B2B antarbisnis, serta masuki pengadaan resmi pemerintah (B2G).
           </p>
 
           {/* Pillar Navigation Tabs */}
-          <div className="flex justify-center flex-wrap gap-2.5 pt-4">
+          <div className="flex justify-center flex-wrap gap-2.5 pt-3">
             <button
               onClick={() => setActiveTab('keuangan')}
               className={`px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer ${
@@ -132,6 +134,13 @@ export const AksesBertumbuhPage: React.FC = () => {
             >
               <Crown className="w-3.5 h-3.5 text-[#C5A059]" />
               <span>Ruang Komersial Berbayar</span>
+              <span className={`text-[9.5px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded-md ${
+                activeTab === 'komersial'
+                  ? 'bg-white/20 text-white'
+                  : 'bg-[#B81D24]/10 text-[#B81D24] border border-[#B81D24]/20'
+              }`}>
+                Premium
+              </span>
             </button>
           </div>
         </div>
