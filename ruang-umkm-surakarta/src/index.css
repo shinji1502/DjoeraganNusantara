@@ -114,10 +114,41 @@ body {
 .akses-hero {
   position: relative;
   background-color: var(--dn-surface-bg, #FFFFFF);
-  background-image: url('/images/solo_umkm_artisan.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .akses-hero {
+    min-height: 420px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .akses-hero {
+    min-height: 440px;
+    height: 450px;
+  }
+}
+
+.akses-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (min-width: 1024px) {
+  .akses-hero-img {
+    object-position: center 22%;
+  }
 }
 
 .akses-hero::before {

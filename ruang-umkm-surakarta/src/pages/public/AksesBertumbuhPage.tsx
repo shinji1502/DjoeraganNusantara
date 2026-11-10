@@ -71,8 +71,15 @@ export const AksesBertumbuhPage: React.FC = () => {
   return (
     <div className="space-y-12 sm:space-y-16 pb-24 bg-theme-akses-bertumbuh min-h-screen">
       {/* Editorial Header — Akses Bertumbuh Dedicated Hero */}
-      <section className="akses-hero overflow-hidden py-10 sm:py-12">
-        <div className="max-w-4xl mx-auto px-4 text-center space-y-3.5 relative z-10">
+      <section className="akses-hero overflow-hidden py-10 sm:py-14">
+        {/* Background photo pengrajin batik — object-fit: cover dengan object-position terkalibrasi */}
+        <img
+          src="/images/solo_umkm_artisan.jpg"
+          alt="Pengrajin Batik Tradisional Solo"
+          className="akses-hero-img"
+        />
+
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-3.5 relative z-10 w-full">
           <h1
             style={{ textShadow: '0 1px 14px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 0.8)' }}
             className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold tracking-tight text-[#292525]"
