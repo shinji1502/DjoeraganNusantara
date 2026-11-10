@@ -152,13 +152,15 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ role }) => {
         <aside className="hidden lg:flex flex-col w-64 bg-white border-r border-[#E7DFD5] shrink-0">
           {/* Brand header */}
           <div className="h-20 px-6 border-b border-[#E7DFD5] flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#B81D24] to-[#7A0D12] flex items-center justify-center text-white font-serif font-extrabold text-base shadow-md shadow-[#B81D24]/25 border border-[#C5A059]/50">
-                DN
-              </div>
+            <Link to="/" className="flex items-center gap-2.5">
+              <img
+                src="/images/logo-emblem.png"
+                alt="Djoeragan Nusantara"
+                className="w-9 h-9 object-contain shrink-0"
+              />
               <div className="flex flex-col">
-                <span className="font-serif font-extrabold text-base tracking-tight text-[#1C1917]">
-                  Djoeragan
+                <span className="font-extrabold text-sm tracking-tight text-[#1C1917] leading-tight">
+                  Djoeragan Nusantara
                 </span>
                 <span className="text-[10px] font-bold text-[#8C5835] tracking-wider uppercase">
                   {roleLabels[role].title}

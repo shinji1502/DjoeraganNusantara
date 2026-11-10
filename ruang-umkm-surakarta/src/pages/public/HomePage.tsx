@@ -650,9 +650,11 @@ export const HomePage: React.FC = () => {
       {/* SECTION: CTA DAFTAR MITRA DJOERAGAN NUSANTARA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden bg-white rounded-3xl border border-[#E7E2D9] p-8 sm:p-12 text-center max-w-4xl mx-auto space-y-6 shadow-sm">
-          <div className="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br from-[#B81D24] to-[#7A0D13] ring-1 ring-[#C5A059]/40 text-white mx-auto flex items-center justify-center font-black text-2xl shadow-lg shadow-[#B81D24]/20">
-            <span className="tracking-tighter">DN</span>
-          </div>
+          <img
+            src="/images/logo-emblem.png"
+            alt="Djoeragan Nusantara"
+            className="relative z-10 w-16 h-16 object-contain mx-auto drop-shadow-sm"
+          />
           <div className="relative z-10 space-y-2">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1C1917] tracking-tight">
               Siap Bertumbuh Bersama Djoeragan Nusantara?

@@ -17,13 +17,11 @@ export const FooterPublic: React.FC = () => {
           {/* Brand & Identity */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#B81D24] to-[#7A0D13] ring-1 ring-[#C5A059]/40 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-black/40">
-                <span className="tracking-tighter">DN</span>
-              </div>
-              <div>
-                <h3 className="font-extrabold text-xl text-white tracking-tight">Djoeragan Nusantara</h3>
-                <p className="text-xs text-[#C5A059] font-bold uppercase tracking-wider">Wadah Kolaborasi & Pertumbuhan UMKM</p>
-              </div>
+              <img
+                src="/images/logo-djoeragan-nusantara-light.png"
+                alt="Djoeragan Nusantara"
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
             </div>
 
             <p className="text-stone-400 text-sm leading-relaxed max-w-sm">

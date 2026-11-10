@@ -41,27 +41,22 @@ export const NavbarPublic: React.FC = () => {
     <header className="w-full bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E7E2D9] transition-all select-none z-40">
       <div className="w-full max-w-[1680px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
         <div className="flex items-center justify-between h-16 sm:h-17 gap-2 xl:gap-3">
-          {/* 1. Left: Brand Identity & Logo (shrink-0) */}
+          {/* 1. Left: Brand Identity & Logo (from user's official logo asset) */}
           <Link
             to="/"
-            className="flex items-center gap-2 sm:gap-2.5 shrink-0 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B81D24] rounded-xl pr-1"
+            className="flex items-center shrink-0 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B81D24] rounded-xl py-1 pr-1"
+            title="Djoeragan Nusantara"
           >
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-[#B81D24] to-[#7A0D13] ring-1 ring-[#C5A059]/40 flex items-center justify-center text-white font-black text-xs sm:text-sm tracking-tight shadow-md shadow-[#B81D24]/20 group-hover:scale-105 transition-transform duration-200">
-              <span className="tracking-tighter">DN</span>
-            </div>
-            <div className="flex flex-col text-left">
-              <span className="font-extrabold text-[14px] sm:text-[15.5px] tracking-tight text-[#1C1917] leading-tight group-hover:text-[#B81D24] transition-colors whitespace-nowrap">
-                Djoeragan Nusantara
-              </span>
-              <span className="text-[8.5px] sm:text-[9.5px] font-bold tracking-widest uppercase text-[#9A6B39] flex items-center gap-1">
-                <span>Wadah Kolaborasi UMKM</span>
-              </span>
-            </div>
+            <img
+              src="/images/logo-djoeragan-nusantara.png"
+              alt="Djoeragan Nusantara"
+              className="h-9 sm:h-10 lg:h-11 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+            />
           </Link>
 
           {/* 2. Middle: Desktop Navigation Links (8 Main Menus) — Responsive, min-w-0 prevents pushing right CTA off-screen */}
           <nav
-            className="hidden xl:flex items-center justify-center gap-0.5 xl:gap-1 2xl:gap-1.5 flex-1 min-w-0 px-1"
+            className="hidden xl:flex items-center justify-center gap-1 xl:gap-1.5 2xl:gap-2 flex-1 min-w-0 px-1"
             aria-label="Navigasi Utama"
           >
             {navLinks.map((item) => (
@@ -70,10 +65,10 @@ export const NavbarPublic: React.FC = () => {
                 to={item.path}
                 end={item.path === '/'}
                 className={({ isActive }) =>
-                  `relative px-2.5 2xl:px-3 py-1.5 text-[12.5px] 2xl:text-[13px] whitespace-nowrap tracking-tight transition-all shrink-0 ${
+                  `relative px-3 2xl:px-3.5 py-1.5 text-[12.5px] 2xl:text-[13px] whitespace-nowrap tracking-tight transition-all shrink-0 rounded-full ${
                     isActive
-                      ? 'text-[#B81D24] font-bold after:absolute after:bottom-0 after:left-2 after:right-2 after:h-[2px] after:bg-[#B81D24]'
-                      : 'text-[#44403C] hover:text-[#1C1917] font-semibold hover:bg-black/5 rounded-lg'
+                      ? 'bg-[#B81D24]/10 text-[#B81D24] font-bold shadow-2xs'
+                      : 'text-[#44403C] hover:text-[#1C1917] font-semibold hover:bg-black/5'
                   }`
                 }
               >
