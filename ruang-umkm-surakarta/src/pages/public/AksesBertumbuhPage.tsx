@@ -74,10 +74,10 @@ export const AksesBertumbuhPage: React.FC = () => {
       <section className="akses-hero overflow-hidden py-10 sm:py-12">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-3.5 relative z-10">
           <h1
-            style={{ textShadow: '0 1px 12px rgba(255, 255, 255, 0.9)' }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-[#1C1917] tracking-tight"
+            style={{ textShadow: '0 1px 14px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 0.8)' }}
+            className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold tracking-tight text-[#292525]"
           >
-            Akses Bertumbuh Djoeragan Nusantara
+            Akses Bertumbuh <span className="text-[#B51E26]">Djoeragan Nusantara</span>
           </h1>
           <p
             style={{ textShadow: '0 1px 12px rgba(255, 255, 255, 0.9)' }}
