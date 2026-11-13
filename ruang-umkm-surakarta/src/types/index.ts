@@ -76,12 +76,18 @@ export interface Member {
   verificationStatus: 'menunggu' | 'disetujui' | 'ditolak';
   rejectionReason?: string;
   bio?: string;
+  /* kyc-update: Penambahan field bank, no rekening, kode pos, dan dokumen KYC */
+  bankName?: string;
+  accountNumber?: string;
+  postalCode?: string;
   documents?: {
-    ktp?: boolean;
-    nib?: boolean;
-    qris?: boolean;
-    fotoUsaha?: boolean;
-    suratPernyataan?: boolean;
+    ktp?: boolean | string;
+    nib?: boolean | string;
+    selfieKtp?: boolean | string;
+    fotoUsaha?: boolean | string;
+    qris?: boolean | string;
+    suratPernyataan?: boolean | string;
+    isDummy?: boolean;
   };
 }
 
@@ -136,9 +142,10 @@ export interface Order {
 export interface VerificationChecklist {
   ktpChecked: boolean;
   nibChecked: boolean;
-  qrisChecked: boolean;
+  selfieKtpChecked?: boolean;
+  qrisChecked?: boolean;
   fotoUsahaChecked: boolean;
-  suratPernyataanChecked: boolean;
+  suratPernyataanChecked?: boolean;
 }
 
 export interface VerificationRequest {
@@ -157,12 +164,18 @@ export interface VerificationRequest {
   submittedDate: string;
   status: 'menunggu' | 'disetujui' | 'ditolak' | SellerVerificationStatus;
   checklist?: VerificationChecklist;
+  /* kyc-update */
+  bankName?: string;
+  accountNumber?: string;
+  postalCode?: string;
   documents: {
     ktp: string;
     nibDoc: string;
     productPhoto: string;
+    selfieKtp?: string;
     qrisDoc?: string;
     suratPernyataan?: string;
+    isDummy?: boolean;
   };
   adminNotes?: string;
   reviewedAt?: string;

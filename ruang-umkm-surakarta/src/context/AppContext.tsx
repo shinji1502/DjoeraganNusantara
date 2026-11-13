@@ -200,9 +200,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [currentUser, setCurrentUser] = useState<User>(() =>
     loadFromStorage<User>('current_user', INITIAL_USERS[0]) // default: Pembeli Ahmad Pratama
   );
-  const [members, setMembers] = useState<Member[]>(() =>
-    loadFromStorage<Member[]>('members', INITIAL_MEMBERS)
-  );
+  /* kyc-update: sinkronisasi anggota awal dengan dokumen dummy jika data lama tersimpan di localStorage */
+  const [members, setMembers] = useState<Member[]>(() => {
+    const loaded = loadFromStorage<Member[]>('members', INITIAL_MEMBERS);
+    return loaded.map((m) => {
+      const init = INITIAL_MEMBERS.find((im) => im.id === m.id);
+      if (init) {
+        return {
+          ...init,
+          ...m,
+          documents: m.documents || init.documents,
+          bankName: m.bankName || init.bankName,
+          accountNumber: m.accountNumber || init.accountNumber,
+          postalCode: m.postalCode || init.postalCode,
+        };
+      }
+      return m;
+    });
+  });
   const [products, setProducts] = useState<Product[]>(() =>
     loadFromStorage<Product[]>('products', INITIAL_PRODUCTS)
   );

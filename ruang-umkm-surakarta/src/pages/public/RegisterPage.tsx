@@ -24,9 +24,63 @@ interface DocumentState {
   file: File | null;
   fileName: string;
   fileSize: string;
+  dataUrl?: string; /* kyc-update: Base64 data URL hasil kompresi canvas */
   status: 'empty' | 'validating' | 'valid' | 'invalid';
   error?: string;
 }
+
+/* kyc-update: Helper kompresi gambar via canvas browser (max 1280px, JPEG 0.75) ke Base64 Data URL */
+const compressImageFile = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const isImage = file.type.startsWith('image/') || /\.(jpg|jpeg|png|webp)$/i.test(file.name);
+    if (!isImage) {
+      // Untuk berkas non-gambar (seperti PDF), baca data URL langsung via FileReader
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (err) => reject(err);
+      reader.readAsDataURL(file);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX_DIM = 1280;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > MAX_DIM || height > MAX_DIM) {
+          if (width > height) {
+            height = Math.round((height * MAX_DIM) / width);
+            width = MAX_DIM;
+          } else {
+            width = Math.round((width * MAX_DIM) / height);
+            height = MAX_DIM;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve(e.target?.result as string);
+          return;
+        }
+
+        ctx.drawImage(img, 0, 0, width, height);
+        // Kompresi JPEG kualitas 0.75
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+        resolve(dataUrl);
+      };
+      img.onerror = () => resolve(e.target?.result as string);
+      img.src = e.target?.result as string;
+    };
+    reader.onerror = (err) => reject(err);
+    reader.readAsDataURL(file);
+  });
+};
 
 export const RegisterPage: React.FC = () => {
   const { setCurrentUser, addUser, submitVerification, addMember, showToast } = useApp();
@@ -49,25 +103,32 @@ export const RegisterPage: React.FC = () => {
   const [category, setCategory] = useState<ProductCategory>('Batik & Fashion');
   const [businessScale, setBusinessScale] = useState<'Mikro' | 'Kecil' | 'Menengah'>('Mikro');
 
-  // Document Upload States
+  /* kyc-update: Field data bank, nomor rekening, dan kode pos */
+  const [bankName, setBankName] = useState('BRI');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [accountNumberError, setAccountNumberError] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [postalCodeError, setPostalCodeError] = useState('');
+
+  /* kyc-update: 4 dokumen KYC (KTP, NIB, Selfie KTP, Foto Usaha) - QRIS dihapus */
   const [docs, setDocs] = useState<{
     ktp: DocumentState;
     nib: DocumentState;
-    qris: DocumentState;
-    dokumenPendukung: DocumentState;
+    selfieKtp: DocumentState;
+    fotoUsaha: DocumentState;
   }>({
     ktp: { file: null, fileName: '', fileSize: '', status: 'empty' },
     nib: { file: null, fileName: '', fileSize: '', status: 'empty' },
-    qris: { file: null, fileName: '', fileSize: '', status: 'empty' },
-    dokumenPendukung: { file: null, fileName: '', fileSize: '', status: 'empty' },
+    selfieKtp: { file: null, fileName: '', fileSize: '', status: 'empty' },
+    fotoUsaha: { file: null, fileName: '', fileSize: '', status: 'empty' },
   });
 
-  // Requirement Checklist States (strictly disabled until document upload succeeds)
+  /* kyc-update: Checklist konfirmasi 4 dokumen */
   const [checklist, setChecklist] = useState({
     ktp: false,
     nib: false,
-    qris: false,
-    dokumenPendukung: false,
+    selfieKtp: false,
+    fotoUsaha: false,
   });
 
   const getAgeGroup = (val: number): AgeGroup => {
@@ -77,8 +138,8 @@ export const RegisterPage: React.FC = () => {
     return '46+';
   };
 
-  // Handle document upload and simulated system validation
-  const handleFileUpload = (
+  /* kyc-update: Handle upload dengan kompresi canvas otomatis ke Base64 Data URL */
+  const handleFileUpload = async (
     key: keyof typeof docs,
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -105,7 +166,9 @@ export const RegisterPage: React.FC = () => {
     }
 
     // Validate allowed file extensions
-    const validExtensions = ['pdf', 'jpg', 'jpeg', 'png', 'webp'];
+    const validExtensions = key === 'selfieKtp'
+      ? ['jpg', 'jpeg', 'png']
+      : ['pdf', 'jpg', 'jpeg', 'png', 'webp'];
     const extension = file.name.split('.').pop()?.toLowerCase() || '';
     if (!validExtensions.includes(extension)) {
       setDocs((prev) => ({
@@ -115,15 +178,15 @@ export const RegisterPage: React.FC = () => {
           fileName: file.name,
           fileSize: `${fileSizeMb} MB`,
           status: 'invalid',
-          error: 'Format harus berupa PDF, JPG, atau PNG.',
+          error: key === 'selfieKtp' ? 'Format harus berupa JPG atau PNG.' : 'Format harus berupa PDF, JPG, atau PNG.',
         },
       }));
       setChecklist((prev) => ({ ...prev, [key]: false }));
-      showToast('Format berkas tidak didukung. Harap unggah PDF, JPG, atau PNG.', 'error');
+      showToast(`Format berkas tidak didukung. Harap unggah ${key === 'selfieKtp' ? 'JPG atau PNG' : 'PDF, JPG, atau PNG'}.`, 'error');
       return;
     }
 
-    // Set validating status momentarily to provide authentic system validation feedback
+    // Set status validating
     setDocs((prev) => ({
       ...prev,
       [key]: {
@@ -134,24 +197,38 @@ export const RegisterPage: React.FC = () => {
       },
     }));
 
-    setTimeout(() => {
+    try {
+      const dataUrl = await compressImageFile(file);
       setDocs((prev) => ({
         ...prev,
         [key]: {
           file,
           fileName: file.name,
           fileSize: `${fileSizeMb} MB`,
+          dataUrl,
           status: 'valid',
         },
       }));
-      showToast(`Berkas ${key.toUpperCase()} berhasil divalidasi sistem! Checklist persyaratan kini aktif.`, 'success');
-    }, 400);
+      showToast(`Berkas ${key === 'selfieKtp' ? 'SELFIE KTP' : key === 'fotoUsaha' ? 'FOTO TEMPAT USAHA' : key.toUpperCase()} berhasil divalidasi sistem!`, 'success');
+    } catch {
+      setDocs((prev) => ({
+        ...prev,
+        [key]: {
+          file: null,
+          fileName: file.name,
+          fileSize: `${fileSizeMb} MB`,
+          status: 'invalid',
+          error: 'Gagal memproses berkas dokumen.',
+        },
+      }));
+      showToast('Gagal memproses berkas dokumen.', 'error');
+    }
   };
 
   const removeDoc = (key: keyof typeof docs) => {
     setDocs((prev) => ({
       ...prev,
-      [key]: { file: null, fileName: '', fileSize: '', status: 'empty' },
+      [key]: { file: null, fileName: '', fileSize: '', dataUrl: undefined, status: 'empty' },
     }));
     setChecklist((prev) => ({ ...prev, [key]: false }));
   };
@@ -172,10 +249,26 @@ export const RegisterPage: React.FC = () => {
       return;
     }
 
+    /* kyc-update: Validasi Kode Pos wajib 5 digit */
+    if (!/^\d{5}$/.test(postalCode)) {
+      setPostalCodeError('Kode pos harus tepat 5 digit angka.');
+      showToast('Kode pos harus tepat 5 digit angka.', 'error');
+      return;
+    }
+
     if (registerType === 'penjual') {
       if (hasBusiness && (!storeName || !nib)) {
         showToast('Bagi pemilik usaha, Nama Toko dan NIB OSS wajib diisi.', 'error');
         return;
+      }
+
+      /* kyc-update: Validasi nomor rekening jika punya usaha */
+      if (hasBusiness) {
+        if (!/^\d{8,16}$/.test(accountNumber)) {
+          setAccountNumberError('Nomor rekening harus terdiri dari 8 hingga 16 digit angka.');
+          showToast('Nomor rekening harus terdiri dari 8 hingga 16 digit angka.', 'error');
+          return;
+        }
       }
 
       // Check upload requirement for KTP
@@ -184,18 +277,20 @@ export const RegisterPage: React.FC = () => {
         return;
       }
 
-      // If hasBusiness, check NIB, QRIS, Dokumen Pendukung
+      /* kyc-update: Validasi Selfie bersama KTP wajib */
+      if (docs.selfieKtp.status !== 'valid' || !checklist.selfieKtp) {
+        showToast('Foto Selfie Bersama KTP wajib diunggah dan dicentang.', 'error');
+        return;
+      }
+
+      // If hasBusiness, check NIB & Foto Tempat Usaha
       if (hasBusiness) {
         if (docs.nib.status !== 'valid' || !checklist.nib) {
           showToast('Dokumen NIB OSS wajib diunggah dan dicentang.', 'error');
           return;
         }
-        if (docs.qris.status !== 'valid' || !checklist.qris) {
-          showToast('Dokumen QRIS / Rekening Usaha wajib diunggah dan dicentang.', 'error');
-          return;
-        }
-        if (docs.dokumenPendukung.status !== 'valid' || !checklist.dokumenPendukung) {
-          showToast('Dokumen Pendukung (foto tempat usaha/produk) wajib diunggah dan dicentang.', 'error');
+        if (docs.fotoUsaha.status !== 'valid' || !checklist.fotoUsaha) {
+          showToast('Foto Tempat Usaha / Produk Fisik wajib diunggah dan dicentang.', 'error');
           return;
         }
       }
@@ -210,7 +305,7 @@ export const RegisterPage: React.FC = () => {
         role: 'penjual',
         storeName: hasBusiness ? storeName : `Calon Wirausaha - ${name}`,
         nib: hasBusiness ? nib : 'Tahap Bimbingan OSS',
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=160&q=80',
+        avatar: docs.selfieKtp.dataUrl || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=160&q=80',
         address: address || selectedRegion,
         isVerified: false, // Wajib ACC Admin
         sellerVerificationStatus: 'Waiting Verification', // Feature 3 & 4
@@ -220,7 +315,7 @@ export const RegisterPage: React.FC = () => {
       setCurrentUser(newSeller);
       addUser(newSeller);
 
-      // Add to member registry with status 'menunggu'
+      /* kyc-update: Buat record anggota baru dengan bank, no rekening, kode pos, & 4 data URL dokumen */
       addMember({
         name,
         gender,
@@ -232,18 +327,21 @@ export const RegisterPage: React.FC = () => {
         businessName: hasBusiness ? storeName : undefined,
         businessType: hasBusiness ? category : undefined,
         businessScale: hasBusiness ? businessScale : undefined,
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80',
+        avatar: docs.selfieKtp.dataUrl || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80',
         phone,
         email,
+        bankName: hasBusiness ? bankName : undefined,
+        accountNumber: hasBusiness ? accountNumber : undefined,
+        postalCode,
         bio: hasBusiness
           ? `Usaha ${category} dari ${selectedRegion}. Sedang menunggu verifikasi resmi admin Djoeragan Nusantara.`
           : `Calon wirausaha dari ${selectedRegion} yang sedang mengikuti bimbingan rintisan usaha.`,
         documents: {
-          ktp: docs.ktp.status === 'valid',
-          nib: hasBusiness ? docs.nib.status === 'valid' : undefined,
-          qris: hasBusiness ? docs.qris.status === 'valid' : undefined,
-          fotoUsaha: docs.dokumenPendukung.status === 'valid',
-          suratPernyataan: true,
+          ktp: docs.ktp.dataUrl || true,
+          nib: hasBusiness ? (docs.nib.dataUrl || true) : undefined,
+          selfieKtp: docs.selfieKtp.dataUrl || true,
+          fotoUsaha: hasBusiness ? (docs.fotoUsaha.dataUrl || true) : undefined,
+          isDummy: false,
         },
       });
 
@@ -260,19 +358,21 @@ export const RegisterPage: React.FC = () => {
         category,
         businessScale,
         annualRevenue: 50000000,
+        bankName: hasBusiness ? bankName : undefined,
+        accountNumber: hasBusiness ? accountNumber : undefined,
+        postalCode,
         checklist: {
           ktpChecked: checklist.ktp,
           nibChecked: checklist.nib,
-          qrisChecked: checklist.qris,
-          fotoUsahaChecked: checklist.dokumenPendukung,
-          suratPernyataanChecked: true,
+          selfieKtpChecked: checklist.selfieKtp,
+          fotoUsahaChecked: checklist.fotoUsaha,
         },
         documents: {
-          ktp: docs.ktp.fileName || 'KTP_PenanggungJawab.jpg',
-          nibDoc: docs.nib.fileName || 'NIB_OSS_Resmi.pdf',
-          productPhoto: docs.dokumenPendukung.fileName || 'Foto_Tempat_Usaha.jpg',
-          qrisDoc: docs.qris.fileName || 'QRIS_Merchant_Usaha.png',
-          suratPernyataan: 'Surat_Pernyataan_Bermaterai.pdf',
+          ktp: docs.ktp.dataUrl || docs.ktp.fileName || 'KTP_PenanggungJawab.jpg',
+          nibDoc: docs.nib.dataUrl || docs.nib.fileName || 'NIB_OSS_Resmi.pdf',
+          productPhoto: docs.fotoUsaha.dataUrl || docs.fotoUsaha.fileName || 'Foto_Tempat_Usaha.jpg',
+          selfieKtp: docs.selfieKtp.dataUrl || docs.selfieKtp.fileName || 'Selfie_KTP.jpg',
+          isDummy: false,
         },
       });
 
@@ -298,13 +398,14 @@ export const RegisterPage: React.FC = () => {
     }
   };
 
-  // Helper render for document upload card
+  /* kyc-update: Helper render dokumen upload dengan thumbnail preview, Ganti, Hapus, dan capture="user" */
   const renderDocumentUploadCard = (
     key: keyof typeof docs,
     title: string,
     description: string,
     isRequired: boolean,
-    acceptedTypes: string
+    acceptedTypes: string,
+    isCamera?: boolean
   ) => {
     const doc = docs[key];
     const isChecked = checklist[key];
@@ -342,7 +443,7 @@ export const RegisterPage: React.FC = () => {
           )}
         </div>
 
-        {/* Step 1: Upload Dropzone / Button */}
+        {/* Step 1: Upload Dropzone / Thumbnail Preview */}
         <div className="pt-1">
           {doc.status === 'empty' ? (
             <label className="flex items-center justify-center gap-2 p-3 border border-dashed border-[#D6CEC2] hover:border-[#C5A059] rounded-xl bg-white hover:bg-[#FAF7F2] cursor-pointer transition text-xs font-bold text-[#1C1917]">
@@ -351,6 +452,7 @@ export const RegisterPage: React.FC = () => {
               <input
                 type="file"
                 accept={acceptedTypes}
+                {...(isCamera ? { capture: 'user' } : {})}
                 onChange={(e) => handleFileUpload(key, e)}
                 className="hidden"
               />
@@ -358,22 +460,52 @@ export const RegisterPage: React.FC = () => {
           ) : doc.status === 'validating' ? (
             <div className="flex items-center justify-center gap-2 p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs font-bold text-amber-800">
               <Clock className="w-4 h-4 animate-spin text-amber-600" />
-              <span>Memvalidasi integritas dokumen...</span>
+              <span>Memproses & mengompresi dokumen...</span>
             </div>
           ) : doc.status === 'valid' ? (
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-emerald-200 text-xs">
-              <div className="flex items-center gap-2 min-w-0">
-                <FileCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span className="font-semibold text-[#1C1917] truncate">{doc.fileName}</span>
-                <span className="text-[10px] text-[#78716C] shrink-0">({doc.fileSize})</span>
+            /* kyc-update: Pratinjau thumbnail dokumen dengan tombol Ganti dan Hapus */
+            <div className="flex items-center justify-between p-3 rounded-xl bg-white border border-emerald-200 text-xs gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                {doc.dataUrl && !doc.fileName.toLowerCase().endsWith('.pdf') ? (
+                  <img
+                    src={doc.dataUrl}
+                    alt={title}
+                    className="w-14 h-14 object-cover rounded-lg border border-emerald-200 shrink-0 bg-stone-100 shadow-2xs"
+                  />
+                ) : (
+                  <div className="w-14 h-14 rounded-lg bg-red-50 border border-red-200 flex flex-col items-center justify-center shrink-0 text-[#B81D24]">
+                    <FileText className="w-6 h-6" />
+                    <span className="text-[9px] font-extrabold uppercase mt-0.5">PDF</span>
+                  </div>
+                )}
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <FileCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span className="font-semibold text-[#1C1917] truncate">{doc.fileName}</span>
+                  </div>
+                  <span className="text-[10px] text-[#78716C] block mt-0.5">{doc.fileSize} • Siap diverifikasi</span>
+                </div>
               </div>
-              <button
-                type="button"
-                onClick={() => removeDoc(key)}
-                className="text-xs text-rose-700 hover:text-rose-900 font-bold shrink-0 ml-2 cursor-pointer"
-              >
-                Ganti Berkas
-              </button>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <label className="text-xs text-[#8C5835] hover:text-[#1C1917] font-bold px-3 py-1.5 rounded-lg border border-[#D6CEC2] hover:bg-[#FAF7F2] cursor-pointer transition">
+                  Ganti
+                  <input
+                    type="file"
+                    accept={acceptedTypes}
+                    {...(isCamera ? { capture: 'user' } : {})}
+                    onChange={(e) => handleFileUpload(key, e)}
+                    className="hidden"
+                  />
+                </label>
+                <button
+                  type="button"
+                  onClick={() => removeDoc(key)}
+                  className="text-xs text-rose-700 hover:text-rose-900 font-bold px-3 py-1.5 rounded-lg border border-rose-200 hover:bg-rose-50 cursor-pointer transition"
+                >
+                  Hapus
+                </button>
+              </div>
             </div>
           ) : (
             <div className="space-y-2">
@@ -389,6 +521,7 @@ export const RegisterPage: React.FC = () => {
                 <input
                   type="file"
                   accept={acceptedTypes}
+                  {...(isCamera ? { capture: 'user' } : {})}
                   onChange={(e) => handleFileUpload(key, e)}
                   className="hidden"
                 />
@@ -576,8 +709,8 @@ export const RegisterPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="sm:col-span-1">
                   <label className="text-xs font-bold text-[#1C1917] block mb-1">
                     Alamat Email *
                   </label>
@@ -591,9 +724,9 @@ export const RegisterPage: React.FC = () => {
                   />
                 </div>
 
-                <div>
+                <div className="sm:col-span-1">
                   <label className="text-xs font-bold text-[#1C1917] block mb-1">
-                    Wilayah Kabupaten / Kota Jawa Tengah *
+                    Wilayah Kabupaten / Kota *
                   </label>
                   <select
                     value={selectedRegion}
@@ -611,6 +744,38 @@ export const RegisterPage: React.FC = () => {
                       ))}
                     </optgroup>
                   </select>
+                </div>
+
+                {/* kyc-update: Field Kode Pos tepat 5 digit angka */}
+                <div className="sm:col-span-1">
+                  <label className="text-xs font-bold text-[#1C1917] block mb-1">
+                    Kode Pos *
+                  </label>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    required
+                    maxLength={5}
+                    placeholder="5 digit (misal 57139)"
+                    value={postalCode}
+                    onChange={(e) => {
+                      const val = e.target.value.replace(/\D/g, '').slice(0, 5);
+                      setPostalCode(val);
+                      if (val.length > 0 && val.length !== 5) {
+                        setPostalCodeError('Kode pos harus tepat 5 digit angka.');
+                      } else {
+                        setPostalCodeError('');
+                      }
+                    }}
+                    className={`w-full px-3.5 py-2.5 rounded-xl border bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:ring-1 font-mono ${
+                      postalCodeError
+                        ? 'border-rose-400 focus:border-rose-500 focus:ring-rose-500'
+                        : 'border-[#D6CEC2] focus:border-[#C5A059] focus:ring-[#C5A059]'
+                    }`}
+                  />
+                  {postalCodeError && (
+                    <p className="text-[10px] text-rose-600 mt-0.5 font-medium">{postalCodeError}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -698,6 +863,61 @@ export const RegisterPage: React.FC = () => {
                       </div>
                     </div>
 
+                    {/* kyc-update: Baris dua kolom Nama Bank & Nomor Rekening */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-bold text-[#1C1917] block mb-1">
+                          Nama Bank *
+                        </label>
+                        <select
+                          value={bankName}
+                          onChange={(e) => setBankName(e.target.value)}
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-xs text-[#1C1917] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
+                        >
+                          <option value="BRI">BRI</option>
+                          <option value="BNI">BNI</option>
+                          <option value="Mandiri">Mandiri</option>
+                          <option value="BCA">BCA</option>
+                          <option value="BSI">BSI</option>
+                          <option value="BTN">BTN</option>
+                          <option value="CIMB Niaga">CIMB Niaga</option>
+                          <option value="Permata">Permata</option>
+                          <option value="Bank Jateng">Bank Jateng</option>
+                          <option value="Lainnya">Lainnya</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="text-xs font-bold text-[#1C1917] block mb-1">
+                          Nomor Rekening *
+                        </label>
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          required
+                          placeholder="8–16 digit nomor rekening"
+                          value={accountNumber}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/\D/g, '').slice(0, 16);
+                            setAccountNumber(val);
+                            if (val.length > 0 && (val.length < 8 || val.length > 16)) {
+                              setAccountNumberError('Nomor rekening harus terdiri dari 8 hingga 16 digit angka.');
+                            } else {
+                              setAccountNumberError('');
+                            }
+                          }}
+                          className={`w-full px-3.5 py-2.5 rounded-xl border bg-[#FAF7F2] text-xs text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:ring-1 font-mono ${
+                            accountNumberError
+                              ? 'border-rose-400 focus:border-rose-500 focus:ring-rose-500'
+                              : 'border-[#D6CEC2] focus:border-[#C5A059] focus:ring-[#C5A059]'
+                          }`}
+                        />
+                        {accountNumberError && (
+                          <p className="text-[10px] text-rose-600 mt-0.5 font-medium">{accountNumberError}</p>
+                        )}
+                      </div>
+                    </div>
+
                     <div>
                       <label className="text-xs font-bold text-[#1C1917] block mb-1">
                         Alamat Lengkap Tempat Usaha / Produksi *
@@ -771,24 +991,25 @@ export const RegisterPage: React.FC = () => {
                       '.pdf,.jpg,.jpeg,.png'
                     )}
 
-                  {/* Doc 3: QRIS Usaha (If has business) */}
+                  {/* Doc 3: Foto Selfie Bersama KTP (Gantikan QRIS) */}
+                  {renderDocumentUploadCard(
+                    'selfieKtp',
+                    'Foto Selfie Bersama KTP',
+                    'Foto diri Anda sambil memegang KTP asli. Wajah dan data pada KTP harus terlihat jelas dan tidak buram.',
+                    true,
+                    '.jpg,.jpeg,.png',
+                    true
+                  )}
+
+                  {/* Doc 4: Dokumen Pendukung (Foto Tempat Usaha / Produk Fisik) */}
                   {hasBusiness &&
                     renderDocumentUploadCard(
-                      'qris',
-                      'QRIS Usaha / Rekening Usaha',
-                      'QRIS Merchant Bank Indonesia atau bukti rekening operasional atas nama usaha.',
-                      true,
-                      '.pdf,.jpg,.jpeg,.png'
+                      'fotoUsaha',
+                      'Foto Tempat Usaha / Produk Fisik',
+                      'Bukti otentik kegiatan produksi, gerai toko, atau sampel produk fisik.',
+                      hasBusiness,
+                      '.jpg,.jpeg,.png,.webp'
                     )}
-
-                  {/* Doc 4: Dokumen Pendukung */}
-                  {renderDocumentUploadCard(
-                    'dokumenPendukung',
-                    'Dokumen Pendukung (Foto Tempat Usaha / Produk Fisik)',
-                    'Bukti otentik kegiatan produksi, gerai toko, atau sampel produk fisik.',
-                    hasBusiness,
-                    '.jpg,.jpeg,.png,.webp'
-                  )}
                 </div>
               </div>
             )}

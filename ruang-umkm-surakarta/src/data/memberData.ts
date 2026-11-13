@@ -65,6 +65,17 @@ export const INITIAL_MEMBERS: Member[] = [
     joinDate: '2026-01-14',
     verificationStatus: 'disetujui',
     bio: 'Pengrajin batik tulis pewarnaan alami di Kampung Batik Laweyan dengan misi membawa kain warisan leluhur ke kancah global.',
+    /* kyc-update */
+    bankName: 'BNI',
+    accountNumber: '022000983192',
+    postalCode: '57147',
+    documents: {
+      ktp: '/images/placeholders/placeholder-ktp.svg',
+      nib: '/images/placeholders/placeholder-nib.svg',
+      selfieKtp: '/images/placeholders/placeholder-selfie.svg',
+      fotoUsaha: '/images/placeholders/placeholder-usaha.svg',
+      isDummy: true,
+    },
   },
   {
     id: 'mem-2',
@@ -100,6 +111,15 @@ export const INITIAL_MEMBERS: Member[] = [
     joinDate: '2026-03-10',
     verificationStatus: 'disetujui',
     bio: 'Mahasiswa tingkat akhir yang sedang merancang rintisan usaha kopi cold brew lokal dan mengikuti inkubasi Djoeragan Nusantara.',
+    /* kyc-update */
+    bankName: 'Bank Jateng',
+    accountNumber: '10023456789',
+    postalCode: '57139',
+    documents: {
+      ktp: '/images/placeholders/placeholder-ktp.svg',
+      selfieKtp: '/images/placeholders/placeholder-selfie.svg',
+      isDummy: true,
+    },
   },
   {
     id: 'mem-4',
@@ -119,6 +139,17 @@ export const INITIAL_MEMBERS: Member[] = [
     joinDate: '2026-03-25',
     verificationStatus: 'menunggu',
     bio: 'Memproduksi ornamen dekorasi interior rumah dari lempengan tembaga dan kuningan khas pasar seni Klewer.',
+    /* kyc-update */
+    bankName: 'BRI',
+    accountNumber: '337201009823451',
+    postalCode: '57118',
+    documents: {
+      ktp: '/images/placeholders/placeholder-ktp.svg',
+      nib: '/images/placeholders/placeholder-nib.svg',
+      selfieKtp: '/images/placeholders/placeholder-selfie.svg',
+      fotoUsaha: '/images/placeholders/placeholder-usaha.svg',
+      isDummy: true,
+    },
   },
   {
     id: 'mem-5',
@@ -433,6 +464,17 @@ export const INITIAL_MEMBERS: Member[] = [
     joinDate: '2026-03-20',
     verificationStatus: 'menunggu',
     bio: 'Lulusan SMK pertanian yang bersiap membangun greenhouse hidroponik melon premium di Sragen.',
+    /* kyc-update */
+    bankName: 'Mandiri',
+    accountNumber: '1380019283746',
+    postalCode: '57211',
+    documents: {
+      ktp: '/images/placeholders/placeholder-ktp.svg',
+      nib: '/images/placeholders/placeholder-nib.svg',
+      selfieKtp: '/images/placeholders/placeholder-selfie.svg',
+      fotoUsaha: '/images/placeholders/placeholder-usaha.svg',
+      isDummy: true,
+    },
   },
   {
     id: 'mem-22',
@@ -450,7 +492,18 @@ export const INITIAL_MEMBERS: Member[] = [
     phone: '0813-2211-7788',
     email: 'kurnia.ikan@djoeragan.id',
     joinDate: '2026-02-11',
-    verificationStatus: 'disetujui',
+    verificationStatus: 'menunggu',
     bio: 'Mengolah hasil tangkapan nelayan samudra Hindia Cilacap menjadi abon ikan bebas pengawet.',
+    /* kyc-update */
+    bankName: 'BCA',
+    accountNumber: '0159823412',
+    postalCode: '53211',
+    documents: {
+      ktp: '/images/placeholders/placeholder-ktp.svg',
+      nib: '/images/placeholders/placeholder-nib.svg',
+      selfieKtp: '/images/placeholders/placeholder-selfie.svg',
+      fotoUsaha: '/images/placeholders/placeholder-usaha.svg',
+      isDummy: true,
+    },
   },
 ];

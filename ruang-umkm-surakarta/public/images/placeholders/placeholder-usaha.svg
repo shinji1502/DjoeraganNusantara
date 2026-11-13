@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="usahaBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF7F2"/>
+      <stop offset="100%" stop-color="#E7DFD5"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" rx="20" fill="url(#usahaBg)" stroke="#8C5835" stroke-width="3"/>
+
+  <!-- Top bar -->
+  <rect x="20" y="20" width="760" height="60" rx="12" fill="#1C1917"/>
+  <text x="40" y="55" font-family="sans-serif" font-size="14" font-weight="bold" fill="#C5A059" letter-spacing="2">DJOERAGAN NUSANTARA • TEMPAT USAHA &amp; PRODUK FISIK</text>
+
+  <!-- Illustration of workshop / craft store -->
+  <!-- Workshop Wall and Shelves -->
+  <rect x="80" y="110" width="640" height="400" rx="16" fill="#F5EFEB" stroke="#D6CEC2" stroke-width="2"/>
+  
+  <!-- Shelves with handcrafted copper products -->
+  <rect x="120" y="180" width="560" height="14" rx="4" fill="#8C5835"/>
+  <rect x="120" y="280" width="560" height="14" rx="4" fill="#8C5835"/>
+  
+  <!-- Vases and Crafts on shelves -->
+  <!-- Vase 1 -->
+  <path d="M160 180 C150 140, 190 140, 180 180 Z" fill="#C5A059"/>
+  <!-- Plate 2 -->
+  <circle cx="270" cy="150" r="26" fill="#B81D24" opacity="0.8"/>
+  <circle cx="270" cy="150" r="18" fill="none" stroke="#FAF7F2" stroke-width="2"/>
+  <!-- Vase 3 -->
+  <path d="M370 180 C350 130, 410 130, 390 180 Z" fill="#8C5835"/>
+  <!-- Crafts 4 -->
+  <rect x="470" y="130" width="60" height="50" rx="6" fill="#10B981" opacity="0.8"/>
+  <!-- Lamp 5 -->
+  <polygon points="600,140 630,180 570,180" fill="#C5A059"/>
+
+  <!-- Lower shelf items -->
+  <rect x="150" y="230" width="80" height="50" rx="4" fill="#B81D24"/>
+  <circle cx="310" cy="255" r="22" fill="#C5A059"/>
+  <rect x="420" y="235" width="100" height="45" rx="6" fill="#1C1917" opacity="0.7"/>
+  <path d="M590 280 C580 230, 640 230, 630 280 Z" fill="#8C5835"/>
+
+  <!-- Workshop Table -->
+  <rect x="100" y="360" width="600" height="130" rx="12" fill="#E2D9CC" stroke="#C5A059" stroke-width="1.5"/>
+  <text x="400" y="410" font-family="sans-serif" font-size="16" font-weight="bold" fill="#1C1917" text-anchor="middle">Sentra Kerajinan Tembaga &amp; Kuningan</text>
+  <text x="400" y="435" font-family="sans-serif" font-size="13" fill="#8C5835" text-anchor="middle">Kriya Ukir Tembaga Surakarta — Pasar Klewer Blok B-12</text>
+  <text x="400" y="460" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">✓ Lokasi &amp; Fasilitas Terverifikasi Lapangan</text>
+
+  <!-- Big Watermark -->
+  <g transform="translate(400, 300) rotate(-16)">
+    <rect x="-260" y="-38" width="520" height="76" rx="14" fill="#B81D24" opacity="0.12" stroke="#B81D24" stroke-width="2" stroke-dasharray="6 6"/>
+    <text x="0" y="12" font-family="sans-serif" font-size="28" font-weight="900" fill="#B81D24" opacity="0.55" text-anchor="middle" letter-spacing="3">CONTOH - TEMPAT USAHA (DUMMY)</text>
+  </g>
+
+  <!-- Footer notice -->
+  <rect x="20" y="540" width="760" height="40" rx="8" fill="#F5EFEB"/>
+  <text x="400" y="565" font-family="sans-serif" font-size="11" fill="#78716C" text-anchor="middle">Dokumen contoh simulasi sistem Djoeragan Nusantara • Bukan foto tempat usaha asli</text>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1050" viewBox="0 0 800 1050">
+  <defs>
+    <linearGradient id="pageBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FAF7F2"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1050" fill="url(#pageBg)" stroke="#D6CEC2" stroke-width="3"/>
+  <rect x="25" y="25" width="750" height="1000" fill="none" stroke="#E7DFD5" stroke-width="2"/>
+
+  <!-- Official Header -->
+  <circle cx="400" cy="90" r="35" fill="#FAF7F2" stroke="#C5A059" stroke-width="2"/>
+  <path d="M380 90 L400 70 L420 90 L400 110 Z" fill="#C5A059"/>
+  <text x="400" y="150" font-family="sans-serif" font-size="15" font-weight="900" fill="#1C1917" text-anchor="middle" letter-spacing="2">PEMERINTAH REPUBLIK INDONESIA</text>
+  <text x="400" y="172" font-family="sans-serif" font-size="13" font-weight="bold" fill="#8C5835" text-anchor="middle">LEMBAGA PENGELOLA DAN PENYELENGGARA OSS</text>
+  <text x="400" y="200" font-family="sans-serif" font-size="18" font-weight="900" fill="#B81D24" text-anchor="middle" letter-spacing="1">NOMOR INDUK BERUSAHA (NIB)</text>
+  <text x="400" y="225" font-family="monospace" font-size="15" font-weight="bold" fill="#1C1917" text-anchor="middle">NIB: 1920005512340</text>
+  
+  <line x1="80" y1="245" x2="720" y2="245" stroke="#1C1917" stroke-width="2"/>
+  <line x1="80" y1="249" x2="720" y2="249" stroke="#1C1917" stroke-width="0.8"/>
+
+  <!-- Content section -->
+  <text x="90" y="285" font-family="sans-serif" font-size="12" fill="#44403C">Berdasarkan ketentuan UU No. 11/2020 tentang Cipta Kerja, Pemerintah menerbitkan NIB kepada:</text>
+
+  <g transform="translate(90, 310)" font-family="sans-serif" font-size="12">
+    <text x="0" y="25" font-weight="bold" fill="#1C1917">1. Nama Usaha / Toko</text>
+    <text x="230" y="25" fill="#1C1917">: Kriya Ukir Tembaga Surakarta</text>
+
+    <text x="0" y="60" font-weight="bold" fill="#1C1917">2. Nama Pelaku Usaha</text>
+    <text x="230" y="60" fill="#1C1917">: Endang Purwanti</text>
+
+    <text x="0" y="95" font-weight="bold" fill="#1C1917">3. NIK Penanggung Jawab</text>
+    <text x="230" y="95" fill="#1C1917">: 3372015509820003</text>
+
+    <text x="0" y="130" font-weight="bold" fill="#1C1917">4. Alamat Kantor / Usaha</text>
+    <text x="230" y="130" fill="#1C1917">: Pasar Klewer Blok B-12, Pasar Kliwon, Kota Surakarta</text>
+
+    <text x="0" y="165" font-weight="bold" fill="#1C1917">5. Status Penanaman Modal</text>
+    <text x="230" y="165" fill="#1C1917">: PMDN (Usaha Mikro)</text>
+
+    <text x="0" y="200" font-weight="bold" fill="#1C1917">6. KBLI Utama</text>
+    <text x="230" y="200" fill="#1C1917">: 25992 (Industri Kriya &amp; Barang Logam Seni)</text>
+
+    <text x="0" y="235" font-weight="bold" fill="#1C1917">7. Skala Usaha</text>
+    <text x="230" y="235" fill="#1C1917">: Usaha Mikro (Tingkat Risiko Rendah)</text>
+  </g>
+
+  <!-- Legal Stamp & QR code simulation -->
+  <rect x="520" y="650" width="160" height="160" rx="10" fill="#FAF7F2" stroke="#8C5835" stroke-width="1.5"/>
+  <rect x="540" y="670" width="120" height="120" fill="#1C1917" opacity="0.1"/>
+  <text x="600" y="735" font-family="monospace" font-size="12" font-weight="bold" fill="#1C1917" text-anchor="middle">QR VERIFIKASI</text>
+  <text x="600" y="755" font-family="monospace" font-size="10" fill="#8C5835" text-anchor="middle">BKPM / OSS RI</text>
+
+  <circle cx="230" cy="730" r="60" fill="none" stroke="#B81D24" stroke-width="2.5" stroke-dasharray="8 4"/>
+  <text x="230" y="725" font-family="sans-serif" font-size="11" font-weight="bold" fill="#B81D24" text-anchor="middle">REPUBLIK INDONESIA</text>
+  <text x="230" y="742" font-family="sans-serif" font-size="10" font-weight="bold" fill="#B81D24" text-anchor="middle">TERVERIFIKASI SISTEM</text>
+
+  <!-- Big Watermark -->
+  <g transform="translate(400, 520) rotate(-25)">
+    <rect x="-260" y="-40" width="520" height="80" rx="14" fill="#B81D24" opacity="0.10" stroke="#B81D24" stroke-width="2" stroke-dasharray="6 6"/>
+    <text x="0" y="12" font-family="sans-serif" font-size="30" font-weight="900" fill="#B81D24" opacity="0.45" text-anchor="middle" letter-spacing="3">CONTOH - NIB OSS (DUMMY)</text>
+  </g>
+
+  <!-- Footer notice -->
+  <rect x="50" y="960" width="700" height="40" rx="8" fill="#F5EFEB"/>
+  <text x="400" y="985" font-family="sans-serif" font-size="11" fill="#78716C" text-anchor="middle">Dokumen contoh simulasi sistem Djoeragan Nusantara • Bukan izin legalitas asli</text>
+</svg>
