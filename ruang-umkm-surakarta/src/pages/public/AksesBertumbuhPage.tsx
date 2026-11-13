@@ -82,7 +82,7 @@ export const AksesBertumbuhPage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 text-center space-y-3.5 relative z-10 w-full">
           <h1
             style={{ textShadow: '0 1px 14px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 0.8)' }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold tracking-tight text-[#292525]"
+            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#292525]"
           >
             Akses Bertumbuh <span className="text-[#B51E26]">Djoeragan Nusantara</span>
           </h1>
@@ -159,7 +159,7 @@ export const AksesBertumbuhPage: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span className="text-xs font-bold text-[#8C5835] uppercase tracking-wider">Pilar A</span>
-              <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-[#1C1917] mt-1">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1C1917] mt-1">
                 Akses Keuangan, Permodalan & Investasi
               </h2>
               <p className="text-xs sm:text-sm text-[#78716C] mt-1 max-w-xl">
@@ -175,7 +175,7 @@ export const AksesBertumbuhPage: React.FC = () => {
                 <div className="w-12 h-12 rounded-2xl bg-[#C5A059]/15 text-[#8C5835] flex items-center justify-center font-bold border border-[#C5A059]/30">
                   <Landmark className="w-6 h-6" />
                 </div>
-                <h3 className="font-serif font-extrabold text-xl text-[#1C1917]">
+                <h3 className="font-extrabold text-xl tracking-tight text-[#1C1917]">
                   Kredit Usaha Rakyat (KUR) Bersubsidi Pemerintah
                 </h3>
                 <p className="text-xs sm:text-sm text-[#57534E] leading-relaxed">
@@ -193,7 +193,7 @@ export const AksesBertumbuhPage: React.FC = () => {
                 <div className="w-12 h-12 rounded-2xl bg-[#B81D24]/10 text-[#98141A] flex items-center justify-center font-bold border border-[#B81D24]/20">
                   <Briefcase className="w-6 h-6" />
                 </div>
-                <h3 className="font-serif font-extrabold text-xl text-[#1C1917]">
+                <h3 className="font-extrabold text-xl tracking-tight text-[#1C1917]">
                   Akses Investasi & Pembiayaan Bagi Hasil (Equity)
                 </h3>
                 <p className="text-xs sm:text-sm text-[#57534E] leading-relaxed">
@@ -210,7 +210,7 @@ export const AksesBertumbuhPage: React.FC = () => {
             <div className="lg:col-span-5 card-heritage p-6 sm:p-8 space-y-6">
               <div className="flex items-center gap-2">
                 <Calculator className="w-5 h-5 text-[#8C5835]" />
-                <h3 className="font-serif font-extrabold text-lg text-[#1C1917]">Simulasi Angsuran KUR Mitra</h3>
+                <h3 className="font-extrabold text-lg tracking-tight text-[#1C1917]">Simulasi Angsuran KUR Mitra</h3>
               </div>
 
               <div className="space-y-4 text-xs">
@@ -289,7 +289,7 @@ export const AksesBertumbuhPage: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span className="text-xs font-bold text-[#8C5835] uppercase tracking-wider">Pilar B</span>
-              <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-[#1C1917] mt-1">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1C1917] mt-1">
                 Kerja Sama Antarbisnis (B2B Matching)
               </h2>
               <p className="text-xs sm:text-sm text-[#78716C] mt-1 max-w-xl">
@@ -305,7 +305,7 @@ export const AksesBertumbuhPage: React.FC = () => {
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C5A059]/15 text-[#8C5835] text-[10px] font-bold border border-[#C5A059]/30">
                   Kebutuhan Produksi
                 </div>
-                <h3 className="font-serif font-extrabold text-lg text-[#1C1917] leading-snug">
+                <h3 className="font-extrabold text-lg tracking-tight text-[#1C1917] leading-snug">
                   Mitra Penjahit Konveksi 1.000 Potong Batik
                 </h3>
                 <p className="text-xs text-[#57534E] leading-relaxed">
@@ -328,7 +328,7 @@ export const AksesBertumbuhPage: React.FC = () => {
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[10px] font-bold border border-emerald-300/60">
                   Pasokan Bahan Baku
                 </div>
-                <h3 className="font-serif font-extrabold text-lg text-[#1C1917] leading-snug">
+                <h3 className="font-extrabold text-lg tracking-tight text-[#1C1917] leading-snug">
                   Pasokan Gula Kelapa Kristal 3 Ton / Bulan
                 </h3>
                 <p className="text-xs text-[#57534E] leading-relaxed">
@@ -351,7 +351,7 @@ export const AksesBertumbuhPage: React.FC = () => {
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#B81D24]/10 text-[#98141A] text-[10px] font-bold border border-[#B81D24]/20">
                   Konsolidasi Ekspor
                 </div>
-                <h3 className="font-serif font-extrabold text-lg text-[#1C1917] leading-snug">
+                <h3 className="font-extrabold text-lg tracking-tight text-[#1C1917] leading-snug">
                   Kriya Ukir & Wayang Mini untuk Ekspor Jepang
                 </h3>
                 <p className="text-xs text-[#57534E] leading-relaxed">
@@ -373,7 +373,7 @@ export const AksesBertumbuhPage: React.FC = () => {
           {/* Form to Post B2B Requirement */}
           <div className="card-heritage p-8 sm:p-10 space-y-6 max-w-2xl mx-auto">
             <div className="space-y-1 text-center">
-              <h3 className="font-serif font-extrabold text-xl text-[#1C1917]">
+              <h3 className="font-extrabold text-xl tracking-tight text-[#1C1917]">
                 Punya Kebutuhan atau Peluang Kerja Sama Bisnis?
               </h3>
               <p className="text-xs sm:text-sm text-[#78716C]">
@@ -458,7 +458,7 @@ export const AksesBertumbuhPage: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span className="text-xs font-bold text-[#8C5835] uppercase tracking-wider">Pilar C</span>
-              <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-[#1C1917] mt-1">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1C1917] mt-1">
                 Peluang Belanja Pemerintah (B2G e-Katalog LKPP)
               </h2>
               <p className="text-xs sm:text-sm text-[#78716C] mt-1 max-w-xl">
@@ -472,7 +472,7 @@ export const AksesBertumbuhPage: React.FC = () => {
               <span className="px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-300/70">
                 Peluang Belanja Rutin Pemerintah
               </span>
-              <h3 className="text-2xl sm:text-3xl font-serif font-extrabold text-[#1C1917] leading-snug">
+              <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1C1917] leading-snug">
                 Pemerintah Daerah Membutuhkan Produk Lokal Bersertifikat
               </h3>
               <p className="text-xs sm:text-sm text-[#57534E] leading-relaxed">
@@ -496,7 +496,7 @@ export const AksesBertumbuhPage: React.FC = () => {
             </div>
 
             <div className="lg:col-span-5 p-6 rounded-2xl bg-[#F5EFEB] border border-[#E7DFD5] space-y-4">
-              <h4 className="font-serif font-extrabold text-base text-[#1C1917]">
+              <h4 className="font-extrabold text-base tracking-tight text-[#1C1917]">
                 Daftar Sebagai Penyedia Pengadaan (B2G)
               </h4>
               <p className="text-xs text-[#78716C] leading-relaxed">
@@ -519,7 +519,7 @@ export const AksesBertumbuhPage: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span className="text-xs font-bold text-[#8C5835] uppercase tracking-wider">Fasilitas Khusus</span>
-              <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-[#1C1917] mt-1">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1C1917] mt-1">
                 Ruang Komersial Berbayar
               </h2>
               <p className="text-xs sm:text-sm text-[#78716C] mt-1 max-w-xl">
@@ -534,7 +534,7 @@ export const AksesBertumbuhPage: React.FC = () => {
                 <span className="p-2.5 rounded-xl bg-[#C5A059]/15 text-[#8C5835] inline-block font-bold border border-[#C5A059]/30">
                   <Crown className="w-5 h-5" />
                 </span>
-                <h4 className="font-serif font-bold text-base text-[#1C1917]">Virtual Booth Premium</h4>
+                <h4 className="font-bold text-base tracking-tight text-[#1C1917]">Virtual Booth Premium</h4>
                 <p className="text-xs text-[#57534E] leading-relaxed">
                   Penempatan produk di baris teratas etalase katalog & beranda website dengan lencana "Official Merchant".
                 </p>
@@ -547,7 +547,7 @@ export const AksesBertumbuhPage: React.FC = () => {
                 <span className="p-2.5 rounded-xl bg-[#B81D24]/10 text-[#98141A] inline-block font-bold border border-[#B81D24]/20">
                   <Building className="w-5 h-5" />
                 </span>
-                <h4 className="font-serif font-bold text-base text-[#1C1917]">Studio Foto & Video UMKM</h4>
+                <h4 className="font-bold text-base tracking-tight text-[#1C1917]">Studio Foto & Video UMKM</h4>
                 <p className="text-xs text-[#57534E] leading-relaxed">
                   Sewa ruang studio foto berlampu studio lengkap beserta fotografer profesional untuk katalog produk Anda.
                 </p>
@@ -560,7 +560,7 @@ export const AksesBertumbuhPage: React.FC = () => {
                 <span className="p-2.5 rounded-xl bg-amber-50 text-amber-800 inline-block font-bold border border-amber-300/70">
                   <Sparkles className="w-5 h-5" />
                 </span>
-                <h4 className="font-serif font-bold text-base text-[#1C1917]">Slot Banner Iklan Eksklusif</h4>
+                <h4 className="font-bold text-base tracking-tight text-[#1C1917]">Slot Banner Iklan Eksklusif</h4>
                 <p className="text-xs text-[#57534E] leading-relaxed">
                   Tampilkan banner promo brand Anda di beranda utama website yang dikunjungi ribuan calon pembeli setiap hari.
                 </p>
@@ -573,7 +573,7 @@ export const AksesBertumbuhPage: React.FC = () => {
                 <span className="p-2.5 rounded-xl bg-emerald-50 text-emerald-800 inline-block font-bold border border-emerald-300/70">
                   <Users className="w-5 h-5" />
                 </span>
-                <h4 className="font-serif font-bold text-base text-[#1C1917]">Coworking & Ruang Temu Klien</h4>
+                <h4 className="font-bold text-base tracking-tight text-[#1C1917]">Coworking & Ruang Temu Klien</h4>
                 <p className="text-xs text-[#57534E] leading-relaxed">
                   Akses ruang rapat representatif di sentra hub Djoeragan Nusantara untuk negosiasi kerja sama bisnis.
                 </p>
@@ -588,7 +588,7 @@ export const AksesBertumbuhPage: React.FC = () => {
               <span className="px-3.5 py-1 rounded-full bg-[#C5A059]/20 text-[#C5A059] text-xs font-bold border border-[#C5A059]/40">
                 Peminatan Ruang Komersial
               </span>
-              <h3 className="text-xl sm:text-2xl font-serif font-extrabold text-[#FAF7F2]">Tertarik Menggunakan Fasilitas Komersial?</h3>
+              <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#FAF7F2]">Tertarik Menggunakan Fasilitas Komersial?</h3>
               <p className="text-xs text-[#A8A29E] leading-relaxed">
                 Mekanisme dan rincian tarif komersial sedang difinalisasi. Daftarkan peminatan usaha Anda untuk mendapatkan promo tarif perdana (Early Bird).
               </p>
