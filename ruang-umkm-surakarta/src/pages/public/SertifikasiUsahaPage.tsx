@@ -7,7 +7,7 @@ import {
   Send,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-import { BatikParang, BatikDivider } from '../../components/common/BatikOrnament';
+import { BatikDivider } from '../../components/common/BatikOrnament';
 
 export const SertifikasiUsahaPage: React.FC = () => {
   const { showToast } = useApp();
@@ -128,17 +128,27 @@ export const SertifikasiUsahaPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-20 bg-theme-pasar min-h-screen">
-      {/* Header with Square Grid, Parang watermark, & Faint Artisan Photo */}
-      <section className="relative overflow-hidden bg-transparent border-b border-[#E7DFD5] bg-heritage-artisan-watermark py-14 sm:py-16">
-        <div className="absolute right-0 top-0 bottom-0 w-64 pointer-events-none opacity-40 hidden md:block">
-          <BatikParang className="h-full w-full" color="#C5A059" opacity={0.12} />
-        </div>
-        <div className="max-w-4xl mx-auto px-4 text-center space-y-4 relative z-10">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-[#1C1917] tracking-tight">
-            Sertifikasi Usaha & Kepastian Hukum
+    <div className="space-y-12 sm:space-y-16 pb-24 bg-theme-akses-bertumbuh min-h-screen">
+      {/* Editorial Header — Seragam dengan Akses Bertumbuh (Master Reference) */}
+      <section className="akses-hero overflow-hidden py-10 sm:py-14">
+        {/* Background photo pengrajin batik — object-fit: cover dengan object-position terkalibrasi */}
+        <img
+          src="/images/solo_umkm_artisan.jpg"
+          alt="Sertifikasi Usaha & Legalitas Djoeragan Nusantara"
+          className="akses-hero-img"
+        />
+
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-3.5 relative z-10 w-full">
+          <h1
+            style={{ textShadow: '0 1px 14px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 0.8)' }}
+            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#292525]"
+          >
+            Sertifikasi Usaha <span className="text-[#B51E26]">Djoeragan Nusantara</span>
           </h1>
-          <p className="text-sm sm:text-base text-[#57534E] max-w-2xl mx-auto leading-relaxed">
+          <p
+            style={{ textShadow: '0 1px 12px rgba(255, 255, 255, 0.9)' }}
+            className="text-sm sm:text-base text-[#2B2118] font-medium max-w-2xl mx-auto leading-relaxed"
+          >
             Legalitas lengkap bikin usaha tenang, dipercaya pembeli, dan gampang tembus pasar modern. Kami menyediakan panduan syarat, alur pendaftaran, tautan resmi ke lembaga terkait, dan pendampingan personal.
           </p>
         </div>
@@ -148,7 +158,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold text-[#8C5835] uppercase tracking-wider">Layanan Tersedia</span>
-          <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-[#1C1917]">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1C1917] tracking-tight">
             Daftar Layanan Sertifikasi & Izin Usaha
           </h2>
           <p className="text-xs sm:text-sm text-[#78716C]">
@@ -169,7 +179,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
                     <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${svc.badgeColor}`}>
                       {svc.badge}
                     </span>
-                    <h3 className="font-serif font-extrabold text-xl text-[#1C1917] mt-2 leading-snug">
+                    <h3 className="font-extrabold text-xl text-[#1C1917] mt-2 leading-snug">
                       {svc.title}
                     </h3>
                     <p className="text-xs text-[#78716C] font-medium">{svc.organizer}</p>
@@ -254,14 +264,14 @@ export const SertifikasiUsahaPage: React.FC = () => {
         <div className="card-heritage p-8 sm:p-10 space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-xs font-bold text-[#8C5835] uppercase tracking-wider">Alur Mudah</span>
-            <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-[#1C1917]">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1C1917] tracking-tight">
               4 Langkah Mudah Mengurus Legalitas Usaha
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             <div className="p-5 rounded-2xl bg-[#FAF7F2] border border-[#E7DFD5] space-y-2.5">
-              <div className="w-10 h-10 rounded-full bg-[#1C1917] text-[#C5A059] font-serif font-extrabold flex items-center justify-center mx-auto text-base border border-[#C5A059]/40">
+              <div className="w-10 h-10 rounded-full bg-[#1C1917] text-[#C5A059] font-extrabold flex items-center justify-center mx-auto text-base border border-[#C5A059]/40">
                 1
               </div>
               <h4 className="font-bold text-sm text-[#1C1917]">Pilih Jenis Izin</h4>
@@ -271,7 +281,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
             </div>
 
             <div className="p-5 rounded-2xl bg-[#FAF7F2] border border-[#E7DFD5] space-y-2.5">
-              <div className="w-10 h-10 rounded-full bg-[#1C1917] text-[#C5A059] font-serif font-extrabold flex items-center justify-center mx-auto text-base border border-[#C5A059]/40">
+              <div className="w-10 h-10 rounded-full bg-[#1C1917] text-[#C5A059] font-extrabold flex items-center justify-center mx-auto text-base border border-[#C5A059]/40">
                 2
               </div>
               <h4 className="font-bold text-sm text-[#1C1917]">Lengkapi Dokumen</h4>
@@ -281,7 +291,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
             </div>
 
             <div className="p-5 rounded-2xl bg-[#FAF7F2] border border-[#E7DFD5] space-y-2.5">
-              <div className="w-10 h-10 rounded-full bg-[#1C1917] text-[#C5A059] font-serif font-extrabold flex items-center justify-center mx-auto text-base border border-[#C5A059]/40">
+              <div className="w-10 h-10 rounded-full bg-[#1C1917] text-[#C5A059] font-extrabold flex items-center justify-center mx-auto text-base border border-[#C5A059]/40">
                 3
               </div>
               <h4 className="font-bold text-sm text-[#1C1917]">Bantuan Fasilitator</h4>
@@ -291,7 +301,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
             </div>
 
             <div className="p-5 rounded-2xl bg-[#FAF7F2] border border-[#E7DFD5] space-y-2.5">
-              <div className="w-10 h-10 rounded-full bg-[#B81D24] text-white font-serif font-extrabold flex items-center justify-center mx-auto text-base border border-[#B81D24]">
+              <div className="w-10 h-10 rounded-full bg-[#B81D24] text-white font-extrabold flex items-center justify-center mx-auto text-base border border-[#B81D24]">
                 4
               </div>
               <h4 className="font-bold text-sm text-[#1C1917]">Sertifikat Terbit</h4>
@@ -311,7 +321,7 @@ export const SertifikasiUsahaPage: React.FC = () => {
               <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
               Bimbingan Personal Gratis
             </div>
-            <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-[#1C1917]">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1C1917] tracking-tight">
               Formulir Bantuan & Pendampingan Sertifikasi
             </h2>
             <p className="text-xs sm:text-sm text-[#78716C] leading-relaxed">

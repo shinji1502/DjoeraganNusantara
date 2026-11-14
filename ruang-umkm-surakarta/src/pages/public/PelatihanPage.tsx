@@ -17,27 +17,40 @@ export const PelatihanPage: React.FC = () => {
   );
 
   return (
-    <div className="space-y-12 pb-20 bg-theme-akademi min-h-screen">
-      {/* Header with friendly tone, square grid, & faint artisan watermark */}
-      <section className="relative overflow-hidden bg-transparent border-b border-[#E7E2D9] bg-heritage-artisan-watermark py-14 sm:py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center space-y-4 relative z-10">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1C1917] tracking-tight">
-            Pelatihan Anggota <span className="text-[#B81D24]">Djoeragan Nusantara</span>
+    <div className="space-y-12 sm:space-y-16 pb-24 bg-theme-akses-bertumbuh min-h-screen">
+      {/* Editorial Header — Seragam dengan Akses Bertumbuh (Master Reference) */}
+      <section className="akses-hero overflow-hidden py-10 sm:py-14">
+        {/* Background photo pengrajin batik — object-fit: cover dengan object-position terkalibrasi */}
+        <img
+          src="/images/solo_umkm_artisan.jpg"
+          alt="Pelatihan Anggota Djoeragan Nusantara"
+          className="akses-hero-img"
+        />
+
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-3.5 relative z-10 w-full">
+          <h1
+            style={{ textShadow: '0 1px 14px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 0.8)' }}
+            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#292525]"
+          >
+            Pelatihan Anggota <span className="text-[#B51E26]">Djoeragan Nusantara</span>
           </h1>
-          <p className="text-sm sm:text-base text-stone-600 max-w-2xl mx-auto leading-relaxed">
+          <p
+            style={{ textShadow: '0 1px 12px rgba(255, 255, 255, 0.9)' }}
+            className="text-sm sm:text-base text-[#2B2118] font-medium max-w-2xl mx-auto leading-relaxed"
+          >
             Belajar bareng praktisi usaha dengan bahasa yang santai dan mudah dipahami. Dari cara bikin foto produk pakai HP, urus izin halal, manajemen pembukuan, hingga trik jualan tembus ekspor dan belanja pemerintah.
           </p>
 
-          {/* Filter pills */}
-          <div className="flex justify-center flex-wrap gap-2 pt-3">
+          {/* Filter pills — Konsisten dengan button styling Akses Bertumbuh */}
+          <div className="flex justify-center flex-wrap gap-2.5 pt-3">
             {types.map((t) => (
               <button
                 key={t}
                 onClick={() => setFilterType(t)}
-                className={`px-4 py-2 rounded-full text-xs font-bold transition cursor-pointer ${
+                className={`px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
                   filterType === t
-                    ? 'bg-[#1C1917] text-white shadow-2xs border border-[#1C1917]'
-                    : 'bg-[#FAF7F2] border border-stone-200/80 text-stone-700 hover:bg-[#F5EFEB]'
+                    ? 'bg-[#1C1917] text-[#FAF7F2] shadow-md border border-[#C5A059]'
+                    : 'bg-white border border-[#D6CEC2] text-[#44403C] hover:bg-[#FAF7F2]'
                 }`}
               >
                 {t === 'Semua' ? 'Semua Pelatihan' : t}

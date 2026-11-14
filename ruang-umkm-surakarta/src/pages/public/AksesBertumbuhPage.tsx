@@ -583,24 +583,23 @@ export const AksesBertumbuhPage: React.FC = () => {
           </div>
 
           {/* Inquiry Box on Commercial Space */}
-          <div className="card-heritage bg-[#1C1917] rounded-3xl p-8 sm:p-10 text-white max-w-2xl mx-auto space-y-6 border border-[#C5A059]/40">
-            <div className="text-center space-y-2">
-              <span className="px-3.5 py-1 rounded-full bg-[#C5A059]/20 text-[#C5A059] text-xs font-bold border border-[#C5A059]/40">
-                Peminatan Ruang Komersial
-              </span>
-              <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#FAF7F2]">Tertarik Menggunakan Fasilitas Komersial?</h3>
-              <p className="text-xs text-[#A8A29E] leading-relaxed">
+          <div className="card-heritage rounded-3xl p-8 sm:p-10 max-w-2xl mx-auto space-y-6">
+            <div className="text-center space-y-3">
+              <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#1C1917]">
+                Tertarik Menggunakan Fasilitas Komersial?
+              </h3>
+              <p className="text-xs sm:text-sm text-[#78716C] leading-relaxed">
                 Mekanisme dan rincian tarif komersial sedang difinalisasi. Daftarkan peminatan usaha Anda untuk mendapatkan promo tarif perdana (Early Bird).
               </p>
             </div>
 
             <form onSubmit={handleCommercialSubmit} className="space-y-4 text-xs">
               <div>
-                <label className="text-[#E7DFD5] block mb-1 font-bold">Pilih Fasilitas</label>
+                <label className="font-bold text-[#1C1917] block mb-1">Pilih Fasilitas</label>
                 <select
                   value={commercialPackage}
                   onChange={(e) => setCommercialPackage(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-[#292524] border border-[#44403C] text-[#FAF7F2] focus:outline-none focus:border-[#C5A059]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-[#1C1917] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                 >
                   <option value="Virtual Booth Premium">Virtual Booth Premium</option>
                   <option value="Studio Foto & Video UMKM">Studio Foto & Video UMKM</option>
@@ -611,25 +610,25 @@ export const AksesBertumbuhPage: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[#E7DFD5] block mb-1 font-bold">Nama Toko / Usaha *</label>
+                  <label className="font-bold text-[#1C1917] block mb-1">Nama Toko / Usaha *</label>
                   <input
                     type="text"
                     required
                     placeholder="Contoh: Kriya Nusantara"
                     value={commercialStore}
                     onChange={(e) => setCommercialStore(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-[#292524] border border-[#44403C] text-[#FAF7F2] placeholder:text-[#78716C] focus:outline-none focus:border-[#C5A059]"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                   />
                 </div>
                 <div>
-                  <label className="text-[#E7DFD5] block mb-1 font-bold">Nomor WhatsApp *</label>
+                  <label className="font-bold text-[#1C1917] block mb-1">Nomor WhatsApp *</label>
                   <input
                     type="tel"
                     required
                     placeholder="0812-xxxx-xxxx"
                     value={commercialPhone}
                     onChange={(e) => setCommercialPhone(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-[#292524] border border-[#44403C] text-[#FAF7F2] placeholder:text-[#78716C] focus:outline-none focus:border-[#C5A059]"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6CEC2] bg-[#FAF7F2] text-[#1C1917] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
                   />
                 </div>
               </div>

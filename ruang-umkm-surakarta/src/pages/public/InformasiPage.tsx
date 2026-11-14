@@ -4,7 +4,6 @@ import {
   Calendar,
   ArrowUpRight,
 } from 'lucide-react';
-import { BatikParang } from '../../components/common/BatikOrnament';
 import { INITIAL_ARTICLES } from '../../data/articleData';
 
 export const InformasiPage: React.FC = () => {
@@ -17,30 +16,40 @@ export const InformasiPage: React.FC = () => {
   );
 
   return (
-    <div className="space-y-12 pb-20 bg-theme-berita min-h-screen">
-      {/* Header with Square Grid, Parang ornament, & Faint Artisan Photo */}
-      <section className="relative overflow-hidden bg-transparent border-b border-[#E7DFD5] bg-heritage-artisan-watermark py-14 sm:py-16">
-        <div className="absolute right-0 top-0 bottom-0 w-64 pointer-events-none opacity-40 hidden md:block">
-          <BatikParang className="h-full w-full" color="#C5A059" opacity={0.12} />
-        </div>
-        <div className="max-w-4xl mx-auto px-4 text-center space-y-4 relative z-10">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-[#1C1917] tracking-tight">
-            Informasi & Edukasi Ruang UMKM Surakarta
+    <div className="space-y-12 sm:space-y-16 pb-24 bg-theme-berita min-h-screen">
+      {/* Editorial Header — Seragam dengan Akses Bertumbuh (Master Reference) */}
+      <section className="akses-hero overflow-hidden py-10 sm:py-14">
+        {/* Background photo pengrajin batik — object-fit: cover dengan object-position terkalibrasi */}
+        <img
+          src="/images/solo_umkm_artisan.jpg"
+          alt="Informasi & Edukasi Djoeragan Nusantara"
+          className="akses-hero-img"
+        />
+
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-3.5 relative z-10 w-full">
+          <h1
+            style={{ textShadow: '0 1px 14px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 0.8)' }}
+            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#292525]"
+          >
+            Informasi & Edukasi <span className="text-[#B51E26]">Djoeragan Nusantara</span>
           </h1>
-          <p className="text-sm sm:text-base text-[#57534E] max-w-2xl mx-auto leading-relaxed">
+          <p
+            style={{ textShadow: '0 1px 12px rgba(255, 255, 255, 0.9)' }}
+            className="text-sm sm:text-base text-[#2B2118] font-medium max-w-2xl mx-auto leading-relaxed"
+          >
             Temukan kabar terbaru seputar regulasi perizinan, tips praktis mengembangkan omzet bisnis, peluang kerja sama pemerintah, dan kisah sukses sobat wirausaha lokal Kota Solo.
           </p>
 
-          {/* Filter pills */}
-          <div className="flex justify-center flex-wrap gap-2 pt-3">
+          {/* Filter pills — Konsisten dengan button styling Akses Bertumbuh */}
+          <div className="flex justify-center flex-wrap gap-2.5 pt-3">
             {tags.map((t) => (
               <button
                 key={t}
                 onClick={() => setSelectedTag(t)}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${
+                className={`px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
                   selectedTag === t
-                    ? 'bg-[#1C1917] text-[#FAF7F2] border border-[#C5A059] shadow-xs'
-                    : 'bg-white border border-[#D6CEC2] text-[#57534E] hover:bg-[#FAF7F2]'
+                    ? 'bg-[#1C1917] text-[#FAF7F2] shadow-md border border-[#C5A059]'
+                    : 'bg-white border border-[#D6CEC2] text-[#44403C] hover:bg-[#FAF7F2]'
                 }`}
               >
                 {t === 'Semua' ? 'Semua Topik' : t}
@@ -75,7 +84,7 @@ export const InformasiPage: React.FC = () => {
                     </span>
                   </div>
                   <Link to={`/informasi/${art.id}`} className="block">
-                    <h3 className="font-serif font-extrabold text-lg text-[#1C1917] leading-snug group-hover:text-[#98141A] transition">
+                    <h3 className="font-extrabold text-lg text-[#1C1917] leading-snug group-hover:text-[#98141A] transition">
                       {art.title}
                     </h3>
                   </Link>
