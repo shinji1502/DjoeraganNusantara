@@ -35,7 +35,7 @@ export const INITIAL_ARTICLES: Article[] = [
     tag: 'Ekspor',
     author: 'Tim Kurasi Kriya Surakarta',
     readTime: '5 menit baca',
-    image: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/kiat-perajin-batik.jpg',
     summary: 'Perpaduan motif klasik dan teknologi kemasan modern menjadi kunci sukses menembus pasar pameran dagang internasional.',
     content: [
       'Permintaan pasar global terhadap produk wastra nusantara ramah lingkungan semakin meningkat pesat di kawasan Eropa, Jepang, dan Amerika Utara. Perajin batik Kampung Laweyan dan Kauman Surakarta kini mulai mengadopsi standar sertifikasi internasional dengan mengedepankan pewarna alami ramah lingkungan (eco-friendly dyes).',
